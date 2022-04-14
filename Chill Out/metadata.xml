@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Chill Out</name>
+    <directory>chill out</directory>
+    <id>1862155132</id>
+    <description>• Passive
+• Grants immunity to all non-self-inflicted damage for two seconds upon entering a room
+• Can give Paper Isaac transformation
+
+When you enter a room, you become immune to most damage sources for two seconds. You are [i]not[/i] immune to self-inflicted damage (IV Bag, Kamikaze, etc), special non-enemy entities (blood donation machine, devil beggar, etc), or spiked doors. Basically, you can't abuse it.
+
+[u]Item Pools[/u]
+• Treasure Room
+
+[u]Transformation[/u]
+• Paper Isaac
+
+This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+</metadata>

@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" version="1">
+	<passive description="Never ending deals!" gfx="darkrestock.png" name="Dark Restock" />
+</items>

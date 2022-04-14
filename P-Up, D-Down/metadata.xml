@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>P-Up, D-Down</name>
+    <directory>p-up, d-down</directory>
+    <id>1862157555</id>
+    <description>• Passive
+• x2 Damage multiplier
+• Take double damage
+
+This item doubles your damage, but also makes you take double damage from all sources, turning you into a glass cannon. Will you take the risk?
+
+[u]Item Pools[/u]
+• Treasure Room
+
+[u]Transformation[/u]
+• Paper Isaac
+
+This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
+    <version>1.1</version>
+    <visibility>Private</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+</metadata>

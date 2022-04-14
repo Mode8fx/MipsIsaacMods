@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Transformation API</name>
+    <directory>transformation api</directory>
+    <id>1883533098</id>
+    <description>• Preconfigured for 50+ items
+• Compatible with Repentance
+
+Are you tired of modded books not counting toward Bookworm? Shouldn't new mushrooms give Fun Guy? The Transformation API adds transformations to over 50 modded items and makes it [u]very[/u] easy to give a transformation to your own item! You can also give additional transformations to official items [strike]in case you think Brimstone is underpowered and want it to also count toward Guppy[/strike]. It even adds the new transformation to the item's External Item Description.
+
+[h1]Items currently included in the API[/h1]
+[url=https://pastebin.com/bWFwhTwu]Here is a list of all modded items currently preconfigured in the API.[/url] If you have any of these items installed, enabling this API is all you have to do to make these items count toward transformations. If you know of a modded item that would make sense to count toward a transformation, leave a comment with the item's exact name as it appears in-game and I might add it. Or if you want to add an item yourself...
+
+[h1]How to add a transformation to your own item[/h1]
+For Repentance players, the current modding API allows you to add a transformation to your item via the official &quot;tags&quot; tag in items.xml. For everyone else...
+Adding a transformation to your own item (or an official item, or someone else's modded item) is very easy. All you have to do is add a single line of code to your mod's MC_POST_PLAYER_INIT callback:
+
+[code]if TransformationAPI ~= nil then TransformationAPI:addItemsToTransformation([i]TRANSFORMATION[/i], [i]{ITEM_1, ITEM_2, ETC}[/i]) end[/code]
+... And that's it! (see examples below)
+
+Replace [i]TRANSFORMATION[/i] with the name of the transformation (all transformations are supported except Adult and Stompy since they require pills; also, though Super Bum is technically supported, it is untested and not recommended due to how Super Bum works):
+[code]&quot;beelzebub&quot;, &quot;guppy&quot;, &quot;bob&quot;, &quot;conjoined&quot;, &quot;funguy&quot;, &quot;leviathan&quot;, &quot;ohcrap&quot;, &quot;seraphim&quot;, &quot;spun&quot;, &quot;superbum&quot;, &quot;yesmother&quot;, &quot;bookworm&quot;, &quot;spiderbaby&quot;[/code]
+
+And replace [i]{ITEM_1, ITEM_2, ETC}[/i] with an array containing the IDs of each item you want to add (even if you're only adding one item, it still needs to be in an array).
+
+For example, if you wanted Little Gish to count toward the Spider Baby transformation, you would include the following line:
+[code]if TransformationAPI ~= nil then TransformationAPI:addItemsToTransformation(&quot;spiderbaby&quot;, {Isaac.GetItemIdByName(&quot;Little Gish&quot;)}) end[/code]
+Or if you wanted to add Seraphim to both Mini Mush and a modded item called Lucky Sevens (which is made up), you would include this line:
+[code]if TransformationAPI ~= nil then TransformationAPI:addItemsToTransformation(&quot;seraphim&quot;, {Isaac.GetItemIdByName(&quot;Mini Mush&quot;), Isaac.GetItemIdByName(&quot;Lucky Sevens&quot;)}) end[/code]</description>
+    <version>1.4</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Tweaks"/>
+</metadata>

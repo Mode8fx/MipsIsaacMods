@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Bump Attack</name>
+    <directory>bump attack</directory>
+    <id>1862147904</id>
+    <description>• Passive
+• Avoid contact damage from weak enemies, and kill weaker enemies on touch
+• Can give Paper Isaac transformation
+
+When you have this item, all enemies with a max health of &lt;= 0.65x your DPS will turn yellow and not deal contact damage. All enemies with a max health of &lt;= 0.5x of your DPS will turn green, and you can kill them just by touching them. Doing this also gives a few frames of invincibility, meaning you can safely bump-kill enemies that explode upon defeat. It's a great defense against kamikaze-like enemies or enemies that spit out weak flies/spiders!
+
+You can change the effectiveness of this item (specifically, the health amounts) with Mod Config Menu. DPS is simply (damage * tears/second), not accounting for items that fire multiple tears, have a chance of firing more powerful tears, etc. If you have any balancing recommendations, feel free to comment below.
+
+[u]Item Pools[/u]
+• Treasure Room
+
+[u]Transformation[/u]
+• Paper Isaac
+
+This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+</metadata>

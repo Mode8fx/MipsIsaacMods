@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" version="1">
+	<passive name="Bump Attack" description="They're not worth your time" gfx="bumpattackbadge.png"	/>
+</items>

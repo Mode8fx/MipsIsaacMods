@@ -1,0 +1,52 @@
+<music root="music/SuperSmashBros/">
+	<track name="SuperSmashBros Basement" intro="Step - The Plain Intro.ogg" path="Step - The Plain.ogg" loop="true" />
+	<track name="SuperSmashBros Cellar" intro="Overworld Theme - The Legend of Zelda Intro.ogg" path="Overworld Theme - The Legend of Zelda.ogg" loop="true" />
+	<track name="SuperSmashBros Burning Basement" intro="Brinstar (SSE Version) Intro.ogg" path="Brinstar (SSE Version).ogg" loop="true" />
+	<track name="SuperSmashBros Caves" intro="Route 10 Intro.ogg" path="Route 10.ogg" loop="true" />
+	<track name="SuperSmashBros Catacombs" intro="Opening Menu - Metroid Prime (SSE Version) Intro.ogg" path="Opening Menu - Metroid Prime (SSE Version).ogg" loop="true" />
+	<track name="SuperSmashBros Flooded Caves" intro="Stickerbush Symphony Intro.ogg" path="Stickerbush Symphony.ogg" loop="true" />
+	<track name="SuperSmashBros Depths" intro="Underground Theme - Super Mario Land Intro.ogg" path="Underground Theme - Super Mario Land.ogg" loop="true" />
+	<track name="SuperSmashBros Necropolis" intro="Death Mountain Intro.ogg" path="Death Mountain.ogg" loop="true" />
+	<track name="SuperSmashBros Dank Depths" intro="Step - The Cave Intro.ogg" path="Step - The Cave.ogg" loop="true" />
+	<track name="SuperSmashBros Womb/Utero" intro="Norfair Intro.ogg" path="Norfair.ogg" loop="true" />
+	<track name="SuperSmashBros Scarred Womb" intro="Brinstar Depths Intro.ogg" path="Brinstar Depths.ogg" loop="true" />
+	<track name="SuperSmashBros Blue Womb" intro="The Dark Realm Intro.ogg" path="The Dark Realm.ogg" loop="true" />
+	<track name="SuperSmashBros Sheol" intro="Step - Subspace Medley Intro.ogg" path="Step - Subspace Medley.ogg" loop="true" />
+	<track name="SuperSmashBros Cathedral" intro="Destroyed Skyworld Intro.ogg" path="Destroyed Skyworld.ogg" loop="true" />
+	<track name="SuperSmashBros Dark Room" intro="Theme of Solid Snake Intro.ogg" path="Theme of Solid Snake.ogg" loop="true" />
+	<track name="SuperSmashBros Chest" intro="Great Temple Intro.ogg" path="Great Temple.ogg" loop="true" />
+	<track name="SuperSmashBros Void" intro="Galeem Dharkon Intro.ogg" path="Galeem Dharkon.ogg" loop="true" />
+	<track name="SuperSmashBros Boss" intro="Boss Battle Intro.ogg" path="Boss Battle.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Depths - Mom)" intro="Multi-Man Melee 1 Intro.ogg" path="Multi-Man Melee 1.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Womb - Mom's Heart)" intro="Final Destination Ver. 2 Intro.ogg" path="Final Destination Ver. 2.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Cathedral - Isaac)" intro="02 Battle Intro.ogg" path="02 Battle.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Sheol - Satan)" intro="Final Destination Intro.ogg" path="Final Destination.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Dark Room)" intro="Master Core Intro.ogg" path="Master Core.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Chest - ???)" intro="Galeem Intro.ogg" path="Galeem.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (alternate)" intro="Boss Battle Song 1 Intro.ogg" path="Boss Battle Song 1.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Blue Womb - Hush)" intro="Dharkon Intro.ogg" path="Dharkon.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Ultra Greed)" intro="Fire Field Intro.ogg" path="Fire Field.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Void)" intro="Multi-Man Melee 2 Intro.ogg" path="Multi-Man Melee 2.ogg" loop="true" />
+	<track name="SuperSmashBros Boss Room (empty)" intro="Main Theme Piano Solo Intro.ogg" path="Main Theme Piano Solo.ogg" loop="true" />
+	<track name="SuperSmashBros Challenge Room (fight)" intro="Metal Battle Intro.ogg" path="Metal Battle.ogg" loop="true" />
+	<track name="SuperSmashBros Library Room" intro="Sticker Album - Album - Chronicle Intro.ogg" path="Sticker Album - Album - Chronicle.ogg" loop="true" />
+	<track name="SuperSmashBros Secret Room" intro="All Clear Intro.ogg" path="All Clear.ogg" loop="true" />
+	<track name="SuperSmashBros Devil Room" intro="Save Point Intro.ogg" path="Save Point.ogg" loop="true" />
+	<track name="SuperSmashBros Angel Room" intro="All-Star Rest Area Intro.ogg" path="All-Star Rest Area.ogg" loop="true" />
+	<track name="SuperSmashBros Shop Room" intro="Shop Intro.ogg" path="Shop.ogg" loop="true" />
+	<track name="SuperSmashBros Arcade Room" intro="Trophies Intro.ogg" path="Trophies.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (jingle)" path="Challenger Appears.ogg" loop="false" />
+	<track name="SuperSmashBros Boss Death (jingle)" path="Stage Clear 1.ogg" loop="false" />
+	<!-- <track name="SuperSmashBros Holy Room Find (jingle)" path=".ogg" loop="false" /> -->
+	<!-- <track name="SuperSmashBros Secret Room Find (jingle)" path=".ogg" loop="false" /> -->
+	<!--<track name="SuperSmashBros Treasure Room Entry (jingle) 1" path=".ogg" loop="false" /> -->
+	<!--<track name="SuperSmashBros Treasure Room Entry (jingle) 2" path=".ogg" loop="false" /> -->
+	<!--<track name="SuperSmashBros Treasure Room Entry (jingle) 3" path=".ogg" loop="false" /> -->
+	<!--<track name="SuperSmashBros Treasure Room Entry (jingle) 4" path=".ogg" loop="false" /> -->
+	<track name="SuperSmashBros Challenge Room Entry (jingle)" path="THIS SONG IS REPLACED WITH NOTHING.ogg" loop="false" />
+	<track name="SuperSmashBros Challenge Room Outro (jingle)" path="Bonus Game - Clear.ogg" loop="false" />
+	<!-- <track name="SuperSmashBros Devil Room appear (jingle)" path=".ogg" loop="false" /> -->
+	<track name="SuperSmashBros Boss Death Alternate (jingle)" path="Stage Clear 2.ogg" loop="false" />
+	<track name="SuperSmashBros Boss Hush Death (jingle)" intro="Classic - Results Screen Intro.ogg" path="Classic - Results Screen.ogg" loop="true" />
+	<track name="SuperSmashBros Boss (Mega Satan)" intro="Giga Bowser Intro.ogg" path="Giga Bowser.ogg" loop="true" />
+</music>

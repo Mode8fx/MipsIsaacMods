@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" version="1">
+    <active description="Build a better you" gfx="selfhelpbook.png" maxcharges="6" name="Self-Help Book" tags="book" />
+</items>

@@ -1,0 +1,1 @@
+local PaperMarioSoundtrack = RegisterMod("Paper Mario Soundtrack", 1)function PaperMarioSoundtrack:onStart()	if SoundtrackSongList then		AddSoundtrackToMenu("PaperMario")	else		Isaac.ConsoleOutput("The Soundtrack Menu Mod is required for Paper Mario Soundtrack")	endendPaperMarioSoundtrack:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, PaperMarioSoundtrack.onStart);

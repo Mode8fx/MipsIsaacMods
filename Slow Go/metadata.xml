@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Slow Go</name>
+    <directory>slow go</directory>
+    <id>1934572924</id>
+    <description>• Passive
+• -50% Speed multiplier. That's it.
+• Can give Paper Isaac transformation
+
+This is a (more or less) objectively bad joke item based on the Paper Mario badge of the same name. All it does is cut your movement speed in half. But it also counts toward the Paper Isaac transformation, so it's not [i]completely[/i] bad.
+
+[u]Item Pools[/u]
+• None, by default
+• Can be added to the Treasure Room pool with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1603631350]Mod Config Menu[/url]
+
+[u]Transformation[/u]
+• Paper Isaac
+
+This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
+    <version>1.1</version>
+    <visibility>Private</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+</metadata>

@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" version="1">
+    <active description="Call the black market" gfx="shadycellphone.png" maxcharges="6" name="Shady Cell Phone" />
+</items>

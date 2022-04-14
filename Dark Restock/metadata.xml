@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Dark Restock</name>
+    <directory>dark restock</directory>
+    <id>1825506519</id>
+    <description>• Passive
+• Drops three random pickups
+• Restocks Devil rooms and black markets
+• Compatible with Repentance
+
+Dark Restock restocks items bought from Devil rooms and black markets, and drops three random pickups upon getting it (just like normal Restock). It also restocks items spawned by the Shady Pass.
+
+By default, the Lost/Tainted Lost is limited to one Devil room or black market restock/floor to prevent an easy win, but this can be changed with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1603631350]Mod Config Menu[/url] to 0-5 or unlimited restocks/floor.
+
+If you want Restock and Dark Restock combined into one item, I also made a mod called [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1825512255]Restock+[/url] that does just that.
+
+[u]Item Pools[/u]
+• Devil Room
+• Demon Beggar
+
+[u]Synergies/Interactions[/u]
+• [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1825244414]Shady Pass[/url]: Restocks item spawned by Shady Pass</description>
+    <version>1.3</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+</metadata>

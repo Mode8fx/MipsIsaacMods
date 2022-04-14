@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Paper Isaac</name>
+    <directory>paper isaac</directory>
+    <id>1826418847</id>
+    <description>• 10 passive items, 1 trinket, 1 transformation, and 2 challenges
+
+This modpack contains 11 badges from the Paper Mario series, all adapted to Isaac. It also includes a transformation that is activated upon getting 3 of these passive badges (or a combination of badges and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=843351279]Transformers[/url]), a challenge that starts you with the trinket + three passive badges of your choice, and a challenge that starts you with every badge except Double Pain and Slow Go.
+
+If you only like certain items in this pack, you can disable the ones you don't want with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1603631350]Mod Config Menu[/url]. There are also individual downloads for each item, plus a download for the transformation + challenges.
+
+[h1]Bump Attack[/h1]
+• Passive
+• Avoid contact damage from weak enemies, and kill weaker enemies on touch
+• Treasure Room pool
+
+When you have this item, all enemies with a max health of &lt;= 0.65x your DPS will turn yellow and not deal contact damage. All enemies with a max health of &lt;= 0.5x of your DPS will turn green, and you can kill them just by touching them. Doing this also gives a few frames of invincibility, meaning you can safely bump-kill enemies that explode upon defeat. It's a great defense against kamikaze-like enemies or enemies that spit out weak flies/spiders!
+
+You can change the effectiveness of this item (specifically, the health amounts) with Mod Config Menu. DPS is simply (damage * tears/second), not accounting for items that fire multiple tears, have a chance of firing more powerful tears, etc. If you have any balancing recommendations, feel free to comment below.
+
+[h1]Chill Out[/h1]
+• Passive
+• Grants immunity to all non-self-inflicted damage for two seconds upon entering a room
+• Treasure Room pool
+
+When you enter a room, you become immune to most damage sources for two seconds. You are [i]not[/i] immune to self-inflicted damage (IV Bag, Kamikaze, etc), special non-enemy entities (blood donation machine, devil beggar, etc), or spiked doors. Basically, you can't abuse it.
+
+You can change the invincibility time with Mod Config Menu.
+
+[h1]Close Call[/h1]
+• Passive
+• Gives a chance to avoid damage when at low health
+• Treasure Room and Secret Room pools
+
+When your total health (red hearts + soul hearts) is 1.5 hearts or less, there is a 1/3 chance you will avoid damage and gain one second of invincibility. This stacks multiplicatively with damage avoiding items such as Infamy, Host Hat, and even itself. Just like in its original games, it can be broken if you manage to get two of them!
+
+[h1]Double Pain[/h1]
+• Passive
+• Take double damage. That's it.
+• No item pool (but it can be added to the Treasure Room pool with Mod Config Menu)
+
+This is a (more or less) objectively bad joke item. All it does is double the damage you take. But it also counts toward the Paper Isaac transformation, so it's not [i]completely[/i] bad.
+
+[h1]Fire Shield[/h1]
+• Trinket
+• Become immune to all fire and fire-related hazards
+
+This protects you from all fire and fire-related hazards, including fireplace projectiles. This does not protect against explosions.
+
+[h1]P-Up, D-Down[/h1]
+• Passive
+• x2 Damage multiplier
+• Take double damage
+• Treasure Room pool
+
+This item doubles your damage, but also makes you take double damage from all sources, turning you into a glass cannon. Will you take the risk?
+
+[h1]Refund[/h1]
+• Passive
+• Using an active item drops money depending on item charge and Luck
+• Treasure Room and Shop pools
+
+Using an active item spawns money depending on the item's charge and your Luck stat, maxing out at 15 coins total per active item.
+
+You need +2 Luck to spawn pennies at the same rate as the Sack of Pennies (one penny every two rooms), but this works great with good use of battery and charge related items.
+
+[h1]Return Postage[/h1]
+• Passive
+• When an enemy damages you, it takes damage equal to 3x your DPS.
+• Treasure Room pool
+
+When an enemy damages you, whether by contact or projectile, it takes damage equal to 3x your DPS. This damage amount can be changed with Mod Config Menu.
+
+(Technical note: As far as I can tell, the API does not offer a built-in way to check which specific entity spawned a projectile; only the type and variant of enemy (SpawnerEntity is always nil). Because of this, the enemy damaged by this item is the [u]closest[/u] enemy with that type and variant. This is accurate most of the time, but it will rarely damage the wrong enemy if there is more than one of whatever enemy damaged you with a projectile in the room.)
+
+[h1]Slow Go[/h1]
+• Passive
+• -50% Speed multiplier. That's it.
+
+This is a (more or less) objectively bad joke item. All it does is cut your movement speed in half. But it also counts toward the Paper Isaac transformation, so it's not [i]completely[/i] bad.
+
+[h1]Spike Shield[/h1]
+• Passive
+• Become immune to all spikes and spike-related hazards
+• Treasure Room and Shop pools
+
+This protects you from all spikes and spike-related hazards, including curse room doors and spiked chests.
+
+[h1]Super Appeal[/h1]
+• Passive
+• +1 Luck
+• Up to +1.5 additional Luck depending on room clear bonus
+• Treasure Room and Boss pools
+
+This item gives a +1 Luck up and an additional 0.1 Luck every time you clear a room. But be careful: taking damage removes 0.3 Luck from this bonus. This per-room bonus maxes out at 1.5 Luck and can't go below 0. In other words, you get a total +1 ~ +2.5 Luck up depending on your room bonus.
+
+[h1]Paper Isaac[/h1]
+• Transformation
+• +0.16 Shot Speed Up
+• Tears may cause bleeding and deal 50% more damage
+
+After getting enough badges, Isaac gets a paper hat! This transformation gives a +0.16 Shot Speed up and a flat 20% chance that your tears will &quot;cut&quot; the enemy, dealing 50% more damage and causing bleeding.
+
+Paper Isaac is activated by getting three of the following items:
+- Bump Attack
+- Chill Out
+- Close Call
+- Double Pain
+- P-Up, D-Down
+- Refund
+- Return Postage
+- Slow Go
+- Spike Shield
+- Super Appeal
+- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=843351279]Transformer[/url] (stacks)
+
+[h1]Paper Isaac [Challenge][/h1]
+A simple challenge that starts you as ??? with the Fire Shield trinket + three badges of your choice, giving you the Paper Isaac transformation immediately. No Treasure rooms. Your goal is to defeat [strike]the Shadow Queen[/strike] Satan.
+
+[h1]Paper Isaac (All) [Challenge][/h1]
+Same as the above challenge, except this starts you with every badge except Double Pain and Slow Go.
+
+Special thanks to Nato Potato for showing how to let the player disable specific items (it seems so obvious in hindsight) and for being an all around great modder.</description>
+    <version>1.3</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+    <tag id="Trinkets"/>
+    <tag id="Challenges"/>
+</metadata>

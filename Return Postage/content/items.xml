@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" version="1">
+	<passive name="Return Postage" description="Send it back" gfx="returnpostagebadge.png" />
+</items>

@@ -1,0 +1,15 @@
+<items gfxroot="gfx/items/" version="1">
+    <passive name="TFAPI Token (Beelzebub)" hidden="true" tags="fly"/>
+    <passive name="TFAPI Token (Guppy)" hidden="true" tags="guppy"/>
+    <passive name="TFAPI Token (Bob)" hidden="true" tags="bob"/>
+    <passive name="TFAPI Token (Conjoined)" hidden="true" tags="baby"/>
+    <passive name="TFAPI Token (Fun Guy)" hidden="true" tags="mushroom"/>
+    <passive name="TFAPI Token (Leviathan)" hidden="true" tags="devil"/>
+    <passive name="TFAPI Token (Oh Crap)" hidden="true" tags="poop"/>
+    <passive name="TFAPI Token (Seraphim)" hidden="true" tags="angel"/>
+    <passive name="TFAPI Token (Spun)" hidden="true" tags="syringe"/>
+    <passive name="TFAPI Token (Yes Mother)" hidden="true" tags="mom"/>
+    <passive name="TFAPI Token (Bookworm)" hidden="true" tags="book"/>
+    <passive name="TFAPI Token (Spider Baby)" hidden="true" tags="spider"/>
+    <passive name="TFAPI Token (All)" hidden="true" tags="fly guppy bob baby mushroom devil poop angel syringe mom book spider"/>
+</items>

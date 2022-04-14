@@ -1,0 +1,52 @@
+<music root="music/PaperMario/">
+	<track name="PaperMario Basement" intro="Gloam Valley Intro.ogg" path="Gloam Valley.ogg" loop="true" />
+	<track name="PaperMario Cellar" intro="Rogueport Intro.ogg" path="Rogueport.ogg" loop="true" />
+	<track name="PaperMario Burning Basement" intro="Hot Times in Mt. Lavalava Intro.ogg" path="Hot Times in Mt. Lavalava.ogg" loop="true" />
+	<track name="PaperMario Caves" intro="Rogueport Sewers Intro.ogg" path="Rogueport Sewers.ogg" loop="true" />
+	<track name="PaperMario Catacombs" intro="Hooktail's Castle Intro.ogg" path="Hooktail's Castle.ogg" loop="true" />
+	<track name="PaperMario Flooded Caves" intro="Shhwonk Fortress Intro.ogg" path="Shhwonk Fortress.ogg" loop="true" />
+	<track name="PaperMario Depths" intro="Yold Ruins Intro.ogg" path="Yold Ruins.ogg" loop="true" />
+	<track name="PaperMario Necropolis" intro="Floro Sapien Caverns Intro.ogg" path="Floro Sapien Caverns.ogg" loop="true" />
+	<track name="PaperMario Dank Depths" intro="Siege on Bowser's Castle Intro.ogg" path="Siege on Bowser's Castle.ogg" loop="true" />
+	<track name="PaperMario Womb/Utero" intro="X-Naut Fortress Intro.ogg" path="X-Naut Fortress.ogg" loop="true" />
+	<track name="PaperMario Scarred Womb" intro="The Moon Intro.ogg" path="The Moon.ogg" loop="true" />
+	<track name="PaperMario Blue Womb" intro="Pit of 100 Trials (TTYD) Intro.ogg" path="Pit of 100 Trials (TTYD).ogg" loop="true" />
+	<track name="PaperMario Sheol" intro="The Underwhere Intro.ogg" path="The Underwhere.ogg" loop="true" />
+	<track name="PaperMario Cathedral" intro="Crystal Palace Crawl Intro.ogg" path="Crystal Palace Crawl.ogg" loop="true" />
+	<track name="PaperMario Dark Room" intro="Deep Into the Shadows Intro.ogg" path="Deep Into the Shadows.ogg" loop="true" />
+	<track name="PaperMario Chest" intro="Pit of 100 Trials (SPM) Intro.ogg" path="Pit of 100 Trials (SPM).ogg" loop="true" />
+	<track name="PaperMario Void" intro="Castle Bleck Intro.ogg" path="Castle Bleck.ogg" loop="true" />
+	<track name="PaperMario Boss" intro="Battle Theme Intro.ogg" path="Battle Theme.ogg" loop="true" />
+	<track name="PaperMario Boss (Depths - Mom)" intro="Attack of the Koopa Bros. Intro.ogg" path="Attack of the Koopa Bros..ogg" loop="true" />
+	<track name="PaperMario Boss (Womb - Mom's Heart)" intro="Boss - The Smorgs Intro.ogg" path="Boss - The Smorgs.ogg" loop="true" />
+	<track name="PaperMario Boss (Cathedral - Isaac)" intro="I'm Not Nice Intro.ogg" path="I'm Not Nice.ogg" loop="true" />
+	<track name="PaperMario Boss (Sheol - Satan)" intro="King of the Koopas Intro.ogg" path="King of the Koopas.ogg" loop="true" />
+	<track name="PaperMario Boss (Dark Room)" intro="Boss - Shadow Queen Part 1 (Peach Form) Intro.ogg" path="Boss - Shadow Queen Part 1 (Peach Form).ogg" loop="true" />
+	<track name="PaperMario Boss (Chest - ???)" intro="Closing Battle Intro.ogg" path="Closing Battle.ogg" loop="true" />
+	<track name="PaperMario Boss (alternate)" intro="Ready... GO! Intro.ogg" path="Ready... GO!.ogg" loop="true" />
+	<track name="PaperMario Boss (Blue Womb - Hush)" intro="The Ultimate Show (Short Intro) Intro.ogg" path="The Ultimate Show (Short Intro).ogg" loop="true" />
+	<track name="PaperMario Boss (Ultra Greed)" intro="Boss - Rawk Hawk Intro.ogg" path="Boss - Rawk Hawk.ogg" loop="true" />
+	<track name="PaperMario Boss (Void)" intro="Boss - Shadow Queen Part 2 Intro.ogg" path="Boss - Shadow Queen Part 2.ogg" loop="true" />
+	<track name="PaperMario Boss Room (empty)" intro="A City in the Stars Intro.ogg" path="A City in the Stars.ogg" loop="true" />
+	<track name="PaperMario Challenge Room (fight)" intro="One Shot Intro.ogg" path="One Shot.ogg" loop="true" />
+	<track name="PaperMario Library Room" intro="Merlon's Hut (Toad Town) Intro.ogg" path="Merlon's Hut (Toad Town).ogg" loop="true" />
+	<track name="PaperMario Secret Room" intro="Tower of Riddles Intro.ogg" path="Tower of Riddles.ogg" loop="true" />
+	<track name="PaperMario Devil Room" intro="Creepy Steeple Intro.ogg" path="Creepy Steeple.ogg" loop="true" />
+	<track name="PaperMario Angel Room" intro="The Sanctum Intro.ogg" path="The Sanctum.ogg" loop="true" />
+	<track name="PaperMario Shop Room" intro="Forget Me Not Intro.ogg" path="Forget Me Not.ogg" loop="true" />
+	<track name="PaperMario Arcade Room" intro="The 65th Super Fun Quirk Quiz Intro.ogg" path="The 65th Super Fun Quirk Quiz.ogg" loop="true" />
+	<track name="PaperMario Boss (jingle)" path="Enemy Surprise!.ogg" loop="false" />
+	<track name="PaperMario Boss Death (jingle)" path="Battle Won!.ogg" loop="false" />
+	<track name="PaperMario Holy Room Find (jingle)" path="Event Switch.ogg" loop="false" />
+	<track name="PaperMario Secret Room Find (jingle)" path="Secret Revealed.ogg" loop="false" />
+	<track name="PaperMario Treasure Room Entry (jingle) 1" path="Item Get.ogg" loop="false" />
+	<track name="PaperMario Treasure Room Entry (jingle) 2" path="Found An Item.ogg" loop="false" />
+	<track name="PaperMario Treasure Room Entry (jingle) 3" path="Found A Badge.ogg" loop="false" />
+	<track name="PaperMario Treasure Room Entry (jingle) 4" path="Get Important Item.ogg" loop="false" />
+	<track name="PaperMario Challenge Room Entry (jingle)" path="THIS SONG IS REPLACED WITH NOTHING.ogg" loop="false" />
+	<track name="PaperMario Challenge Room Outro (jingle)" path="New Item.ogg" loop="false" />
+	<track name="PaperMario Devil Room appear (jingle)" path="Something Bad Shows Up.ogg" loop="false" />
+	<track name="PaperMario Boss Death Alternate (jingle)" path="Glitz Pit Outro.ogg" loop="false" />
+	<track name="PaperMario Boss Hush Death (jingle)" intro="Pure Heart Get (No Intro) Intro.ogg" path="Pure Heart Get (No Intro).ogg" loop="true" />
+	<track name="PaperMario Boss (Mega Satan)" intro="Boss - Bowser Intro.ogg" path="Boss - Bowser.ogg" loop="true" />
+</music>

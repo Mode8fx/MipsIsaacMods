@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Shady Pass</name>
+    <directory>shady pass</directory>
+    <id>1825244414</id>
+    <description>• Passive
+• +1 black heart
+• Spawn a single black market deal in the starting room of every floor
+
+The Shady Pass is the black market's calling card, and it brings the market to Isaac by offering a single black market deal in the starting room of each floor. This means each starting room sells one item from the Shop pool at the cost of a heart container, which counts as a Devil deal. It also synergizes with the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1825502490]Shady Cell Phone[/url], which can restock the Shady Pass's spawned item if it has already been bought. Picking up the Shady Pass also gives 1 black heart.
+
+This item spawns in the Demon Beggar, Curse, and Secret Room item pools.
+
+The Shady Pass works on every floor except The Chest/Dark Room, where the black market is inaccessible.
+
+(Note: There is a visual bug where rerolling an item spawned by the Shady Pass may turn the item into a heart pickup for one frame. This is only visual and does not affect gameplay.)</description>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+</metadata>

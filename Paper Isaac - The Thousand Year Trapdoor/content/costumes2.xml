@@ -1,0 +1,3 @@
+<costumes anm2root="gfx/characters/">
+	<costume type="none" id="Paper Isaac" anm2path="paperisaacani.anm2" hasSkinAlt="true" priority="24"/> 
+</costumes>

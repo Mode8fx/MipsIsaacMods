@@ -1,0 +1,8 @@
+<sounds root="sfx/">
+	<sound name ="good">
+		<sample weight="1" path="good.wav" />
+	</sound>
+	<sound name ="bad">
+		<sample weight="1" path="bad.wav" />
+	</sound>
+</sounds>

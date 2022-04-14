@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Self-Help Book</name>
+    <directory>self-help book</directory>
+    <id>1841530569</id>
+    <description>• Active (6 room charge)
+• Gives a small, permanent stat boost on every use
+• The increased stat is random, but you can give a specific stat priority
+• Can give Bookworm transformation
+• Compatible with Repentance
+
+The Self-Help Book gives a small but permanent stat boost, equal to 1/2 of a stat up pill. The possible stat boosts are:
+
+• Damage +0.25
+• Range +1.25
+• Speed +0.075
+• Luck +0.5
+• +1 empty heart container
+
+After using this item, you can fire in a direction to give one stat priority. There is a 50% chance that the chosen stat will increase, and a 12.5% chance for every other stat. Health Up cannot be given priority, so you'll just have to get lucky if you want more health.
+
+This mod has [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1603631350]Mod Config Menu[/url] support! You can change the strength of the stat boost, make it guaranteed that your chosen stat will increase, remove stat priority to make it completely random, or remove health from the pool of stats that can increase.
+
+Two challenges are included, both of which start you with the Self-Help Book and the No! trinket. Depending on which challenge you pick, your goal will be to defeat either The Lamb or ???.
+
+[u]Item Pools[/u]
+• Treasure Room
+• Library
+
+[u]Transformation[/u]
+• Bookworm
+
+[u]Synergies/Interactions[/u]
+• Car Battery: The stat boost is doubled.
+• [url=https://steamcommunity.com/sharedfiles/filedetails/?id=843351279]Transformer[/url]: Can be used with the Self-Help Book and another book (or second Transformer) to get the Bookworm transformation.</description>
+    <version>1.10</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+    <tag id="Active Items"/>
+</metadata>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Shady Cell Phone</name>
+    <directory>shady cell phone</directory>
+    <id>1825502490</id>
+    <description>• Active (6 room charge)
+• Spawns a single black market deal
+• Restocks deals spawned by the Shady Pass
+
+Isaac has a direct line to the black market, and they'll help in whatever way they can... for a fee.
+
+The Shady Cell Phone is a 6 room charge active item that spawns a single black market deal (as in, one item from the Shop pool is on sale for a heart container and counts as a Devil deal). It also restocks the Shady Pass's spawned item if you already bought it.
+
+Since the black market is inaccessible in The Chest/Dark Room, the Shady Cell Phone gets bad reception on those floors and doesn't work.
+
+This item spawns in the Demon Beggar, Curse, and Secret Room item pools.
+
+(Note: There is a visual bug where rerolling an item spawned by the Shady Cell Phone may turn the item into a heart pickup for one frame. This is only visual and does not affect gameplay.)</description>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+    <tag id="Active Items"/>
+</metadata>

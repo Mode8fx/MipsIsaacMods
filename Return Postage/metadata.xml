@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Return Postage</name>
+    <directory>return postage</directory>
+    <id>1862159093</id>
+    <description>• Passive
+• When an enemy damages you, it takes damage equal to 3x your DPS.
+
+When an enemy damages you, whether by contact or projectile, it takes damage equal to 3x your DPS. This damage amount can be changed with Mod Config Menu.
+
+(Technical note: As far as I can tell, the API does not offer a built-in way to check which specific entity spawned a projectile; only the type and variant of enemy (SpawnerEntity is always nil). Because of this, the enemy damaged by this item is the [u]closest[/u] enemy with that type and variant. This is accurate most of the time, but it will rarely damage the wrong enemy if there is more than one of whatever enemy damaged you with a projectile in the room.)
+
+[u]Item Pools[/u]
+• Treasure Room
+
+[u]Transformation[/u]
+• Paper Isaac
+
+This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+</metadata>

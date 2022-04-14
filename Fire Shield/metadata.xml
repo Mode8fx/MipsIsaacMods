@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Fire Shield</name>
+    <directory>fire shield</directory>
+    <id>1862156188</id>
+    <description>• Trinket
+• Become immune to all fire and fire-related hazards
+
+This protects you from all fire and fire-related hazards, including fireplace projectiles. This does not protect against explosions.
+
+This trinket is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
+    <version>1.1</version>
+    <visibility>Private</visibility>
+    <tag id="Lua"/>
+    <tag id="Trinkets"/>
+</metadata>

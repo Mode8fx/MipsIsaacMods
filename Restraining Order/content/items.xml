@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" version="1">
+	<passive description="Get behind me, Satan!" gfx="restrainingorder.png" name="Restraining Order" />
+</items>

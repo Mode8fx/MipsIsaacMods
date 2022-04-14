@@ -1,0 +1,24 @@
+<ItemPools>
+	<Pool Name="treasure">
+        <Item Name="Bump Attack" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+        <Item Name="Chill Out" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+        <Item Name="Close Call" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+        <Item Name="Double Pain" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+        <Item Name="P-Up, D-Down" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+        <Item Name="Refund" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+        <Item Name="Return Postage" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+        <Item Name="Slow Go" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+        <Item Name="Spike Shield" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+        <Item Name="Super Appeal" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+    </Pool>
+    <Pool Name="boss">
+        <Item Name="Super Appeal" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+    </Pool>
+    <Pool Name="secret">
+        <Item Name="Close Call" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+    </Pool>
+    <Pool Name="shop">
+        <Item Name="Refund" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+        <Item Name="Spike Shield" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+    </Pool>
+</ItemPools>

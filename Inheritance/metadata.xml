@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Inheritance</name>
+    <directory>inheritance</directory>
+    <id>1825505316</id>
+    <description>• Trinket
+• Spawns a passive item and pickup on the final floor of your run
+• Compatible with Repentance
+
+Inheritance is a trinket that spawns a random passive item and pickup when you get to your run's estimated final floor. The type of item/pickup depends on the floor:
+
+Sheol: Devil Room item + black heart
+Cathedral: Angel Room item + soul heart
+Dark Room: Red Chest item + bomb
+Chest: Golden Chest item + key
+Void: Boss Room item + trinket (excluding Inheritance)
+Corpse 2: Curse Room item + rotten heart
+Home: Secret Room item + tarot card
+
+This trinket synergizes with Mom's Box by giving two items and pickups, and it synergizes with Humbling Bundle and BOGO Bombs by spawning double pickups when applicable.
+
+Since the game sometimes can't know for certain what your final floor is due to randomly-spawning Void portals, it is estimated based on your current situation (for example, if you get to the Cathedral and don't have the Polaroid, then it estimates that the Cathedral is your final floor). Regardless, Inheritance is guaranteed to activate at some point in the run. Also, getting to this final floor removes Inheritance from both your inventory and the trinket pool since it is no longer useful.</description>
+    <version>1.2</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Trinkets"/>
+</metadata>

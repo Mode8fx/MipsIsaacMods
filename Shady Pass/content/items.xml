@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" version="1">
+    <passive description="Here's my card" gfx="shadypass.png" name="Shady Pass" />
+</items>
