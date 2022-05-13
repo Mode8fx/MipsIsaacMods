@@ -1,0 +1,119 @@
+Bump Attack
+- Bumping into a bumpable enemy still takes away Holy Mantle, etc.
+- Only works for player 1
+- Affects all players equally (probably keep this behavior? but refine it)
+- Add quality
+
+Chill Out
+- Even with Chill Out, you can still lose Holy Mantle, etc.
+- "PostRoomLoad" failed: line 127: attempt to index a nil value (upvalue 'player')
+	- Only does this during the first run after the game is opened
+- If player 1 has Chill Out, the ! appears over player 1 but affects both players; Chill Out is useless to other players
+- Add quality
+
+Close Call
+- Close Call cannot prevent losing Holy Mantle
+- Close Call affects both players only according to player 1's health and # of badges
+- Add quality
+
+Dark Restock
+- "PostUpdate" failed: line 106: attempt to index a nil value (upvalue 'player')
+	- Only does this during the first run after the game is opened
+- Item currently spawns three random pickups; make this a toggle (disabled by default)
+- Only works if player 1 has Dark Restock
+- Does not work if A Pound of Flesh is active (should ONLY restock devil room item)
+- Add quality
+
+Double Pain
+- "PostPlayerInit" failed
+- Replace ModConfigMenuOptionType.BOOLEAN with ModConfigMenu.OptionType.BOOLEAN
+- If player 1 has Double Pain, player 1 always takes x2 damage and player 2 always takes no damage
+- Double Pain has no effect for player 2
+- Add quality
+
+P-Up, D-Down
+- If player 1 has PUDD, player 1 always takes x2 damage and player 2 always takes no damage
+- PUDD still gives player 2 a stat boost as necessary, but otherwise has no effect
+- Add quality
+
+Refund
+- "PostPlayerInit" failed
+- "PostUseItem" failed: line 80: attempt to index a nil value (upvalue 'player')
+	- Only does this during the first run after the game is opened
+- Both players (whichever one uses an item) get coins according to player 1's item's charge, and if and only if player 1 has Refund
+- Add quality
+
+Restraining Order
+- "PostUpdate" failed: line 136: attempt to index a nil value (upvalue 'player')
+	- Only does this during the first run after the game is opened
+- Angel room chance increase only works if player 1 gets Restraining Order
+- Add quality
+
+Return Postage
+- [UNTESTED]
+- Add quality
+
+Self-Help Book
+- [UNTESTED]
+- Add quality
+
+Shady Cell Phone
+- [UNTESTED]
+- Add quality
+
+Shady Pass
+- [UNTESTED]
+- Add quality
+
+Slow Go
+- "PostPlayerInit" failed
+- Removing Slow Go doesn't remove stat drop
+- Add quality
+
+Spike Shield
+- Spike Shield affects both players only according to whether or not player 1 has it
+- Blocks damage taken from - and functionality of - Mausoleum door; needs to have no effect on this door
+- Add quality
+
+Super Appeal
+- "PostUpdate" failed: line 54: attempt to index a nil value (upvalue 'player')
+	- Only does this during the first run after the game is opened
+- If player 1 has Super Appeal, room bonus is lost if either player gets hit
+- Player 2 doesn't get a room bonus at all
+- Add quality
+
+Restock+
+- [UNTESTED]
+- Add quality
+
+Fire Shield
+- Fire Shield affects both players only according to whether or not player 1 has it
+
+Inheritance
+- "PostPlayerInit" failed
+- Only works for player 1; player 2 needs to have an Inheritance that spawns in a different position
+
+White Halo
+- [UNTESTED]
+
+Donation Card
+- [UNTESTED]
+
+Paper Isaac (Transformation)
+- [UNTESTED]
+
+Super Smash Bros. Soundtrack (Rep. Ver)
+- No changes
+
+Paper Mario Soundtrack
+- No changes
+
+Super Smash Bros. Soundtrack (AB+ Ver)
+- No changes
+
+Transformation API
+- [UNTESTED]
+
+Paper Isaac: The Thousand Year Trapdoor
+- [UNTESTED]
+- Finished all the other Paper Isaac items and merge them in
