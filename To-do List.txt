@@ -21,7 +21,7 @@ Dark Restock
 	- Only does this during the first run after the game is opened
 - Item currently spawns three random pickups; make this a toggle (disabled by default)
 - Only works if player 1 has Dark Restock
-- Does not work if A Pound of Flesh is active (should ONLY restock devil room item)
+- Does not work if A Pound of Flesh is active (should restock devil room item)
 - Add quality
 
 Double Pain
@@ -50,11 +50,14 @@ Restraining Order
 - Add quality
 
 Return Postage
-- [UNTESTED]
+- "PostPlayerInit" failed
+- Return Postage affects both players only according to whether or not player 1 has it
 - Add quality
 
 Self-Help Book
-- [UNTESTED]
+- "PostUpdate" failed: line 319: bad argument #1 to GetCollectibleNum (number expected, got nil)
+	- Only does this during the first run after the game is opened
+- Item is used on player 1, regardless of who actually uses it
 - Add quality
 
 Shady Cell Phone
@@ -83,7 +86,10 @@ Super Appeal
 - Add quality
 
 Restock+
-- [UNTESTED]
+- "PostUpdate" failed: line 149: attempt to index a nil value (upvalue 'player')
+	- Only does this during the first run after the game is opened
+- Only works if player 1 has Restock
+- Does not work if A Pound of Flesh is active (should restock devil room item)
 - Add quality
 
 Fire Shield
@@ -94,13 +100,20 @@ Inheritance
 - Only works for player 1; player 2 needs to have an Inheritance that spawns in a different position
 
 White Halo
-- [UNTESTED]
+- "PostPlayerInit" failed
+- "PostRoomLoad" failed: line 70: attempt to index a nil value (upvalue 'player')
+	- Only does this during the first run after the game is opened
+- Only works for player 1(?)
 
 Donation Card
-- [UNTESTED]
+- "PostPlayerInit" failed
+- Donation machine spawns next to player 1, regardless of who used the card
 
 Paper Isaac (Transformation)
-- [UNTESTED]
+- "PostUpdate" failed: line 246: attempt to index a nil value (upvalue 'p')
+	- Only does this during the first run after the game is opened
+- If player 1 gets three Paper items, player 1 gets the costume and stat boost, but all players get the transformation
+- If any other player gets three Paper items, nothing happens
 
 Super Smash Bros. Soundtrack (Rep. Ver)
 - No changes
