@@ -86,9 +86,6 @@ Restock+
 - Tainted Jacob's ghost form can get infinite items
 - Add quality
 
-Fire Shield
-- Fire Shield affects both players only according to whether or not player 1 has it
-
 Inheritance
 - "PostPlayerInit" failed
 - Only works for player 1; player 2 needs to have an Inheritance that spawns in a different position
@@ -108,15 +105,6 @@ Paper Isaac (Transformation)
 	- Only does this during the first run after the game is opened
 - If player 1 gets three Paper items, player 1 gets the costume and stat boost, but all players get the transformation
 - If any other player gets three Paper items, nothing happens
-
-Super Smash Bros. Soundtrack (Rep. Ver)
-- No changes
-
-Paper Mario Soundtrack
-- No changes
-
-Super Smash Bros. Soundtrack (AB+ Ver)
-- No changes
 
 Transformation API
 - [UNTESTED]

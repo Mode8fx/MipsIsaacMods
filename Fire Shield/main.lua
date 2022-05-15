@@ -2,11 +2,14 @@ FireShield = RegisterMod("Fire Shield", 1)
 
 FireShield.TRINKET_FIRE_SHIELD = Isaac.GetTrinketIdByName("Fire Shield")
 
-local player
+local playerTypes
+local currPlayerType
 local currFrame = 0
 
 function FireShield:onStart()
-	player = Isaac.GetPlayer(0)
+	playerTypes = getPlayerTypes()
+	currPlayerType = playerTypes[0]
+
 	currFrame = 0
 
 	-- External Item Description
@@ -30,19 +33,26 @@ function hasBit(var, bit)
 	return var % (bit + bit) >= bit
 end
 
-local fs_lastColorFrame = 0
+local fs_lastColorFrame = {}
 local fs_safeColor = Color(0.886, 0.345, 0.133, 1, 0, 0, 0)
 local fs_numColorFrames = 15
-local fs_onFire = false
+local fs_onFire = {}
 
 function FireShield:fs_onStart()
-	fs_lastColorFrame = 0
+	for i = 0, Game():GetNumPlayers() do
+		table.insert(fs_lastColorFrame, 0)
+		table.insert(fs_onFire, false)
+	end
 end
 
 function FireShield:fs_onUpdate()
-	if fs_onFire and currFrame > fs_lastColorFrame + 1 then
-		player:SetColor(fs_safeColor, fs_numColorFrames, 0, true, false)
-		fs_onFire = false
+	for i = 0, Game():GetNumPlayers() do
+		if fs_onFire[i] and currFrame > fs_lastColorFrame[i] + 1 then
+			if Game():GetNumPlayers() == 1 then
+				Isaac.GetPlayer(i):SetColor(fs_safeColor, fs_numColorFrames, 0, true, false) -- SetColor() is bugged and always affects all players?
+			end
+			fs_onFire[i] = false
+		end
 	end
 end
 
@@ -50,14 +60,28 @@ function FireShield:fs_onHit(target,damageAmount,damageFlag,damageSource,numCoun
 	-- print(damageSource.Type)
 	-- print(damageSource.Variant)
 	-- print(damageFlag)
+	player = target:ToPlayer()
+	currPlayerType = player:GetPlayerType()
 	if player:HasTrinket(FireShield.TRINKET_FIRE_SHIELD) then
 		if hasBit(damageFlag, DamageFlag.DAMAGE_FIRE) or (damageSource ~= nil and (damageSource.Type == EntityType.ENTITY_FIREPLACE or (damageSource.Type == EntityType.ENTITY_PROJECTILE and damageSource.Variant == ProjectileVariant.PROJECTILE_FIRE) or (damageSource.Entity ~= nil and damageSource.Entity:ToProjectile() ~= nil and damageSource.Entity:ToProjectile().ProjectileFlags == ProjectileFlags.FIRE))) then
-			fs_lastColorFrame = currFrame
-			player:SetColor(fs_safeColor, 1, 0, false, false)
-			fs_onFire = true
-			return false
+			for i = 0, Game():GetNumPlayers() do
+				if playerTypes[i] == currPlayerType then
+					fs_lastColorFrame[i] = currFrame
+					target:SetColor(fs_safeColor, 1, 0, false, false)
+					fs_onFire[i] = true
+					return false
+				end
+			end
 		end
 	end
+end
+
+function getPlayerTypes()
+	local playerTypes = {}
+	for i = 0, Game():GetNumPlayers() do
+		table.insert(playerTypes, Isaac.GetPlayer(i):GetPlayerType())
+	end
+	return playerTypes
 end
 
 FireShield:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, FireShield.fs_onStart)
