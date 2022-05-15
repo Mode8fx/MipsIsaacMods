@@ -39,6 +39,8 @@ local fs_numColorFrames = 15
 local fs_onFire = {}
 
 function FireShield:fs_onStart()
+	fs_lastColorFrame = {}
+	fs_onFire = {}
 	for i = 0, Game():GetNumPlayers() do
 		table.insert(fs_lastColorFrame, 0)
 		table.insert(fs_onFire, false)
@@ -77,11 +79,13 @@ function FireShield:fs_onHit(target,damageAmount,damageFlag,damageSource,numCoun
 end
 
 function getPlayerTypes()
-	local playerTypes = {}
+	local pt = {}
 	for i = 0, Game():GetNumPlayers() do
-		table.insert(playerTypes, Isaac.GetPlayer(i):GetPlayerType())
+		if Isaac.GetPlayer(i) ~= nil then
+			table.insert(pt, Isaac.GetPlayer(i):GetPlayerType())
+		end
 	end
-	return playerTypes
+	return pt
 end
 
 FireShield:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, FireShield.fs_onStart)

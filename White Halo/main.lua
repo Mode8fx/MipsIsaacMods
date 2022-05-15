@@ -5,11 +5,13 @@ WhiteHalo.TRINKET_WHITE_HALO = Isaac.GetTrinketIdByName("White Halo")
 local GameState = {}
 local json = require("json")
 
-local player
+local players
 
 function WhiteHalo:onStart()
-	GameState = json.decode(WhiteHalo:LoadData())
-	player = Isaac.GetPlayer(0)
+	if WhiteHalo:HasData() then
+		GameState = json.decode(WhiteHalo:LoadData())
+	end
+	players = getPlayers()
 
 	-- External Item Description
 	if not __eidTrinketDescriptions then
@@ -67,22 +69,56 @@ end
 -- end
 
 function shouldSpawnAngelRoom()
-	if player:HasTrinket(WhiteHalo.TRINKET_WHITE_HALO) and not GameState.currLevelIsDecided and Game():GetLevel():GetStage() >= 3 and Game():GetLevel():GetStage() <= 8 and Game():GetDevilRoomDeals() > 0 then
+	local haveWhiteHalo = false
+	local haveRosaryBead = false
+	local haveKeyPiece1 = false
+	local haveKeyPiece2 = false
+	local haveBookOfVirtues = false
+	for i = 0, Game():GetNumPlayers() do
+		if players[i] ~= nil then -- for some reason, the players array always includes a nil value, even when I check for it...
+			if players[i]:HasTrinket(WhiteHalo.TRINKET_WHITE_HALO) then
+				haveWhiteHalo = true
+			end
+			if players[i]:HasTrinket(TrinketType.TRINKET_ROSARY_BEAD) then
+				haveRosaryBead = true
+			end
+			if players[i]:HasCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_1) then
+				haveKeyPiece1 = true
+			end
+			if players[i]:HasCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_2) then
+				haveKeyPiece2 = true
+			end
+			if players[i]:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then
+				haveBookOfVirtues = true
+			end
+		end
+	end
+	if haveWhiteHalo and not GameState.currLevelIsDecided and Game():GetLevel():GetStage() >= 3 and Game():GetLevel():GetStage() <= 8 and Game():GetDevilRoomDeals() > 0 then
 		GameState.currLevelIsForgiven = false
 		-- simulating official angel room chance (coin flips)
 		currLevel = Game():GetLevel()
 		if currLevel:GetStateFlag(LevelStateFlag.STATE_EVIL_BUM_LEFT) and math.random(100) <= 10 then
 			return false
 		end
-		angelChances = {true, player:HasTrinket(TrinketType.TRINKET_ROSARY_BEAD), Game():GetDonationModAngel() >= 10, player:HasCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_1), player:HasCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_2), currLevel:GetStateFlag(LevelStateFlag.STATE_EVIL_BUM_KILLED), currLevel:GetStateFlag(LevelStateFlag.STATE_BUM_LEFT)}
-		angelChanceProbs = {50, 50, 50, 25, 25, 25, 10}
+		angelChances = {true, haveRosaryBead, Game():GetDonationModAngel() >= 10, haveKeyPiece1, haveKeyPiece2, currLevel:GetStateFlag(LevelStateFlag.STATE_EVIL_BUM_KILLED), currLevel:GetStateFlag(LevelStateFlag.STATE_BUM_LEFT), haveBookOfVirtues}
+		angelChanceProbs = {500, 500, 500, 250, 250, 250, 100, 250}
 		for i=1, #angelChances, 1 do
-			if angelChances[i] and math.random(100) <= angelChanceProbs[i] then
+			if angelChances[i] and math.random(1000) <= angelChanceProbs[i] then
 				return true
 			end
 		end
 	end
 	return false
+end
+
+function getPlayers()
+	local p = {}
+	for i = 0, Game():GetNumPlayers() do
+		if Isaac.GetPlayer(i) ~= nil then
+			table.insert(p, Isaac.GetPlayer(i))
+		end
+	end
+	return p
 end
 
 WhiteHalo:AddCallback(ModCallbacks.MC_POST_UPDATE, WhiteHalo.onUpdate)

@@ -2,19 +2,16 @@ Bump Attack
 - Bumping into a bumpable enemy still takes away Holy Mantle, etc.
 - Only works for player 1
 - Affects all players equally (probably keep this behavior? but refine it)
-- Add quality
 
 Chill Out
 - Even with Chill Out, you can still lose Holy Mantle, etc.
 - "PostRoomLoad" failed: line 127: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
 - If player 1 has Chill Out, the ! appears over player 1 but affects both players; Chill Out is useless to other players
-- Add quality
 
 Close Call
 - Close Call cannot prevent losing Holy Mantle
 - Close Call affects both players only according to player 1's health and # of badges
-- Add quality
 
 Dark Restock
 - "PostUpdate" failed: line 106: attempt to index a nil value (upvalue 'player')
@@ -23,60 +20,41 @@ Dark Restock
 - Only works if player 1 has Dark Restock
 - Does not work if A Pound of Flesh is active (should restock devil room item)
 - Tainted Jacob's ghost form can get infinite items
-- Add quality
-
-Double Pain
-- Add quality
-
-P-Up, D-Down
-- Add quality
 
 Refund
 - "PostPlayerInit" failed
 - "PostUseItem" failed: line 80: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
 - Both players (whichever one uses an item) get coins according to player 1's item's charge, and if and only if player 1 has Refund
-- Add quality
 
 Restraining Order
 - "PostUpdate" failed: line 136: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
 - Angel room chance increase only works if player 1 gets Restraining Order
-- Add quality
-
-Return Postage
-- Add quality
 
 Self-Help Book
 - "PostUpdate" failed: line 319: bad argument #1 to GetCollectibleNum (number expected, got nil)
 	- Only does this during the first run after the game is opened
 - Item is used on player 1, regardless of who actually uses it
-- Add quality
 
 Shady Cell Phone
 - [UNTESTED]
-- Add quality
 
 Shady Pass
 - [UNTESTED]
-- Add quality
 
 Slow Go
 - "PostPlayerInit" failed
-- Removing Slow Go doesn't remove stat drop
-- Add quality
 
 Spike Shield
 - Spike Shield affects both players only according to whether or not player 1 has it
 - Blocks damage taken from - and functionality of - Mausoleum door; needs to have no effect on this door
-- Add quality
 
 Super Appeal
 - "PostUpdate" failed: line 54: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
 - If player 1 has Super Appeal, room bonus is lost if either player gets hit
 - Player 2 doesn't get a room bonus at all
-- Add quality
 
 Restock+
 - "PostUpdate" failed: line 149: attempt to index a nil value (upvalue 'player')
@@ -84,17 +62,10 @@ Restock+
 - Only works if player 1 has Restock
 - Does not work if A Pound of Flesh is active (should restock devil room item)
 - Tainted Jacob's ghost form can get infinite items
-- Add quality
 
 Inheritance
 - "PostPlayerInit" failed
 - Only works for player 1; player 2 needs to have an Inheritance that spawns in a different position
-
-White Halo
-- "PostPlayerInit" failed
-- "PostRoomLoad" failed: line 70: attempt to index a nil value (upvalue 'player')
-	- Only does this during the first run after the game is opened
-- Only works for player 1(?)
 
 Donation Card
 - "PostPlayerInit" failed
@@ -111,4 +82,23 @@ Transformation API
 
 Paper Isaac: The Thousand Year Trapdoor
 - [UNTESTED]
-- Finished all the other Paper Isaac items and merge them in
+- Finish all the other Paper Isaac items and merge them in
+
+
+
+Add quality for the following items:
+- Bump Attack
+- Chill Out
+- Close Call
+- Dark Restock
+- Double Pain
+- P-Up, D-Down
+- Refund
+- Restraining Order
+- Return Postage
+- Self-Help Book
+- Shady Cell Phone
+- Shady Pass
+- Slow Go
+- Spike Shield
+- Super Appeal
