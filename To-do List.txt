@@ -43,9 +43,6 @@ Shady Cell Phone
 Shady Pass
 - [UNTESTED]
 
-Slow Go
-- "PostPlayerInit" failed
-
 Spike Shield
 - Spike Shield affects both players only according to whether or not player 1 has it
 - Blocks damage taken from - and functionality of - Mausoleum door; needs to have no effect on this door

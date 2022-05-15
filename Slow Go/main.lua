@@ -10,7 +10,9 @@ local alreadyPlayedOnceOnBoot = false -- for Mod Config Menu; makes it so that t
 local player
 
 function SlowGo:onStart()
-	GameState = json.decode(SlowGo:LoadData())
+	if SlowGo:HasData() then
+		GameState = json.decode(SlowGo:LoadData())
+	end
 
 	player = Isaac.GetPlayer(0)
 
@@ -25,7 +27,7 @@ function SlowGo:onStart()
 	if not alreadyPlayedOnceOnBoot then
 		if ModConfigMenu then
 			ModConfigMenu.AddSetting("Slow Go", "Spawns", {
-				Type = ModConfigMenuOptionType.BOOLEAN,
+				Type = ModConfigMenu.OptionType.BOOLEAN,
 				CurrentSetting = function()
 					return GameState.enabledSG
 				end,

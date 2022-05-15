@@ -10,7 +10,7 @@ local donationCardChance = 65 -- higher number = less likely to appear (default 
 local usedCardInThisRoom = false
 local animation = "gfx/donationcarddrop.anm2"
 
-local player
+local player1
 local isGreedMode
 local numCoinsDonated
 local oldNumCoinsDonated
@@ -19,12 +19,14 @@ local oldNumCoins
 -- local currRoomHasDonationMachine
 
 function DonationCard:onStart()
-	GameState = json.decode(DonationCard:LoadData())
-	player = Isaac.GetPlayer(0)
+	if DonationCard:HasData() then
+		GameState = json.decode(DonationCard:LoadData())
+	end
+	player1 = Isaac.GetPlayer(0)
 	isGreedMode = Game():IsGreedMode()
 	numCoinsDonated = 0
 	oldNumCoinsDonated = numCoinsDonated
-	numCoins = player:GetNumCoins()
+	numCoins = player1:GetNumCoins()
 	oldNumCoins = numCoins
 
 	if not __eidCardDescriptions then
@@ -49,7 +51,7 @@ function DonationCard:onUpdate()
 	if usedCardInThisRoom then
 		if isGreedMode and Game():GetLevel():GetStage() == 7 and Game():GetRoom():IsClear() then
 			-- numCoinsDonated = Game():GetDonationModGreed() -- doesn't work in the API
-			numCoins = player:GetNumCoins()
+			numCoins = player1:GetNumCoins()
 			if numCoins < oldNumCoins then
 				numCoinsDonated = numCoinsDonated + (oldNumCoins - numCoins)
 			end
@@ -57,7 +59,7 @@ function DonationCard:onUpdate()
 			numCoinsDonated = Game():GetDonationModAngel()
 		end
 		if numCoinsDonated > oldNumCoinsDonated then
-			player:AddCoins(numCoinsDonated - oldNumCoinsDonated)
+			player1:AddCoins(numCoinsDonated - oldNumCoinsDonated)
 			GameState.totalNumCoinsDonated = GameState.totalNumCoinsDonated + (numCoinsDonated - oldNumCoinsDonated)
 			checkForJam()
 		end
@@ -66,7 +68,7 @@ function DonationCard:onUpdate()
 	end
 end
 
-function DonationCard:onUseCard()
+function DonationCard:onUseCard(cardID, player, useFlags)
 	-- Donate_____() doesn't actually donate; it just changes the amount the game thinks you "donated" on the current floor
 	local newMachinePos = Isaac.GetFreeNearPosition(Vector(player.Position.X + 30, player.Position.Y - 30), 0)
 	Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 1, Isaac.GetFreeNearPosition(Vector(player.Position.X + 20*math.random(-1,1), player.Position.Y + 20*math.random(-1,1)), 0), Vector(0,0), nil):ToPickup()
