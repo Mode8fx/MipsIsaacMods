@@ -4,11 +4,7 @@ PUpDDown.COLLECTIBLE_P_UP_D_DOWN = Isaac.GetItemIdByName("P-Up, D-Down")
 
 local alreadyPlayedOnceOnBoot = false -- for Mod Config Menu; makes it so that the option is only added once per game boot
 
-local players
-
 function PUpDDown:onStart()
-	players = getPlayers()
-
 	-- External Item Description
 	if not __eidItemDescriptions then
 		__eidItemDescriptions = {}
@@ -40,14 +36,6 @@ function PUpDDown:pudd_onHit(target,damageAmount,damageFlag,damageSource,numCoun
 		target:TakeDamage(damageAmount * 2, damageFlag, damageSource, numCountdownFrames) -- this is supposed to keep the original number of invincibility frames, but it's broken in the API?
 		return false
 	end
-end
-
-function getPlayers()
-	local players = {}
-	for i = 0, Game():GetNumPlayers() do
-		table.insert(players, Isaac.GetPlayer(i))
-	end
-	return players
 end
 
 PUpDDown:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, PUpDDown.pudd_onStart)

@@ -7,12 +7,10 @@ local json = require("json")
 
 local alreadyPlayedOnceOnBoot = false -- for Mod Config Menu; makes it so that the option is only added once per game boot
 
-local player
-
 function DoublePain:onStart()
-	GameState = json.decode(DoublePain:LoadData())
-
-	player = Isaac.GetPlayer(0)
+	if DoublePain:HasData() then
+		GameState = json.decode(DoublePain:LoadData())
+	end
 
 	-- External Item Description
 	if not __eidItemDescriptions then
@@ -25,7 +23,7 @@ function DoublePain:onStart()
 	if not alreadyPlayedOnceOnBoot then
 		if ModConfigMenu then
 			ModConfigMenu.AddSetting("Double Pain", "Spawns", {
-				Type = ModConfigMenuOptionType.BOOLEAN,
+				Type = ModConfigMenu.OptionType.BOOLEAN,
 				CurrentSetting = function()
 					return GameState.enabledDP
 				end,
@@ -82,9 +80,9 @@ function DoublePain:dp_onHit(target,damageAmount,damageFlag,damageSource,numCoun
 		dp_tookDamage = false
 		return nil
 	end
-	if player:HasCollectible(DoublePain.COLLECTIBLE_DOUBLE_PAIN) then
+	if target:ToPlayer():HasCollectible(DoublePain.COLLECTIBLE_DOUBLE_PAIN) then
 		dp_tookDamage = true
-		player:TakeDamage(damageAmount * 2, damageFlag, damageSource, numCountdownFrames) -- this is supposed to keep the original number of invincibility frames, but it's broken in the API?
+		target:TakeDamage(damageAmount * 2, damageFlag, damageSource, numCountdownFrames) -- this is supposed to keep the original number of invincibility frames, but it's broken in the API?
 		return false
 	end
 end
