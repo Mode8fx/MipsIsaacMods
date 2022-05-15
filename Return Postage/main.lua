@@ -10,9 +10,9 @@ local alreadyPlayedOnceOnBoot = false -- for Mod Config Menu; makes it so that t
 local player
 
 function ReturnPostage:onStart()
-	GameState = json.decode(ReturnPostage:LoadData())
-
-	player = Isaac.GetPlayer(0)
+	if ReturnPostage:HasData() then
+		GameState = json.decode(ReturnPostage:LoadData())
+	end
 
 	-- External Item Description
 	if not __eidItemDescriptions then
@@ -77,31 +77,31 @@ function ReturnPostage:rp_onHit(target,damageAmount,damageFlag,damageSource,numC
 	-- print(damageSource.SpawnerVariant)
 	-- print(damageSource.Entity.SpawnerType) -- the type of enemy that spawned the entity (0 if nothing spawned it)
 	-- print(damageSource.Entity.SpawnerVariant) -- the variant of enemy that spawned the entity (0 if nothing spawned it or default variant)
-	if player:HasCollectible(ReturnPostage.COLLECTIBLE_RETURN_POSTAGE) and not hasBit(damageFlag, DamageFlag.DAMAGE_FAKE) and damageSource and damageSource.Entity and damageSource.Type ~= EntityType.ENTITY_PLAYER and damageSource.Entity.SpawnerType ~= EntityType.ENTITY_PLAYER and damageSource.Type < 1000 then
+	if target:ToPlayer():HasCollectible(ReturnPostage.COLLECTIBLE_RETURN_POSTAGE) and not hasBit(damageFlag, DamageFlag.DAMAGE_FAKE) and damageSource and damageSource.Entity and damageSource.Type ~= EntityType.ENTITY_PLAYER and damageSource.Entity.SpawnerType ~= EntityType.ENTITY_PLAYER and damageSource.Type < 1000 then
 		local hitByProjectile = damageSource.Entity.Type == EntityType.ENTITY_PROJECTILE or damageSource.Entity.Type == EntityType.ENTITY_BOMBDROP or damageSource.Entity.Type == EntityType.ENTITY_LASER or (damageSource.Entity.SpawnerType ~= 0 and not (damageSource.Entity:IsVulnerableEnemy() and not (damageSource.Type == 39 and damageSource.Variant == 22)))
 		local entityToAttack = nil
 		local entityToAttackDist = 999
 		for _, entity in pairs(Isaac.GetRoomEntities()) do
 			if hitByProjectile then
 				if entity.Type == damageSource.Entity.SpawnerType and entity.Variant == damageSource.Entity.SpawnerVariant then
-					local dist = math.sqrt((entity.Position.X - player.Position.X)^2 + (entity.Position.Y - player.Position.Y)^2)
+					local dist = math.sqrt((entity.Position.X - target.Position.X)^2 + (entity.Position.Y - target.Position.Y)^2)
 					if entityToAttack == nil or dist < entityToAttackDist then
 						entityToAttack = entity
 						entityToAttackDist = dist
 					end
 				end
 			elseif entity.Type == damageSource.Entity.Type and entity.Variant == damageSource.Entity.Variant and entity.Position.X == damageSource.Entity.Position.X and entity.Position.Y == damageSource.Entity.Position.Y then
-				ReturnPostage:hurtEnemy(entity, damageFlag, numCountdownFrames)
+				ReturnPostage:hurtEnemy(target:ToPlayer(), entity, damageFlag, numCountdownFrames)
 				break
 			end
 		end
 		if entityToAttack ~= nil then
-			ReturnPostage:hurtEnemy(entityToAttack, damageFlag, numCountdownFrames)
+			ReturnPostage:hurtEnemy(target:ToPlayer(), entityToAttack, damageFlag, numCountdownFrames)
 		end
 	end
 end
 
-function ReturnPostage:hurtEnemy(entity, damageFlag, numCountdownFrames)
+function ReturnPostage:hurtEnemy(player, entity, damageFlag, numCountdownFrames)
 	local dpsVal = player.Damage*math.ceil(GameState.rp_counterDamage*30/player.MaxFireDelay)
 	entity:TakeDamage(dpsVal, damageFlag, EntityRef(player), numCountdownFrames)
 end

@@ -26,10 +26,6 @@ Dark Restock
 - Add quality
 
 Double Pain
-- "PostPlayerInit" failed
-- Replace ModConfigMenuOptionType.BOOLEAN with ModConfigMenu.OptionType.BOOLEAN
-- If player 1 has Double Pain, player 1 always takes x2 damage and player 2 always takes no damage
-- Double Pain has no effect for player 2
 - Add quality
 
 P-Up, D-Down
@@ -49,8 +45,6 @@ Restraining Order
 - Add quality
 
 Return Postage
-- "PostPlayerInit" failed
-- Return Postage affects both players only according to whether or not player 1 has it
 - Add quality
 
 Self-Help Book
