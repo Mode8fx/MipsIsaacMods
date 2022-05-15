@@ -22,6 +22,7 @@ Dark Restock
 - Item currently spawns three random pickups; make this a toggle (disabled by default)
 - Only works if player 1 has Dark Restock
 - Does not work if A Pound of Flesh is active (should restock devil room item)
+- Tainted Jacob's ghost form can get infinite items
 - Add quality
 
 Double Pain
@@ -32,8 +33,6 @@ Double Pain
 - Add quality
 
 P-Up, D-Down
-- If player 1 has PUDD, player 1 always takes x2 damage and player 2 always takes no damage
-- PUDD still gives player 2 a stat boost as necessary, but otherwise has no effect
 - Add quality
 
 Refund
@@ -90,6 +89,7 @@ Restock+
 	- Only does this during the first run after the game is opened
 - Only works if player 1 has Restock
 - Does not work if A Pound of Flesh is active (should restock devil room item)
+- Tainted Jacob's ghost form can get infinite items
 - Add quality
 
 Fire Shield

@@ -4,10 +4,10 @@ PUpDDown.COLLECTIBLE_P_UP_D_DOWN = Isaac.GetItemIdByName("P-Up, D-Down")
 
 local alreadyPlayedOnceOnBoot = false -- for Mod Config Menu; makes it so that the option is only added once per game boot
 
-local player
+local players
 
 function PUpDDown:onStart()
-	player = Isaac.GetPlayer(0)
+	players = getPlayers()
 
 	-- External Item Description
 	if not __eidItemDescriptions then
@@ -17,13 +17,6 @@ function PUpDDown:onStart()
 end
 
 PUpDDown:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, PUpDDown.onStart)
-
-function hasBit(var, bit)
-	if var == nil then
-		return false
-	end
-	return var % (bit + bit) >= bit
-end
 
 local pudd_tookDamage = false
 
@@ -39,17 +32,22 @@ end
 
 function PUpDDown:pudd_onHit(target,damageAmount,damageFlag,damageSource,numCountdownFrames)
 	if pudd_tookDamage then
-		-- print("START")
-		-- print(damageAmount) -- 1 per half heart
-		-- print(numCountdownFrames)
 		pudd_tookDamage = false
 		return nil
 	end
-	if player:HasCollectible(PUpDDown.COLLECTIBLE_P_UP_D_DOWN) then
+	if target:ToPlayer():HasCollectible(PUpDDown.COLLECTIBLE_P_UP_D_DOWN) then
 		pudd_tookDamage = true
-		player:TakeDamage(damageAmount * 2, damageFlag, damageSource, numCountdownFrames) -- this is supposed to keep the original number of invincibility frames, but it's broken in the API?
+		target:TakeDamage(damageAmount * 2, damageFlag, damageSource, numCountdownFrames) -- this is supposed to keep the original number of invincibility frames, but it's broken in the API?
 		return false
 	end
+end
+
+function getPlayers()
+	local players = {}
+	for i = 0, Game():GetNumPlayers() do
+		table.insert(players, Isaac.GetPlayer(i))
+	end
+	return players
 end
 
 PUpDDown:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, PUpDDown.pudd_onStart)
