@@ -22,7 +22,7 @@ Dark Restock
 - Tainted Jacob's ghost form can get infinite items
 
 Refund
-- "PostPlayerInit" failed
+- "PostPlayerInit" failed; this prevents save data from loading properly after closing and re-opening the game
 - "PostUseItem" failed: line 80: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
 - Both players (whichever one uses an item) get coins according to player 1's item's charge, and if and only if player 1 has Refund
@@ -33,9 +33,9 @@ Restraining Order
 - Angel room chance increase only works if player 1 gets Restraining Order
 
 Self-Help Book
-- "PostUpdate" failed: line 319: bad argument #1 to GetCollectibleNum (number expected, got nil)
-	- Only does this during the first run after the game is opened
-- Item is used on player 1, regardless of who actually uses it
+- "PostPlayerInit" failed
+- Only player 1 can choose which stat to upgrade
+- "Stat up" popup/fade-out is a little buggy in multiplayer if both players have the book and use it around the same time
 
 Shady Cell Phone
 - [UNTESTED]
@@ -63,10 +63,6 @@ Restock+
 Inheritance
 - "PostPlayerInit" failed
 - Only works for player 1; player 2 needs to have an Inheritance that spawns in a different position
-
-Donation Card
-- "PostPlayerInit" failed
-- Donation machine spawns next to player 1, regardless of who used the card
 
 Paper Isaac (Transformation)
 - "PostUpdate" failed: line 246: attempt to index a nil value (upvalue 'p')

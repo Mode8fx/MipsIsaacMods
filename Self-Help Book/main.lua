@@ -10,17 +10,18 @@ local json = require("json")
 
 local alreadyPlayedOnceOnBoot = false -- for Mod Config Menu; makes it so that the option is only added once per game boot
 
-local player
--- local usingItemStart = false
-local usingItem = false
+local players = {}
+-- local playerTypes = {}
+local usingItem = {false, false, false, false}
 local damageUpVal = 0.5
 local rangeUpVal = 2.5
 local speedUpVal = 0.15
 local luckUpVal = 1
-local oldCharge = 0
-local oldBatteryCharge = 0
-local statUpString = nil
-local statUpFrame = -150
+local oldCharge = {0, 0, 0, 0}
+local oldBatteryCharge = {0, 0, 0, 0}
+local statUpString = {nil, nil, nil, nil}
+local statUpFrame = {-150, -150, -150, -150}
+local playerNum = 0
 local books = {
 	CollectibleType.COLLECTIBLE_BIBLE,
 	CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL,
@@ -34,7 +35,9 @@ local books = {
 	CollectibleType.COLLECTIBLE_HOW_TO_JUMP,
 	CollectibleType.COLLECTIBLE_TELEPATHY_BOOK,
 	CollectibleType.COLLECTIBLE_SATANIC_BIBLE,
-	CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD
+	CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
+	CollectibleType.COLLECTIBLE_LEMEGETON,
+	CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES
 }
 
 function SelfHelpBook:onStart()
@@ -50,24 +53,17 @@ function SelfHelpBook:onStart()
 	__eidItemTransformations[SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK] = "12"
 	__eidItemDescriptions[SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK] = "Gives a small, permanent stat boost on every use#Input a direction to give a higher chance of raising a specific stat"
 
+	players = getPlayers()
+	-- playerTypes = getPlayerTypes()
 	initializeAllVars()
 
-	player = Isaac.GetPlayer(0)
 	SelfHelpBook.COLLECTIBLE_TRANSFORMER = Isaac.GetItemIdByName("Transformer")
-	statUpFrame = -150
+	oldCharge = {0, 0, 0, 0}
+	oldBatteryCharge = {0, 0, 0, 0}
+	statUpString = {nil, nil, nil, nil}
+	statUpFrame = {-150, -150, -150, -150}
 
 	if not alreadyPlayedOnceOnBoot then
-		-- OptionsMod
-		-- if optionsmod ~= nil and optionsmod.RegisterNewSetting ~= nil then
-		-- 	SelfHelpBookOptionsMod()
-		-- else
-		-- 	if optionsmod_init == nil then
-		-- 		optionsmod_init = {}
-		-- 	end
-		-- 	optionsmod_init[#optionsmod_init+1] = SelfHelpBookOptionsMod
-		-- end
-
-		-- Mod Config Menu
 		if ModConfigMenu then
 			ModConfigMenu.AddSpace("Self-Help Book")
 			ModConfigMenu.AddSetting("Self-Help Book", { 
@@ -143,53 +139,23 @@ function SelfHelpBook:onStart()
 	end
 
 	if Game():GetFrameCount() == 0 then
-		GameState.numDamageUp = 0
-		GameState.numRangeUp = 0
-		GameState.numSpeedUp = 0
-		GameState.numLuckUp = 0
-		GameState.collectedBooks = {}
-		GameState.highestID = -1
-		GameState.transformed = false
+		GameState.numDamageUp = {0, 0, 0, 0}
+		GameState.numRangeUp = {0, 0, 0, 0}
+		GameState.numSpeedUp = {0, 0, 0, 0}
+		GameState.numLuckUp = {0, 0, 0, 0}
+		GameState.collectedBooks = {{}, {}, {}, {}}
+		GameState.highestID = {-1, -1, -1, -1}
+		GameState.transformed = {false, false, false, false}
 	else
 		SelfHelpBook:loadCollectedList()
 	end
 
 	if Game():GetFrameCount() == 0 and (Game().Challenge == SelfHelpBook.CHALLENGE_SELF_HELP_1 or Game().Challenge == SelfHelpBook.CHALLENGE_SELF_HELP_2) then
-		player:AddCollectible(SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK, 6, false)
+		players[0]:AddCollectible(SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK, 6, false)
 		Game():GetItemPool():RemoveCollectible(SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK)
 	end
 end
 SelfHelpBook:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, SelfHelpBook.onStart)
-
--- function SelfHelpBookOptionsMod()
--- 	optionsmod.RegisterMod("Self-Help Book", {"Item behavior"})
--- 	GameState.statBoostValue = optionsmod.RegisterNewSetting({
--- 	    name = "Stat boost value",
--- 	    description = "Set the size of the stat boost relative to a stat up pill",
--- 	    category = "Item behavior",
--- 	    type = "percent",
--- 	    default = 0.5,
--- 	    min = 0.05,
--- 	    max = 1,
--- 	    adjustRate = 0.05
--- 	})
--- 	GameState.statPriorityValue = optionsmod.RegisterNewSetting({
--- 	    name = "Stat priority value",
--- 	    description = "Set the likelihood that your chosen stat will increase",
--- 	    category = "Item behavior",
--- 	    type = "normal",
--- 	    options = {{"No priority", 0}, {"50% chance", 1}, {"Guaranteed", 2}},
--- 	    default = 2 -- 2nd value, not "value = 2"
--- 	})
--- 	GameState.canBoostHealth = optionsmod.RegisterNewSetting({
--- 	    name = "Can boost health",
--- 	    description = "Set whether or not the item can randomly increase health",
--- 	    category = "Item behavior",
--- 	    type = "toggle",
--- 	    default = true
--- 	})
--- 	alreadyPlayedOnceOnBoot = true
--- end
 
 function initializeVar(var, value)
 	if var == nil then
@@ -199,22 +165,33 @@ function initializeVar(var, value)
 end
 
 function initializeAllVars()
-	GameState.numDamageUp = initializeVar(GameState.numDamageUp, 0)
-	GameState.numRangeUp = initializeVar(GameState.numRangeUp, 0)
-	GameState.numSpeedUp = initializeVar(GameState.numSpeedUp, 0)
-	GameState.numLuckUp = initializeVar(GameState.numLuckUp, 0)
-	GameState.collectedBooks = initializeVar(GameState.collectedBooks, {})
-	GameState.highestID = initializeVar(GameState.highestID, -1)
-	GameState.transformed = initializeVar(GameState.transformed, false)
+	GameState.numDamageUp = initializeVar(GameState.numDamageUp, {})
+	GameState.numRangeUp = initializeVar(GameState.numRangeUp, {})
+	GameState.numSpeedUp = initializeVar(GameState.numSpeedUp, {})
+	GameState.numLuckUp = initializeVar(GameState.numLuckUp, {})
+	GameState.collectedBooks = initializeVar(GameState.collectedBooks, {{}, {}, {}, {}})
+	GameState.highestID = initializeVar(GameState.highestID, {})
+	GameState.transformed = initializeVar(GameState.transformed, {})
+	for i=1,4 do
+		GameState.numDamageUp[i] = initializeVar(GameState.numDamageUp[i], 0)
+		GameState.numRangeUp[i] = initializeVar(GameState.numRangeUp[i], 0)
+		GameState.numSpeedUp[i] = initializeVar(GameState.numSpeedUp[i], 0)
+		GameState.numLuckUp[i] = initializeVar(GameState.numLuckUp[i], 0)
+		GameState.collectedBooks[i] = initializeVar(GameState.collectedBooks[i], {})
+		GameState.highestID[i] = initializeVar(GameState.highestID[i], -1)
+		GameState.transformed[i] = initializeVar(GameState.transformed[i], false)
+	end
 	GameState.statBoostValue = initializeVar(GameState.statBoostValue, 0.5)
 	GameState.statPriorityValue = initializeVar(GameState.statPriorityValue, 1)
 	GameState.canBoostHealth = initializeVar(GameState.canBoostHealth, true)
 end
 
 function SelfHelpBook:onExit(save)
-	for i=1,GameState.highestID do
-		if GameState.collectedBooks[i] == nil then
-			GameState.collectedBooks[i] = false
+	for playerNum=1,4 do
+		for i=1,GameState.highestID[playerNum] do
+			if GameState.collectedBooks[playerNum][i] == nil then
+				GameState.collectedBooks[playerNum][i] = false
+			end
 		end
 	end
 	SelfHelpBook:SaveData(json.encode(GameState))
@@ -223,122 +200,123 @@ SelfHelpBook:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, SelfHelpBook.onExit)
 SelfHelpBook:AddCallback(ModCallbacks.MC_POST_GAME_END, SelfHelpBook.onExit)
 
 function SelfHelpBook:loadCollectedList()
-	local new_collectedBooks = {}
-	for i=1, GameState.highestID do
-		if GameState.collectedBooks[i] == true then
-			new_collectedBooks[i] = true
+	for playerNum=1,4 do
+		local new_collectedBooks = {}
+		for i=1, GameState.highestID[playerNum] do
+			if GameState.collectedBooks[playerNum][i] == true then
+				new_collectedBooks[playerNum][i] = true
+			end
 		end
+		GameState.collectedBooks[playerNum] = new_collectedBooks
 	end
-	GameState.collectedBooks = new_collectedBooks
 end
 
 function SelfHelpBook:onRender()
-	if usingItem and GameState.statPriorityValue > 0 then
-		local playerPos = Game():GetRoom():WorldToScreenPosition(player.Position)
-		Isaac.RenderText("Damage", playerPos.X-18, playerPos.Y-52, 1, 1, 1, 1)
-		Isaac.RenderText("^", playerPos.X-3, playerPos.Y-40, 1, 1, 1, 1)
-		Isaac.RenderText("Range <", playerPos.X-60, playerPos.Y-24, 1, 1, 1, 1)
-		Isaac.RenderText("> Speed", playerPos.X+18, playerPos.Y-24, 1, 1, 1, 1)
-		Isaac.RenderText("v", playerPos.X-3, playerPos.Y, 1, 1, 1, 1)
-		Isaac.RenderText("Luck", playerPos.X-12, playerPos.Y+12, 1, 1, 1, 1)
-	end
-	if statUpString ~= nil then
-		local currFrame = Game():GetFrameCount()
-		if currFrame < statUpFrame + 90 then
-			local playerPos = Game():GetRoom():WorldToScreenPosition(player.Position)
-			Isaac.RenderText(statUpString, playerPos.X+18, playerPos.Y-40, 1, 1, 1, 1-((currFrame-statUpFrame)/90))
-		else
-			statUpString = nil
+	for playerNum=1,Game():GetNumPlayers() do
+		if usingItem[playerNum] and GameState.statPriorityValue > 0 then
+			local playerPos = Game():GetRoom():WorldToScreenPosition(players[playerNum].Position)
+			Isaac.RenderText("Damage", playerPos.X-18, playerPos.Y-52, 1, 1, 1, 1)
+			Isaac.RenderText("^", playerPos.X-3, playerPos.Y-40, 1, 1, 1, 1)
+			Isaac.RenderText("Range <", playerPos.X-60, playerPos.Y-24, 1, 1, 1, 1)
+			Isaac.RenderText("> Speed", playerPos.X+18, playerPos.Y-24, 1, 1, 1, 1)
+			Isaac.RenderText("v", playerPos.X-3, playerPos.Y, 1, 1, 1, 1)
+			Isaac.RenderText("Luck", playerPos.X-12, playerPos.Y+12, 1, 1, 1, 1)
+		end
+		if statUpString[playerNum] ~= nil then
+			local currFrame = Game():GetFrameCount()
+			if currFrame < statUpFrame[playerNum] + 90 then
+				local playerPos = Game():GetRoom():WorldToScreenPosition(players[playerNum].Position)
+				Isaac.RenderText(statUpString[playerNum], playerPos.X+18, playerPos.Y-40, 1, 1, 1, 1-((currFrame-statUpFrame[playerNum])/90))
+			else
+				statUpString[playerNum] = nil
+			end
 		end
 	end
 end
 
 function SelfHelpBook:onUpdate()
-	if player == nil then
-		player = Isaac.GetPlayer(0)
+	if players[playerNum] == nil then
+		players = getPlayers()
 	end
-	if usingItem then
-		local num
-		local otherNums
-		if GameState.statPriorityValue > 0 then
-			for controllerId=0,1 do
-				if Input.IsActionPressed(ButtonAction.ACTION_SHOOTUP, controllerId) then
-					num, otherNums = SelfHelpBook:setNums(0)
-					break
+	for playerNum=1,Game():GetNumPlayers() do
+		if usingItem[playerNum] then
+			local num
+			local otherNums
+			if GameState.statPriorityValue > 0 then
+				-- local currPlayerIsEsau = 0
+				-- if players[playerNum]:GetPlayerType()==20 then
+				-- 	currPlayerIsEsau = 1
+				-- end
+				for controllerId=0,1 do
+					if Input.IsActionPressed(ButtonAction.ACTION_SHOOTUP, controllerId) then
+						num, otherNums = SelfHelpBook:setNums(0)
+					elseif Input.IsActionPressed(ButtonAction.ACTION_SHOOTLEFT, controllerId) then
+						num, otherNums = SelfHelpBook:setNums(1)
+					elseif Input.IsActionPressed(ButtonAction.ACTION_SHOOTRIGHT, controllerId) then
+						num, otherNums = SelfHelpBook:setNums(2)
+					elseif Input.IsActionPressed(ButtonAction.ACTION_SHOOTDOWN, controllerId) then
+						num, otherNums = SelfHelpBook:setNums(3)
+					end
 				end
-				if Input.IsActionPressed(ButtonAction.ACTION_SHOOTLEFT, controllerId) then
-					num, otherNums = SelfHelpBook:setNums(1)
-					break
-				end
-				if Input.IsActionPressed(ButtonAction.ACTION_SHOOTRIGHT, controllerId) then
-					num, otherNums = SelfHelpBook:setNums(2)
-					break
-				end
-				if Input.IsActionPressed(ButtonAction.ACTION_SHOOTDOWN, controllerId) then
-					num, otherNums = SelfHelpBook:setNums(3)
-					break
-				end
-			end
-		elseif GameState.statPriorityValue == 0 then
-			num, otherNums = SelfHelpBook:setNums(math.random(4))
-		else
-			usingItem = false
-		end
-		if num ~= nil then
-			-- 50% chance that the chosen stat will increase, 12.5% chance for each other stat
-			if GameState.statPriorityValue == 2 or math.random(2) == 1 then
-				SelfHelpBook:statUp(num)
-			elseif GameState.canBoostHealth == true then
-				SelfHelpBook:statUp(otherNums[math.random(4)])
+			elseif GameState.statPriorityValue == 0 then
+				num, otherNums = SelfHelpBook:setNums(math.random(4))
 			else
-				SelfHelpBook:statUp(otherNums[math.random(3)])
+				usingItem[playerNum] = false
 			end
-			if player:GetActiveItem() ~= CollectibleType.COLLECTIBLE_VOID then
-				player:AnimateHappy()
-			end
-			SFXManager():Play(SoundEffect.SOUND_POWERUP_SPEWER, 1, 0, false, 1)
-			-- usingItemStart = false
-			usingItem = false
-			-- player:DischargeActiveItem()
-		end
-	end
-	-- Bookworm transformation (ignore if Transformation API is enabled)
-	if TransformationAPI == nil and not GameState.transformed then
-		for i=1,#books do
-			if player:GetActiveItem() == books[i] then
-				GameState.collectedBooks[books[i]] = true
-				GameState.highestID = math.max(GameState.highestID, books[i])
-			end
-		end
-		local count = 0
-		for _, j in pairs(GameState.collectedBooks) do
-			if j == true then
-				count = count + 1
+			if num ~= nil then
+				-- 50% chance that the chosen stat will increase, 12.5% chance for each other stat
+				if GameState.statPriorityValue == 2 or math.random(2) == 1 then
+					SelfHelpBook:statUp(num)
+				elseif GameState.canBoostHealth == true then
+					SelfHelpBook:statUp(otherNums[math.random(4)])
+				else
+					SelfHelpBook:statUp(otherNums[math.random(3)])
+				end
+				if players[playerNum]:GetActiveItem() ~= CollectibleType.COLLECTIBLE_VOID then
+					players[playerNum]:AnimateHappy()
+				end
+				SFXManager():Play(SoundEffect.SOUND_POWERUP_SPEWER, 1, 0, false, 1)
+				usingItem[playerNum] = false
 			end
 		end
-		local numTransformers = player:GetCollectibleNum(SelfHelpBook.COLLECTIBLE_TRANSFORMER)
-		if SelfHelpBook.COLLECTIBLE_TRANSFORMER == -1 then
-			numTransformers = 0
-		end
-		if count >= 3 or (SelfHelpBook.COLLECTIBLE_TRANSFORMER ~= -1 and count + numTransformers >= 3) then
-			if GameState.collectedBooks[SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK] ~= nil then
-				for i=1,(1+numTransformers) do
-					for i=1,#books do
-						if GameState.collectedBooks[books[i]] ~= true then
-							local currItem = player:GetActiveItem()
-							local currCharge = player:GetActiveCharge() + player:GetBatteryCharge()
-							player:RemoveCollectible(currItem)
-							player:AddCollectible(books[i], 0, false)
-							GameState.collectedBooks[books[i]] = true
-							player:RemoveCollectible(books[i])
-							player:AddCollectible(currItem, currCharge, false)
-							numTransformers = numTransformers - 1
-							break
+		-- Bookworm transformation (ignore if Transformation API is enabled)
+		if TransformationAPI == nil and not GameState.transformed[playerNum] then
+			for i=1,#books do
+				if players[playerNum]:GetActiveItem() == books[i] then
+					GameState.collectedBooks[playerNum][books[i]] = true
+					GameState.highestID[playerNum] = math.max(GameState.highestID[playerNum], books[i])
+				end
+			end
+			local count = 0
+			for _, j in pairs(GameState.collectedBooks[playerNum]) do
+				if j == true then
+					count = count + 1
+				end
+			end
+			local numTransformers = 0
+			if SelfHelpBook.COLLECTIBLE_TRANSFORMER ~= nil and SelfHelpBook.COLLECTIBLE_TRANSFORMER ~= -1 then
+				numTransformers = players[playerNum]:GetCollectibleNum(SelfHelpBook.COLLECTIBLE_TRANSFORMER)
+			end
+			if count >= 3 or (SelfHelpBook.COLLECTIBLE_TRANSFORMER ~= nil and SelfHelpBook.COLLECTIBLE_TRANSFORMER ~= -1 and count + numTransformers >= 3) then
+				if GameState.collectedBooks[playerNum][SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK] ~= nil then
+					for i=1,(1+numTransformers) do
+						for i=1,#books do
+							if GameState.collectedBooks[playerNum][books[i]] ~= true then
+								local currItem = players[playerNum]:GetActiveItem()
+								local currCharge = players[playerNum]:GetActiveCharge() + players[playerNum]:GetBatteryCharge()
+								players[playerNum]:RemoveCollectible(currItem)
+								players[playerNum]:AddCollectible(books[i], 0, false)
+								GameState.collectedBooks[playerNum][books[i]] = true
+								players[playerNum]:RemoveCollectible(books[i])
+								players[playerNum]:AddCollectible(currItem, currCharge, false)
+								numTransformers = numTransformers - 1
+								break
+							end
 						end
 					end
 				end
+				GameState.transformed[playerNum] = true
 			end
-			GameState.transformed = true
 		end
 	end
 end
@@ -365,88 +343,137 @@ function SelfHelpBook:setNums(tempNum)
 end
 
 function SelfHelpBook:statUp(num)
-	local j = 1
-	if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
-		j = 2
+	-- playerNum has already been set
+	local numUses = 1
+	if players[playerNum]:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+		numUses = 2
 	end
-	for i=1,j do
+	for i=1,numUses do
 		if num == 0 then
-			GameState.numDamageUp = GameState.numDamageUp + 1
-			player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-			statUpString = "Damage up"
+			GameState.numDamageUp[playerNum] = GameState.numDamageUp[playerNum] + 1
+			players[playerNum]:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+			statUpString[playerNum] = "Damage up"
 		end
 		if num == 1 then
-			GameState.numRangeUp = GameState.numRangeUp + 1
-			player:AddCacheFlags(CacheFlag.CACHE_RANGE)
-			statUpString = "Range up"
+			GameState.numRangeUp[playerNum] = GameState.numRangeUp[playerNum] + 1
+			players[playerNum]:AddCacheFlags(CacheFlag.CACHE_RANGE)
+			statUpString[playerNum] = "Range up"
 		end
 		if num == 2 then
-			GameState.numSpeedUp = GameState.numSpeedUp + 1
-			player:AddCacheFlags(CacheFlag.CACHE_SPEED)
-			statUpString = "Speed up"
+			GameState.numSpeedUp[playerNum] = GameState.numSpeedUp[playerNum] + 1
+			players[playerNum]:AddCacheFlags(CacheFlag.CACHE_SPEED)
+			statUpString[playerNum] = "Speed up"
 		end
 		if num == 3 then
-			GameState.numLuckUp = GameState.numLuckUp + 1
-			player:AddCacheFlags(CacheFlag.CACHE_LUCK)
-			statUpString = "Luck up"
+			GameState.numLuckUp[playerNum] = GameState.numLuckUp[playerNum] + 1
+			players[playerNum]:AddCacheFlags(CacheFlag.CACHE_LUCK)
+			statUpString[playerNum] = "Luck up"
 		end
 		if num == 4 then
-			player:AddMaxHearts(2, true)
-			statUpString = "Health up"
+			players[playerNum]:AddMaxHearts(2, true)
+			statUpString[playerNum] = "Health up"
 		end
 	end
-	player:EvaluateItems()
-	statUpFrame = Game():GetFrameCount()
+	players[playerNum]:EvaluateItems()
+	statUpFrame[playerNum] = Game():GetFrameCount()
 end
 
-function SelfHelpBook:useItem()
-	if not usingItem then
+function SelfHelpBook:useItem(collectibleType, rng, player, flags, activeSlot, customVarData)
+	playerNum = getCurrPlayerNum(player)
+	if not usingItem[playerNum] then
 		if GameState.statPriorityValue > 0 and player:GetActiveItem() ~= CollectibleType.COLLECTIBLE_VOID then
 			player:AnimateCollectible(SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK, "LiftItem", "Idle")
 		end
-		-- usingItemStart = true
-		usingItem = true
-		oldCharge = player:GetActiveCharge()
-		oldBatteryCharge = player:GetBatteryCharge()
+		usingItem[playerNum] = true
+		oldCharge[playerNum] = player:GetActiveCharge()
+		oldBatteryCharge[playerNum] = player:GetBatteryCharge()
 	end
 end
 
 function SelfHelpBook:cacheUpdate(player, flag)
+	if players[1] == nil then
+		players = getPlayers()
+	end
+	-- if playerTypes[1] == nil then
+	-- 	playerTypes = getPlayerTypes()
+	-- end
 	if GameState.numDamageUp == nil then
 		initializeAllVars()
 	end
-	if flag == CacheFlag.CACHE_DAMAGE then
-        player.Damage = player.Damage + (GameState.numDamageUp * damageUpVal * GameState.statBoostValue)
-    end
-    if flag == CacheFlag.CACHE_RANGE then
-		player.TearHeight = player.TearHeight - (GameState.numRangeUp * rangeUpVal * GameState.statBoostValue)
-		player.TearFallingSpeed = player.TearFallingSpeed + (GameState.numRangeUp * rangeUpVal/9 * GameState.statBoostValue)
-    end
-    if flag == CacheFlag.CACHE_SPEED then
-        player.MoveSpeed = player.MoveSpeed + (GameState.numSpeedUp * speedUpVal * GameState.statBoostValue)
-    end
-	if flag == CacheFlag.CACHE_LUCK then
-        player.Luck = player.Luck + (GameState.numLuckUp * luckUpVal * GameState.statBoostValue)
-    end
+	playerNum = getCurrPlayerNum(player)
+	if playerNum ~= -1 then
+		if flag == CacheFlag.CACHE_DAMAGE then
+			player.Damage = player.Damage + (GameState.numDamageUp[playerNum] * damageUpVal * GameState.statBoostValue)
+		end
+		if flag == CacheFlag.CACHE_RANGE then
+			player.TearHeight = player.TearHeight - (GameState.numRangeUp[playerNum] * rangeUpVal * GameState.statBoostValue)
+			player.TearFallingSpeed = player.TearFallingSpeed + (GameState.numRangeUp[playerNum] * rangeUpVal/9 * GameState.statBoostValue)
+		end
+		if flag == CacheFlag.CACHE_SPEED then
+			player.MoveSpeed = player.MoveSpeed + (GameState.numSpeedUp[playerNum] * speedUpVal * GameState.statBoostValue)
+		end
+		if flag == CacheFlag.CACHE_LUCK then
+			player.Luck = player.Luck + (GameState.numLuckUp[playerNum] * luckUpVal * GameState.statBoostValue)
+		end
+	end
 end
 
 function SelfHelpBook:onHit(target,damageAmount,damageFlag,damageSource,numCountdownFrames)
 	if target and target.Type == EntityType.ENTITY_PLAYER then
-		SelfHelpBook:refreshItemCharge()
+		SelfHelpBook:refreshItemChargeOnePlayer(target.ToPlayer())
 	end
 end
 
-function SelfHelpBook:refreshItemCharge()
-	if usingItem and player:GetActiveItem() == SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK then
-		player:SetActiveCharge(oldCharge + oldBatteryCharge)
+function SelfHelpBook:refreshItemChargeOnePlayer(player)
+	playerNum = getCurrPlayerNum(player)
+	if usingItem[playerNum] and players[playerNum]:GetActiveItem() == SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK then
+		players[playerNum]:SetActiveCharge(oldCharge[playerNum] + oldBatteryCharge[playerNum])
 	end
-	usingItem = false
+	usingItem[playerNum] = false
+end
+
+function SelfHelpBook:refreshItemChargeAllPlayers()
+	for playerNum=1,Game():GetNumPlayers() do
+		if usingItem[playerNum] and players[playerNum]:GetActiveItem() == SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK then
+			players[playerNum]:SetActiveCharge(oldCharge[playerNum] + oldBatteryCharge[playerNum])
+		end
+		usingItem[playerNum] = false
+	end
+end
+
+function getPlayers()
+	local p = {}
+	for i = 0, Game():GetNumPlayers() do
+		if Isaac.GetPlayer(i) ~= nil then
+			table.insert(p, Isaac.GetPlayer(i))
+		end
+	end
+	return p
+end
+
+-- function getPlayerTypes()
+-- 	local pt = {}
+-- 	for i = 0, Game():GetNumPlayers() do
+-- 		if Isaac.GetPlayer(i) ~= nil then
+-- 			table.insert(pt, Isaac.GetPlayer(i):GetPlayerType())
+-- 		end
+-- 	end
+-- 	return pt
+-- end
+
+function getCurrPlayerNum(player)
+	for i = 1, #players do
+		if player:GetPlayerType() == players[i]:GetPlayerType() then
+			return i
+		end
+	end
+	return -1
 end
 
 SelfHelpBook:AddCallback(ModCallbacks.MC_POST_RENDER, SelfHelpBook.onRender)
 SelfHelpBook:AddCallback(ModCallbacks.MC_POST_UPDATE, SelfHelpBook.onUpdate)
-SelfHelpBook:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, SelfHelpBook.refreshItemCharge)
-SelfHelpBook:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, SelfHelpBook.refreshItemCharge)
+SelfHelpBook:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, SelfHelpBook.refreshItemChargeAllPlayers)
+SelfHelpBook:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, SelfHelpBook.refreshItemChargeAllPlayers)
 SelfHelpBook:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, SelfHelpBook.cacheUpdate)
 SelfHelpBook:AddCallback(ModCallbacks.MC_USE_ITEM, SelfHelpBook.useItem, SelfHelpBook.COLLECTIBLE_SELF_HELP_BOOK)
 SelfHelpBook:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, SelfHelpBook.onHit)
