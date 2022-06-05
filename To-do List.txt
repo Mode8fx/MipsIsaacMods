@@ -34,7 +34,6 @@ Restraining Order
 
 Self-Help Book
 - "PostPlayerInit" failed
-- Only player 1 can choose which stat to upgrade
 - "Stat up" popup/fade-out is a little buggy in multiplayer if both players have the book and use it around the same time
 
 Shady Cell Phone

@@ -14,7 +14,8 @@ local players = {}
 -- local playerTypes = {}
 local usingItem = {false, false, false, false}
 local damageUpVal = 0.5
-local rangeUpVal = 2.5
+local rangeUpVal_rep = 30 -- Repentance completely changes how Range is modified via API
+local rangeUpVal_abp = 2.5
 local speedUpVal = 0.15
 local luckUpVal = 1
 local oldCharge = {0, 0, 0, 0}
@@ -243,20 +244,18 @@ function SelfHelpBook:onUpdate()
 			local num
 			local otherNums
 			if GameState.statPriorityValue > 0 then
-				-- local currPlayerIsEsau = 0
-				-- if players[playerNum]:GetPlayerType()==20 then
-				-- 	currPlayerIsEsau = 1
-				-- end
-				for controllerId=0,1 do
-					if Input.IsActionPressed(ButtonAction.ACTION_SHOOTUP, controllerId) then
-						num, otherNums = SelfHelpBook:setNums(0)
-					elseif Input.IsActionPressed(ButtonAction.ACTION_SHOOTLEFT, controllerId) then
-						num, otherNums = SelfHelpBook:setNums(1)
-					elseif Input.IsActionPressed(ButtonAction.ACTION_SHOOTRIGHT, controllerId) then
-						num, otherNums = SelfHelpBook:setNums(2)
-					elseif Input.IsActionPressed(ButtonAction.ACTION_SHOOTDOWN, controllerId) then
-						num, otherNums = SelfHelpBook:setNums(3)
-					end
+				local currPlayerIsEsau = 0
+				if players[playerNum]:GetPlayerType()==20 then
+					currPlayerIsEsau = 1
+				end
+				if Input.IsActionPressed(ButtonAction.ACTION_SHOOTUP, playerNum-1-currPlayerIsEsau) then
+					num, otherNums = SelfHelpBook:setNums(0)
+				elseif Input.IsActionPressed(ButtonAction.ACTION_SHOOTLEFT, playerNum-1-currPlayerIsEsau) then
+					num, otherNums = SelfHelpBook:setNums(1)
+				elseif Input.IsActionPressed(ButtonAction.ACTION_SHOOTRIGHT, playerNum-1-currPlayerIsEsau) then
+					num, otherNums = SelfHelpBook:setNums(2)
+				elseif Input.IsActionPressed(ButtonAction.ACTION_SHOOTDOWN, playerNum-1-currPlayerIsEsau) then
+					num, otherNums = SelfHelpBook:setNums(3)
 				end
 			elseif GameState.statPriorityValue == 0 then
 				num, otherNums = SelfHelpBook:setNums(math.random(4))
@@ -406,8 +405,12 @@ function SelfHelpBook:cacheUpdate(player, flag)
 			player.Damage = player.Damage + (GameState.numDamageUp[playerNum] * damageUpVal * GameState.statBoostValue)
 		end
 		if flag == CacheFlag.CACHE_RANGE then
-			player.TearHeight = player.TearHeight - (GameState.numRangeUp[playerNum] * rangeUpVal * GameState.statBoostValue)
-			player.TearFallingSpeed = player.TearFallingSpeed + (GameState.numRangeUp[playerNum] * rangeUpVal/9 * GameState.statBoostValue)
+			if REPENTANCE then
+				player.TearRange = player.TearRange + (GameState.numRangeUp[playerNum] * rangeUpVal_rep * GameState.statBoostValue)
+			else
+				player.TearHeight = player.TearHeight - (GameState.numRangeUp[playerNum] * rangeUpVal_abp * GameState.statBoostValue)
+				player.TearFallingSpeed = player.TearFallingSpeed + (GameState.numRangeUp[playerNum] * rangeUpVal_abp/9 * GameState.statBoostValue)
+			end
 		end
 		if flag == CacheFlag.CACHE_SPEED then
 			player.MoveSpeed = player.MoveSpeed + (GameState.numSpeedUp[playerNum] * speedUpVal * GameState.statBoostValue)
