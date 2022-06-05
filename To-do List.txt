@@ -36,12 +36,6 @@ Spike Shield
 - Spike Shield affects both players only according to whether or not player 1 has it
 - Blocks damage taken from - and functionality of - Mausoleum door; needs to have no effect on this door
 
-Super Appeal
-- "PostUpdate" failed: line 54: attempt to index a nil value (upvalue 'player')
-	- Only does this during the first run after the game is opened
-- If player 1 has Super Appeal, room bonus is lost if either player gets hit
-- Player 2 doesn't get a room bonus at all
-
 Restock+
 - "PostUpdate" failed: line 149: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened

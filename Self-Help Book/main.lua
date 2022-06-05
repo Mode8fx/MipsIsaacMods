@@ -282,8 +282,8 @@ function SelfHelpBook:onUpdate()
 				usingItem[playerNum] = false
 			end
 		end
-		-- Bookworm transformation (ignore if Transformation API is enabled)
-		if TransformationAPI == nil and not GameState.transformed[playerNum] then
+		-- Bookworm transformation (only needed for AB+; ignore if Transformation API is enabled)
+		if (not REPENTANCE) and (TransformationAPI == nil) and (not GameState.transformed[playerNum]) then
 			for i=1,#books do
 				if players[playerNum]:GetActiveItem() == books[i] then
 					GameState.collectedBooks[playerNum][books[i]] = true
@@ -420,7 +420,7 @@ end
 
 function SelfHelpBook:onHit(target,damageAmount,damageFlag,damageSource,numCountdownFrames)
 	if target and target.Type == EntityType.ENTITY_PLAYER then
-		SelfHelpBook:refreshItemChargeOnePlayer(target.ToPlayer())
+		SelfHelpBook:refreshItemChargeOnePlayer(target:ToPlayer())
 	end
 end
 

@@ -6,6 +6,7 @@ local GameState = {}
 local json = require("json")
 
 local players = {}
+local playerNum = 0
 
 function Refund:onStart()
 	if Refund:HasData() then
