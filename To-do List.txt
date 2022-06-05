@@ -32,10 +32,6 @@ Restraining Order
 	- Only does this during the first run after the game is opened
 - Angel room chance increase only works if player 1 gets Restraining Order
 
-Self-Help Book
-- "PostPlayerInit" failed
-- "Stat up" popup/fade-out is a little buggy in multiplayer if both players have the book and use it around the same time
-
 Shady Cell Phone
 - [UNTESTED]
 

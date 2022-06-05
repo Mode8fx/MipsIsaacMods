@@ -42,7 +42,11 @@ local books = {
 }
 
 function SelfHelpBook:onStart()
-	GameState = json.decode(SelfHelpBook:LoadData())
+	if SelfHelpBook:HasData() then
+		GameState = json.decode(SelfHelpBook:LoadData())
+	else
+		GameState = {}
+	end
 
 	-- External Item Description
 	if not __eidItemTransformations then
@@ -258,7 +262,7 @@ function SelfHelpBook:onUpdate()
 					num, otherNums = SelfHelpBook:setNums(3)
 				end
 			elseif GameState.statPriorityValue == 0 then
-				num, otherNums = SelfHelpBook:setNums(math.random(4))
+				num, otherNums = SelfHelpBook:setNums(math.random(0,3))
 			else
 				usingItem[playerNum] = false
 			end
@@ -324,16 +328,13 @@ function SelfHelpBook:setNums(tempNum)
 	if tempNum == 0 then
 		num = 0
 		otherNums = {1, 2, 3, 4}
-	end
-	if tempNum == 1 then
+	elseif tempNum == 1 then
 		num = 1
 		otherNums = {0, 2, 3, 4}
-	end
-	if tempNum == 2 then
+	elseif tempNum == 2 then
 		num = 2
 		otherNums = {0, 1, 3, 4}
-	end
-	if tempNum == 3 then
+	elseif tempNum == 3 then
 		num = 3
 		otherNums = {0, 1, 2, 4}
 	end
@@ -352,29 +353,25 @@ function SelfHelpBook:statUp(num)
 			GameState.numDamageUp[playerNum] = GameState.numDamageUp[playerNum] + 1
 			players[playerNum]:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
 			statUpString[playerNum] = "Damage up"
-		end
-		if num == 1 then
+		elseif num == 1 then
 			GameState.numRangeUp[playerNum] = GameState.numRangeUp[playerNum] + 1
 			players[playerNum]:AddCacheFlags(CacheFlag.CACHE_RANGE)
 			statUpString[playerNum] = "Range up"
-		end
-		if num == 2 then
+		elseif num == 2 then
 			GameState.numSpeedUp[playerNum] = GameState.numSpeedUp[playerNum] + 1
 			players[playerNum]:AddCacheFlags(CacheFlag.CACHE_SPEED)
 			statUpString[playerNum] = "Speed up"
-		end
-		if num == 3 then
+		elseif num == 3 then
 			GameState.numLuckUp[playerNum] = GameState.numLuckUp[playerNum] + 1
 			players[playerNum]:AddCacheFlags(CacheFlag.CACHE_LUCK)
 			statUpString[playerNum] = "Luck up"
-		end
-		if num == 4 then
+		elseif num == 4 then
 			players[playerNum]:AddMaxHearts(2, true)
 			statUpString[playerNum] = "Health up"
 		end
 	end
-	players[playerNum]:EvaluateItems()
 	statUpFrame[playerNum] = Game():GetFrameCount()
+	players[playerNum]:EvaluateItems()
 end
 
 function SelfHelpBook:useItem(collectibleType, rng, player, flags, activeSlot, customVarData)
