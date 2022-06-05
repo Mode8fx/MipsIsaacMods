@@ -6,43 +6,44 @@ All mods are currently available on the Steam Workshop. In the case of music mod
 ## List of Mods
 
 ### Modpacks
-#### AB+ only, Repentance support not yet confirmed
+#### AB+ only, Repentance support coming soon
 - Paper Isaac: The Thousand Year Trapdoor
 
 ### Items
-#### AB+ only, Repentance support not yet confirmed
+#### AB+ only, Repentance support coming soon
 - Bump Attack
 - Chill Out
 - Close Call
-- Dark Restock
 - Double Pain
 - P-Up, D-Down
 - Refund
-- Restraining Order
 - Return Postage
 - Self-Help Book
-- Shady Cell Phone
-- Shady Pass
 - Slow Go
 - Spike Shield
 - Super Appeal
+#### AB+ only, Repentance support not yet confirmed
+- Dark Restock
+- Restraining Order
+- Shady Cell Phone
+- Shady Pass
 
 ### Changes to Existing Items
 #### AB+ only, Repentance support not yet confirmed
 - Restock+
 
 ### Trinkets
-#### AB+ only, Repentance support not yet confirmed
+#### AB+ only, Repentance support coming soon
 - Fire Shield
 - Inheritance
 - White Halo
 
 ### Cards
-#### AB+ only, Repentance support not yet confirmed
+#### AB+ only, Repentance support coming soon
 - Donation Card
 
 ### Transformations
-#### AB+ only, Repentance support not yet confirmed
+#### AB+ only, Repentance support coming soon
 - Paper Isaac (Transformation)
 
 ### Soundtracks
