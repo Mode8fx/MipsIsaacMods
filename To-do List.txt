@@ -11,7 +11,6 @@ Chill Out
 
 Close Call
 - Close Call cannot prevent losing Holy Mantle
-- Close Call affects both players only according to player 1's health and # of badges
 
 Dark Restock
 - "PostUpdate" failed: line 106: attempt to index a nil value (upvalue 'player')
