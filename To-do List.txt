@@ -43,10 +43,6 @@ Restock+
 - Does not work if A Pound of Flesh is active (should restock devil room item)
 - Tainted Jacob's ghost form can get infinite items
 
-Inheritance
-- "PostPlayerInit" failed
-- Only works for player 1; player 2 needs to have an Inheritance that spawns in a different position
-
 Paper Isaac (Transformation)
 - "PostUpdate" failed: line 246: attempt to index a nil value (upvalue 'p')
 	- Only does this during the first run after the game is opened
