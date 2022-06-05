@@ -21,12 +21,6 @@ Dark Restock
 - Does not work if A Pound of Flesh is active (should restock devil room item)
 - Tainted Jacob's ghost form can get infinite items
 
-Refund
-- "PostPlayerInit" failed; this prevents save data from loading properly after closing and re-opening the game
-- "PostUseItem" failed: line 80: attempt to index a nil value (upvalue 'player')
-	- Only does this during the first run after the game is opened
-- Both players (whichever one uses an item) get coins according to player 1's item's charge, and if and only if player 1 has Refund
-
 Restraining Order
 - "PostUpdate" failed: line 136: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
