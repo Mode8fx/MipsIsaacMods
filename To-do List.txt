@@ -9,9 +9,6 @@ Chill Out
 	- Only does this during the first run after the game is opened
 - If player 1 has Chill Out, the ! appears over player 1 but affects both players; Chill Out is useless to other players
 
-Close Call
-- Close Call cannot prevent losing Holy Mantle
-
 Dark Restock
 - "PostUpdate" failed: line 106: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
@@ -30,10 +27,6 @@ Shady Cell Phone
 
 Shady Pass
 - [UNTESTED]
-
-Spike Shield
-- Spike Shield affects both players only according to whether or not player 1 has it
-- Blocks damage taken from - and functionality of - Mausoleum door; needs to have no effect on this door
 
 Restock+
 - "PostUpdate" failed: line 149: attempt to index a nil value (upvalue 'player')
@@ -73,3 +66,13 @@ Add quality for the following items:
 - Slow Go
 - Spike Shield
 - Super Appeal
+
+
+
+Unfixable(?) Bugs:
+
+Close Call
+- Close Call cannot prevent losing Holy Mantle (Holy Mantle activates before the MC_ENTITY_TAKE_DMG callback is attempted)
+
+Spike Shield
+- Spiked rocks pierce Spike Shield (I don't think there's a way to uniquely distinguish this entity through the damageSource)

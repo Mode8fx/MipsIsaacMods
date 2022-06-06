@@ -4,11 +4,9 @@ SpikeShield.COLLECTIBLE_SPIKE_SHIELD = Isaac.GetItemIdByName("Spike Shield")
 
 SoundEffect.SOUND_SPIKE_SHIELD = Isaac.GetSoundIdByName("spike")
 
-local player
 local currFrame = 0
 
 function SpikeShield:onStart()
-	player = Isaac.GetPlayer(0)
 	currFrame = 0
 
 	-- External Item Description
@@ -32,6 +30,13 @@ function hasBit(var, bit)
 	return var % (bit + bit) >= bit
 end
 
+function damageIsFromMausoleumDoor(damageFlag)
+	local currStage = Game():GetLevel():GetStage()
+	return (hasBit(damageFlag, DamageFlag.DAMAGE_SPIKES)
+		and (currStage == LevelStage.STAGE2_2 or currStage == LevelStage.STAGE3_1 or currStage == LevelStage.STAGE2_1)
+		and Game():GetRoom():GetType() == RoomType.ROOM_BOSS and Game():GetRoom():IsClear())
+end
+
 local ss_lastDamageFrame = 0
 
 function SpikeShield:ss_onStart()
@@ -39,13 +44,19 @@ function SpikeShield:ss_onStart()
 end
 
 function SpikeShield:ss_onHit(target,damageAmount,damageFlag,damageSource,numCountdownFrames)
-	if player:HasCollectible(SpikeShield.COLLECTIBLE_SPIKE_SHIELD) then
-		if (hasBit(damageFlag, DamageFlag.DAMAGE_SPIKES) and Game():GetRoom():GetType() ~= RoomType.ROOM_SACRIFICE) or hasBit(damageFlag, DamageFlag.DAMAGE_CURSED_DOOR) or hasBit(damageFlag, DamageFlag.DAMAGE_CHEST) or damageSource.Type == 44 or damageSource.Type == 218 then
-			if currFrame > ss_lastDamageFrame + 1 then
-				SFXManager():Play(SoundEffect.SOUND_SPIKE_SHIELD, 1, 0, false, 1)
+	if target and target.Type == EntityType.ENTITY_PLAYER then
+		if target:ToPlayer():HasCollectible(SpikeShield.COLLECTIBLE_SPIKE_SHIELD) then
+			if ((hasBit(damageFlag, DamageFlag.DAMAGE_SPIKES) and Game():GetRoom():GetType() ~= RoomType.ROOM_SACRIFICE)
+				or hasBit(damageFlag, DamageFlag.DAMAGE_CURSED_DOOR)
+				or hasBit(damageFlag, DamageFlag.DAMAGE_CHEST)
+				or damageSource.Type == 44 or damageSource.Type == 218 or damageSource.Type == 877 or damageSource.Type == 893 or damageSource.Type == 852 or damageSource.Type == 915)
+				and not damageIsFromMausoleumDoor(damageFlag) then
+				if currFrame > ss_lastDamageFrame + 1 then
+					SFXManager():Play(SoundEffect.SOUND_SPIKE_SHIELD, 1, 0, false, 1)
+				end
+				ss_lastDamageFrame = currFrame
+				return false
 			end
-			ss_lastDamageFrame = currFrame
-			return false
 		end
 	end
 end
