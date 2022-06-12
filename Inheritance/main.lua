@@ -31,8 +31,8 @@ Inheritance:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, Inheritance.onExit)
 Inheritance:AddCallback(ModCallbacks.MC_POST_GAME_END, Inheritance.onExit)
 
 function playersHaveCollectible(collectibleType)
-	for playerNum=1,Game():GetNumPlayers() do
-		if Isaac.GetPlayer(playerNum-1):HasCollectible(collectibleType) then
+	for playerNum=0,Game():GetNumPlayers()-1 do
+		if Isaac.GetPlayer(playerNum):HasCollectible(collectibleType) then
 			return true
 		end
 	end

@@ -1,8 +1,3 @@
-Bump Attack
-- Bumping into a bumpable enemy still takes away Holy Mantle, etc.
-- Only works for player 1
-- Affects all players equally (probably keep this behavior? but refine it)
-
 Dark Restock
 - "PostUpdate" failed: line 106: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
@@ -15,12 +10,6 @@ Restraining Order
 - "PostUpdate" failed: line 136: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
 - Angel room chance increase only works if player 1 gets Restraining Order
-
-Shady Cell Phone
-- [UNTESTED]
-
-Shady Pass
-- [UNTESTED]
 
 Restock+
 - "PostUpdate" failed: line 149: attempt to index a nil value (upvalue 'player')
@@ -65,8 +54,15 @@ Add quality for the following items:
 
 Unfixable(?) Bugs:
 
-Chill Out, Close Call
+Bump Attack, Chill Out, Close Call
 - These items cannot prevent losing Holy Mantle (Holy Mantle activates before the MC_ENTITY_TAKE_DMG callback is attempted)
 
 Spike Shield
 - Spiked rocks pierce Spike Shield (I don't think there's a way to uniquely distinguish this entity through the damageSource since it's a GridEntity)
+
+
+
+Other Known Bugs:
+
+Shady Cell Phone, Shady Pass
+- These items are untested and probably don't work at all in Repentance; I may come back and test/fix them in the future, but they're the first mods I ever made, the code is messy, and I suspect they'll be some of the most difficult to fix.
