@@ -75,6 +75,9 @@ function PaperTransformation:onStart()
 		choseSG = false
 		choseSS = false
 		choseSA = false
+	else
+		inChallengeSelection1 = false
+		inChallengeSelection2 = false
 	end
 end
 
