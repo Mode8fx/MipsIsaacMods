@@ -10,6 +10,7 @@ Restraining Order
 - "PostUpdate" failed: line 136: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
 - Angel room chance increase only works if player 1 gets Restraining Order
+- The three soul hearts upon picking up the item always go to player 1
 
 Restock+
 - "PostUpdate" failed: line 149: attempt to index a nil value (upvalue 'player')
@@ -17,12 +18,6 @@ Restock+
 - Only works if player 1 has Restock
 - Does not work if A Pound of Flesh is active (should restock devil room item)
 - Tainted Jacob's ghost form can get infinite items
-
-Paper Isaac (Transformation)
-- "PostUpdate" failed: line 246: attempt to index a nil value (upvalue 'p')
-	- Only does this during the first run after the game is opened
-- If player 1 gets three Paper items, player 1 gets the costume and stat boost, but all players get the transformation
-- If any other player gets three Paper items, nothing happens
 
 Transformation API
 - [UNTESTED]

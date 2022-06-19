@@ -22,14 +22,19 @@ local choseRP = false
 local choseSG = false
 local choseSS = false
 local choseSA = false
+local alreadyHit = false
 
-local player
+local players = {}
 local currFrame = 0
 
 function PaperTransformation:onStart()
-	GameState = json.decode(PaperTransformation:LoadData())
+	if PaperTransformation:HasData() then
+		GameState = json.decode(PaperTransformation:LoadData())
+	else
+		GameState = {}
+	end
 
-	player = Isaac.GetPlayer(0)
+	players = getPlayers()
 	currFrame = Game():GetFrameCount()
 	PaperTransformation.COLLECTIBLE_BUMP_ATTACK = Isaac.GetItemIdByName("Bump Attack")
 	PaperTransformation.COLLECTIBLE_CHILL_OUT = Isaac.GetItemIdByName("Chill Out")
@@ -181,10 +186,10 @@ end
 function custAddItem(itemID, isTrinket)
 	if itemID ~= -1 then
 		if not isTrinket then
-			player:AddCollectible(itemID, 0, false)
+			players[1]:AddCollectible(itemID, 0, false)
 			Game():GetItemPool():RemoveCollectible(itemID)
 		else
-			player:AddTrinket(itemID)
+			players[1]:AddTrinket(itemID)
 			Game():GetItemPool():RemoveTrinket(itemID)
 		end
 	end
@@ -199,45 +204,47 @@ PaperTransformation:AddCallback(ModCallbacks.MC_POST_RENDER, PaperTransformation
 
 function PaperTransformation:pt_onStart()
 	if currFrame == 0 then
-		GameState.pt_hadBA = 0
-		GameState.pt_hadCO = 0
-		GameState.pt_hadCC = 0
-		GameState.pt_hadDP = 0
-		GameState.pt_hadPUDD = 0
-		GameState.pt_hadR = 0
-		GameState.pt_hadRP = 0
-		GameState.pt_hadSG = 0
-		GameState.pt_hadSS = 0
-		GameState.pt_hadSA = 0
-		GameState.pt_hadT = 0
-		GameState.pt_transformed = false
+		GameState.pt_hadBA = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadCO = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadCC = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadDP = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadPUDD = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadR = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadRP = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadSG = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadSS = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadSA = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_hadT = {0, 0, 0, 0, 0, 0, 0, 0}
+		GameState.pt_transformed = {false, false, false, false, false, false, false, false}
 	end
 end
 
 function PaperTransformation:pt_onUpdate()
-	if not GameState.pt_transformed then
-		GameState.pt_hadBA = checkItemForTF(PaperTransformation.COLLECTIBLE_BUMP_ATTACK, GameState.pt_hadBA, player)
-		GameState.pt_hadCO = checkItemForTF(PaperTransformation.COLLECTIBLE_CHILL_OUT, GameState.pt_hadCO, player)
-		GameState.pt_hadCC = checkItemForTF(PaperTransformation.COLLECTIBLE_CLOSE_CALL, GameState.pt_hadCC, player)
-		GameState.pt_hadDP = checkItemForTF(PaperTransformation.COLLECTIBLE_DOUBLE_PAIN, GameState.pt_hadDP, player)
-		GameState.pt_hadPUDD = checkItemForTF(PaperTransformation.COLLECTIBLE_P_UP_D_DOWN, GameState.pt_hadPUDD, player)
-		GameState.pt_hadR = checkItemForTF(PaperTransformation.COLLECTIBLE_REFUND, GameState.pt_hadR, player)
-		GameState.pt_hadRP = checkItemForTF(PaperTransformation.COLLECTIBLE_RETURN_POSTAGE, GameState.pt_hadRP, player)
-		GameState.pt_hadSG = checkItemForTF(PaperTransformation.COLLECTIBLE_SLOW_GO, GameState.pt_hadSG, player)
-		GameState.pt_hadSS = checkItemForTF(PaperTransformation.COLLECTIBLE_SPIKE_SHIELD, GameState.pt_hadSS, player)
-		GameState.pt_hadSA = checkItemForTF(PaperTransformation.COLLECTIBLE_SUPER_APPEAL, GameState.pt_hadSA, player)
-		if PaperTransformation.COLLECTIBLE_TRANSFORMER ~= -1 and player:HasCollectible(PaperTransformation.COLLECTIBLE_TRANSFORMER) then
-			GameState.pt_hadT = math.max(GameState.pt_hadT, player:GetCollectibleNum(PaperTransformation.COLLECTIBLE_TRANSFORMER))
-		end
+	for i=1, #players do
+		if not GameState.pt_transformed[i] then
+			GameState.pt_hadBA[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_BUMP_ATTACK, GameState.pt_hadBA[i], players[i])
+			GameState.pt_hadCO[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_CHILL_OUT, GameState.pt_hadCO[i], players[i])
+			GameState.pt_hadCC[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_CLOSE_CALL, GameState.pt_hadCC[i], players[i])
+			GameState.pt_hadDP[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_DOUBLE_PAIN, GameState.pt_hadDP[i], players[i])
+			GameState.pt_hadPUDD[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_P_UP_D_DOWN, GameState.pt_hadPUDD[i], players[i])
+			GameState.pt_hadR[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_REFUND, GameState.pt_hadR[i], players[i])
+			GameState.pt_hadRP[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_RETURN_POSTAGE, GameState.pt_hadRP[i], players[i])
+			GameState.pt_hadSG[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_SLOW_GO, GameState.pt_hadSG[i], players[i])
+			GameState.pt_hadSS[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_SPIKE_SHIELD, GameState.pt_hadSS[i], players[i])
+			GameState.pt_hadSA[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_SUPER_APPEAL, GameState.pt_hadSA[i], players[i])
+			if PaperTransformation.COLLECTIBLE_TRANSFORMER ~= -1 and players[i]:HasCollectible(PaperTransformation.COLLECTIBLE_TRANSFORMER) then
+				GameState.pt_hadT[i] = math.max(GameState.pt_hadT[i], players[i]:GetCollectibleNum(PaperTransformation.COLLECTIBLE_TRANSFORMER))
+			end
 
-		if GameState.pt_hadBA + GameState.pt_hadCO + GameState.pt_hadCC + GameState.pt_hadDP + GameState.pt_hadPUDD + GameState.pt_hadR + GameState.pt_hadRP + GameState.pt_hadSG + GameState.pt_hadSS + GameState.pt_hadSA + GameState.pt_hadT >= 3 then
-			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, player.Position, Vector(0,0), nil)
-			SFXManager():Play(SoundEffect.SOUND_POWERUP_SPEWER, 1, 0, false, 1)
-			player:AddNullCostume(PaperTransformation.COSTUME_PAPER_ISAAC)
-			GameState.pt_transformed = true
-			player:AddCacheFlags(CacheFlag.CACHE_SHOTSPEED)
-			player:AddCacheFlags(CacheFlag.CACHE_TEARCOLOR)
-			player:EvaluateItems()
+			if GameState.pt_hadBA[i] + GameState.pt_hadCO[i] + GameState.pt_hadCC[i] + GameState.pt_hadDP[i] + GameState.pt_hadPUDD[i] + GameState.pt_hadR[i] + GameState.pt_hadRP[i] + GameState.pt_hadSG[i] + GameState.pt_hadSS[i] + GameState.pt_hadSA[i] + GameState.pt_hadT[i] >= 3 then
+				Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, players[i].Position, Vector(0,0), nil)
+				SFXManager():Play(SoundEffect.SOUND_POWERUP_SPEWER, 1, 0, false, 1)
+				players[i]:AddNullCostume(PaperTransformation.COSTUME_PAPER_ISAAC)
+				GameState.pt_transformed[i] = true
+				players[i]:AddCacheFlags(CacheFlag.CACHE_SHOTSPEED)
+				players[i]:AddCacheFlags(CacheFlag.CACHE_TEARCOLOR)
+				players[i]:EvaluateItems()
+			end
 		end
 	end
 end
@@ -250,7 +257,8 @@ function checkItemForTF(itemID, itemVar, p)
 end
 
 function PaperTransformation:pt_cacheUpdate(player, flag)
-	if GameState.pt_transformed then
+	playerNum = getCurrPlayerNum(player)
+	if GameState.pt_transformed[playerNum] then
 		if flag == CacheFlag.CACHE_SHOTSPEED then
 			player.ShotSpeed = player.ShotSpeed + 0.16
 		end
@@ -260,21 +268,49 @@ function PaperTransformation:pt_cacheUpdate(player, flag)
 	end
 end
 
+function PaperTransformation:pt_onHit(target,damageAmount,damageFlag,damageSource,numCountdownFrames)
+	PaperTransformation:pt_checkForBleeding(target,damageAmount,damageFlag,damageSource,numCountdownFrames)
+	alreadyHit = false
+end
+
 function PaperTransformation:pt_checkForBleeding(target,damageAmount,damageFlag,damageSource,numCountdownFrames)
-	if GameState.pt_transformed and damageSource.Type == EntityType.ENTITY_TEAR and target:IsVulnerableEnemy() and not (target.Type == 39 and target.Variant == 22) and math.random(5) == 1 then
-		for _, entity in pairs(Isaac.GetRoomEntities()) do
-			if entity.Type == damageSource.Entity.Type and entity.Variant == damageSource.Entity.Variant and entity.Position.X == damageSource.Entity.Position.X and entity.Position.Y == damageSource.Entity.Position.Y then
-				target:TakeDamage(player.Damage * 0.5, 0, damageSource, 0)
-				if not target:IsBoss() then
-					target:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT)
+	if (not alreadyHit) and damageSource and damageSource.Entity and damageSource.Entity.SpawnerType == EntityType.ENTITY_PLAYER and damageSource.Type == EntityType.ENTITY_TEAR and target:IsVulnerableEnemy() and not (target.Type == 39 and target.Variant == 22) and math.random(5) == 1 then
+		playerNum = getCurrPlayerNum(damageSource.Entity.SpawnerEntity:ToPlayer())
+		if GameState.pt_transformed[playerNum] then
+			for _, entity in pairs(Isaac.GetRoomEntities()) do
+				if entity.Type == damageSource.Entity.Type and entity.Variant == damageSource.Entity.Variant and entity.Position.X == damageSource.Entity.Position.X and entity.Position.Y == damageSource.Entity.Position.Y then
+					alreadyHit = true
+					target:TakeDamage(damageAmount * 0.5, 0, damageSource, 0)
+					if not target:IsBoss() then
+						target:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT)
+					end
+					break
 				end
-				break
 			end
 		end
 	end
 end
 
+function getPlayers()
+	local p = {}
+	for i = 0, Game():GetNumPlayers() do
+		if Isaac.GetPlayer(i) ~= nil then
+			table.insert(p, Isaac.GetPlayer(i))
+		end
+	end
+	return p
+end
+
+function getCurrPlayerNum(player)
+	for i = 1, #players do
+		if player:GetPlayerType() == players[i]:GetPlayerType() then
+			return i
+		end
+	end
+	return -1
+end
+
 PaperTransformation:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, PaperTransformation.pt_onStart)
 PaperTransformation:AddCallback(ModCallbacks.MC_POST_UPDATE, PaperTransformation.pt_onUpdate)
 PaperTransformation:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, PaperTransformation.pt_cacheUpdate)
-PaperTransformation:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PaperTransformation.pt_checkForBleeding)
+PaperTransformation:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PaperTransformation.pt_onHit)
