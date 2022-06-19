@@ -17,45 +17,6 @@ function SlowGo:onStart()
 		__eidItemDescriptions = {}
 	end
 	__eidItemDescriptions[SlowGo.COLLECTIBLE_SLOW_GO] = "\2 -50% Speed multiplier"
-
-	GameState.enabledSG = initializeVar(GameState.enabledSG, false)
-
-	if not alreadyPlayedOnceOnBoot then
-		SlowGo:sg_addMCMOptions()
-		alreadyPlayedOnceOnBoot = true
-	end
-
-	if currFrame == 0 then
-		if not GameState.enabledSG then
-			Game():GetItemPool():RemoveCollectible(SlowGo.COLLECTIBLE_SLOW_GO)
-		end
-	end
-end
-
-function SlowGo:sg_addMCMOptions()
-	if ModConfigMenu then
-		ModConfigMenu.AddSetting("Slow Go", "Spawns", {
-			Type = ModConfigMenu.OptionType.BOOLEAN,
-			CurrentSetting = function()
-				return GameState.enabledSG
-			end,
-			Display = function()
-				local choice = "No"
-				if GameState.enabledSG then
-					choice = "Yes"
-				end
-				return "Spawns in item pool: " .. choice
-			end,
-			Default = false,
-			OnChange = function(currentBool)
-				GameState.enabledSG = currentBool
-				SlowGo:onExit()
-			end,
-			Info = {
-				"If disabled, Slow Go will not spawn."
-			}
-		})
-	end
 end
 
 function initializeVar(var, value)

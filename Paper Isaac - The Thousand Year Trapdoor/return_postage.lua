@@ -30,7 +30,9 @@ end
 
 function ReturnPostage:rp_addMCMOptions()
 	if ModConfigMenu then
-		ModConfigMenu.AddSetting("Return Postage", { 
+		ModConfigMenu.AddSpace("Paper Isaac", "Values")
+		ModConfigMenu.AddText("Paper Isaac", "Values", "Return Postage")
+		ModConfigMenu.AddSetting("Paper Isaac", "Values", { 
 			Type = ModConfigMenu.OptionType.NUMBER,
 			CurrentSetting = function()
 				return GameState.rp_counterDamage

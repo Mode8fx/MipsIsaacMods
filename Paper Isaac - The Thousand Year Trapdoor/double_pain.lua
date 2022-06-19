@@ -17,45 +17,6 @@ function DoublePain:onStart()
 		__eidItemDescriptions = {}
 	end
 	__eidItemDescriptions[DoublePain.COLLECTIBLE_DOUBLE_PAIN] = "Take double damage"
-
-	GameState.enabledDP = initializeVar(GameState.enabledDP, false)
-
-	if not alreadyPlayedOnceOnBoot then
-		DoublePain:dp_addMCMOptions()
-		alreadyPlayedOnceOnBoot = true
-	end
-
-	if currFrame == 0 then
-		if not GameState.enabledDP then
-			Game():GetItemPool():RemoveCollectible(DoublePain.COLLECTIBLE_DOUBLE_PAIN)
-		end
-	end
-end
-
-function DoublePain:dp_addMCMOptions()
-	if ModConfigMenu then
-		ModConfigMenu.AddSetting("Double Pain", "Spawns", {
-			Type = ModConfigMenu.OptionType.BOOLEAN,
-			CurrentSetting = function()
-				return GameState.enabledDP
-			end,
-			Display = function()
-				local choice = "No"
-				if GameState.enabledDP then
-					choice = "Yes"
-				end
-				return "Spawns in item pool: " .. choice
-			end,
-			Default = false,
-			OnChange = function(currentBool)
-				GameState.enabledDP = currentBool
-				DoublePain:onExit()
-			end,
-			Info = {
-				"If disabled, Double Pain will not spawn."
-			}
-		})
-	end
 end
 
 function initializeVar(var, value)

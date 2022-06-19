@@ -37,7 +37,8 @@ end
 
 function BumpAttack:ba_addMCMOptions()
 	if ModConfigMenu then
-		ModConfigMenu.AddSetting("Bump Attack", { 
+		ModConfigMenu.AddText("Paper Isaac", "Values", "Bump Attack")
+		ModConfigMenu.AddSetting("Paper Isaac", "Values", { 
 			Type = ModConfigMenu.OptionType.NUMBER,
 			CurrentSetting = function()
 				return GameState.ba_safeBumpValue
@@ -59,8 +60,7 @@ function BumpAttack:ba_addMCMOptions()
 				"your DPS) needed to safely bump into it."
 			}
 		})
-		ModConfigMenu.AddSpace("Bump Attack")
-		ModConfigMenu.AddSetting("Bump Attack", { 
+		ModConfigMenu.AddSetting("Paper Isaac", "Values", { 
 			Type = ModConfigMenu.OptionType.NUMBER,
 			CurrentSetting = function()
 				return GameState.ba_bumpKillValue

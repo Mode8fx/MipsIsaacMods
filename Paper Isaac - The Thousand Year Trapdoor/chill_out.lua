@@ -41,7 +41,9 @@ end
 
 function ChillOut:co_addMCMOptions()
 	if ModConfigMenu then
-		ModConfigMenu.AddSetting("Chill Out", { 
+		ModConfigMenu.AddSpace("Paper Isaac", "Values")
+		ModConfigMenu.AddText("Paper Isaac", "Values", "Chill Out")
+		ModConfigMenu.AddSetting("Paper Isaac", "Values", { 
 			Type = ModConfigMenu.OptionType.NUMBER,
 			CurrentSetting = function()
 				return GameState.co_invincibilityTime
@@ -55,9 +57,6 @@ function ChillOut:co_addMCMOptions()
 			Default = 2.0,
 			OnChange = function(currentNum)
 				GameState.co_invincibilityTime = currentNum
-				co_numSafeFrames = GameState.co_invincibilityTime * 30
-				co_numRenderFrames1 = GameState.co_invincibilityTime * 18
-				co_numRenderFrames2 = co_numSafeFrames - co_numRenderFrames1
 				ChillOut:onExit()
 			end,
 			Info = {
@@ -65,8 +64,7 @@ function ChillOut:co_addMCMOptions()
 				"time upon entering a new room."
 			}
 		})
-		ModConfigMenu.AddSpace("Chill Out")
-		ModConfigMenu.AddSetting("Chill Out", {
+		ModConfigMenu.AddSetting("Paper Isaac", "Values", {
 			Type = ModConfigMenu.OptionType.BOOLEAN,
 			CurrentSetting = function()
 				return GameState.co_showIcon
