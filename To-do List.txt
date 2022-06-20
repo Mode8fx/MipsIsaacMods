@@ -22,10 +22,6 @@ Restock+
 Transformation API
 - [UNTESTED]
 
-Paper Isaac: The Thousand Year Trapdoor
-- [UNTESTED]
-- Finish all the other Paper Isaac items and merge them in
-
 
 
 Add quality for the following items:

@@ -62,23 +62,27 @@ function SuperAppeal:sa_onStart()
 end
 
 function SuperAppeal:sa_onUpdate()
-	for playerNum=1,Game():GetNumPlayers() do
-		if players[playerNum]:HasCollectible(SuperAppeal.COLLECTIBLE_SUPER_APPEAL) then
-			if not GameState.sa_inSafeRoom[playerNum] and GameState.sa_currRoom[playerNum]:IsClear() and GameState.sa_hadSA[playerNum] then
-				GameState.sa_numRooms[playerNum] = math.min(GameState.sa_numRooms[playerNum] + 1, sa_maxRooms)
-				GameState.sa_inSafeRoom[playerNum] = true
-				players[playerNum]:AddCacheFlags(CacheFlag.CACHE_LUCK)
-				players[playerNum]:EvaluateItems()
+	if GameState.sa_inSafeRoom then
+		for playerNum=1,Game():GetNumPlayers() do
+			if players[playerNum]:HasCollectible(SuperAppeal.COLLECTIBLE_SUPER_APPEAL) then
+				if not GameState.sa_inSafeRoom[playerNum] and GameState.sa_currRoom[playerNum]:IsClear() and GameState.sa_hadSA[playerNum] then
+					GameState.sa_numRooms[playerNum] = math.min(GameState.sa_numRooms[playerNum] + 1, sa_maxRooms)
+					GameState.sa_inSafeRoom[playerNum] = true
+					players[playerNum]:AddCacheFlags(CacheFlag.CACHE_LUCK)
+					players[playerNum]:EvaluateItems()
+				end
 			end
 		end
 	end
 end
 
 function SuperAppeal:sa_onNewRoom()
-	for playerNum=1,Game():GetNumPlayers() do
-		GameState.sa_currRoom[playerNum] = Game():GetRoom()
-		GameState.sa_inSafeRoom[playerNum] = GameState.sa_currRoom[playerNum]:IsClear()
-		GameState.sa_hadSA[playerNum] = players[playerNum]:HasCollectible(SuperAppeal.COLLECTIBLE_SUPER_APPEAL)
+	if GameState.sa_currRoom then
+		for playerNum=1,Game():GetNumPlayers() do
+			GameState.sa_currRoom[playerNum] = Game():GetRoom()
+			GameState.sa_inSafeRoom[playerNum] = GameState.sa_currRoom[playerNum]:IsClear()
+			GameState.sa_hadSA[playerNum] = players[playerNum]:HasCollectible(SuperAppeal.COLLECTIBLE_SUPER_APPEAL)
+		end
 	end
 end
 
@@ -94,10 +98,12 @@ function SuperAppeal:sa_loseBonus(target,damageAmount,damageFlag,damageSource,nu
 end
 
 function SuperAppeal:sa_cacheUpdate(player, flag)
-	playerNum = getCurrPlayerNum(player)
-	if player:HasCollectible(SuperAppeal.COLLECTIBLE_SUPER_APPEAL) and flag == CacheFlag.CACHE_LUCK then
-        player.Luck = player.Luck + (player:GetCollectibleNum(SuperAppeal.COLLECTIBLE_SUPER_APPEAL) * sa_initLuckUp) + (GameState.sa_numRooms[playerNum] * sa_roomLuckBonus)
-    end
+	if GameState.sa_numRooms then
+		playerNum = getCurrPlayerNum(player)
+		if player:HasCollectible(SuperAppeal.COLLECTIBLE_SUPER_APPEAL) and flag == CacheFlag.CACHE_LUCK then
+			player.Luck = player.Luck + (player:GetCollectibleNum(SuperAppeal.COLLECTIBLE_SUPER_APPEAL) * sa_initLuckUp) + (GameState.sa_numRooms[playerNum] * sa_roomLuckBonus)
+		end
+	end
 end
 
 function getPlayers()

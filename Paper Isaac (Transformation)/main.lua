@@ -223,30 +223,32 @@ function PaperTransformation:pt_onStart()
 end
 
 function PaperTransformation:pt_onUpdate()
-	for i=1, #players do
-		if not GameState.pt_transformed[i] then
-			GameState.pt_hadBA[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_BUMP_ATTACK, GameState.pt_hadBA[i], players[i])
-			GameState.pt_hadCO[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_CHILL_OUT, GameState.pt_hadCO[i], players[i])
-			GameState.pt_hadCC[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_CLOSE_CALL, GameState.pt_hadCC[i], players[i])
-			GameState.pt_hadDP[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_DOUBLE_PAIN, GameState.pt_hadDP[i], players[i])
-			GameState.pt_hadPUDD[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_P_UP_D_DOWN, GameState.pt_hadPUDD[i], players[i])
-			GameState.pt_hadR[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_REFUND, GameState.pt_hadR[i], players[i])
-			GameState.pt_hadRP[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_RETURN_POSTAGE, GameState.pt_hadRP[i], players[i])
-			GameState.pt_hadSG[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_SLOW_GO, GameState.pt_hadSG[i], players[i])
-			GameState.pt_hadSS[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_SPIKE_SHIELD, GameState.pt_hadSS[i], players[i])
-			GameState.pt_hadSA[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_SUPER_APPEAL, GameState.pt_hadSA[i], players[i])
-			if PaperTransformation.COLLECTIBLE_TRANSFORMER ~= -1 and players[i]:HasCollectible(PaperTransformation.COLLECTIBLE_TRANSFORMER) then
-				GameState.pt_hadT[i] = math.max(GameState.pt_hadT[i], players[i]:GetCollectibleNum(PaperTransformation.COLLECTIBLE_TRANSFORMER))
-			end
+	if GameState.pt_transformed then
+		for i=1, #players do
+			if not GameState.pt_transformed[i] then
+				GameState.pt_hadBA[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_BUMP_ATTACK, GameState.pt_hadBA[i], players[i])
+				GameState.pt_hadCO[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_CHILL_OUT, GameState.pt_hadCO[i], players[i])
+				GameState.pt_hadCC[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_CLOSE_CALL, GameState.pt_hadCC[i], players[i])
+				GameState.pt_hadDP[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_DOUBLE_PAIN, GameState.pt_hadDP[i], players[i])
+				GameState.pt_hadPUDD[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_P_UP_D_DOWN, GameState.pt_hadPUDD[i], players[i])
+				GameState.pt_hadR[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_REFUND, GameState.pt_hadR[i], players[i])
+				GameState.pt_hadRP[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_RETURN_POSTAGE, GameState.pt_hadRP[i], players[i])
+				GameState.pt_hadSG[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_SLOW_GO, GameState.pt_hadSG[i], players[i])
+				GameState.pt_hadSS[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_SPIKE_SHIELD, GameState.pt_hadSS[i], players[i])
+				GameState.pt_hadSA[i] = checkItemForTF(PaperTransformation.COLLECTIBLE_SUPER_APPEAL, GameState.pt_hadSA[i], players[i])
+				if PaperTransformation.COLLECTIBLE_TRANSFORMER ~= -1 and players[i]:HasCollectible(PaperTransformation.COLLECTIBLE_TRANSFORMER) then
+					GameState.pt_hadT[i] = math.max(GameState.pt_hadT[i], players[i]:GetCollectibleNum(PaperTransformation.COLLECTIBLE_TRANSFORMER))
+				end
 
-			if GameState.pt_hadBA[i] + GameState.pt_hadCO[i] + GameState.pt_hadCC[i] + GameState.pt_hadDP[i] + GameState.pt_hadPUDD[i] + GameState.pt_hadR[i] + GameState.pt_hadRP[i] + GameState.pt_hadSG[i] + GameState.pt_hadSS[i] + GameState.pt_hadSA[i] + GameState.pt_hadT[i] >= 3 then
-				Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, players[i].Position, Vector(0,0), nil)
-				SFXManager():Play(SoundEffect.SOUND_POWERUP_SPEWER, 1, 0, false, 1)
-				players[i]:AddNullCostume(PaperTransformation.COSTUME_PAPER_ISAAC)
-				GameState.pt_transformed[i] = true
-				players[i]:AddCacheFlags(CacheFlag.CACHE_SHOTSPEED)
-				players[i]:AddCacheFlags(CacheFlag.CACHE_TEARCOLOR)
-				players[i]:EvaluateItems()
+				if GameState.pt_hadBA[i] + GameState.pt_hadCO[i] + GameState.pt_hadCC[i] + GameState.pt_hadDP[i] + GameState.pt_hadPUDD[i] + GameState.pt_hadR[i] + GameState.pt_hadRP[i] + GameState.pt_hadSG[i] + GameState.pt_hadSS[i] + GameState.pt_hadSA[i] + GameState.pt_hadT[i] >= 3 then
+					Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, players[i].Position, Vector(0,0), nil)
+					SFXManager():Play(SoundEffect.SOUND_POWERUP_SPEWER, 1, 0, false, 1)
+					players[i]:AddNullCostume(PaperTransformation.COSTUME_PAPER_ISAAC)
+					GameState.pt_transformed[i] = true
+					players[i]:AddCacheFlags(CacheFlag.CACHE_SHOTSPEED)
+					players[i]:AddCacheFlags(CacheFlag.CACHE_TEARCOLOR)
+					players[i]:EvaluateItems()
+				end
 			end
 		end
 	end
@@ -261,7 +263,7 @@ end
 
 function PaperTransformation:pt_cacheUpdate(player, flag)
 	playerNum = getCurrPlayerNum(player)
-	if GameState.pt_transformed[playerNum] then
+	if GameState.pt_transformed and GameState.pt_transformed[playerNum] then
 		if flag == CacheFlag.CACHE_SHOTSPEED then
 			player.ShotSpeed = player.ShotSpeed + 0.16
 		end
