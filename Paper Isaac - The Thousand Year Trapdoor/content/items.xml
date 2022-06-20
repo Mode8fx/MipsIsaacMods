@@ -1,13 +1,13 @@
 <items gfxroot="gfx/items/" version="1">
-	<passive name="Bump Attack" description="They're not worth your time" gfx="bumpattackbadge.png"	/>
-	<passive name="Chill Out" description="No spawn camping" gfx="chilloutbadge.png" />
-	<passive name="Close Call" description="Lucky in a pinch" gfx="closecallbadge.png" />
-	<passive name="Double Pain" description="All pain, no gain" gfx="doublepainbadge.png" />
+	<passive name="Bump Attack" description="They're not worth your time" gfx="bumpattackbadge.png" quality="3"	/>
+	<passive name="Chill Out" description="No spawn camping" gfx="chilloutbadge.png" quality="2" />
+	<passive name="Close Call" description="Lucky in a pinch" gfx="closecallbadge.png" quality="2" />
+	<passive name="Double Pain" description="All pain, no gain" gfx="doublepainbadge.png" quality="0" />
 	<trinket name="Fire Shield" description="Flame retardant" gfx="fireshieldbadge.png" />
-	<passive name="P-Up, D-Down" description="Give and take" gfx="pupddownbadge.png" cache="damage" />
-	<passive name="Refund" description="Money back guarantee!" gfx="refundbadge.png" />
-	<passive name="Return Postage" description="Send it back" gfx="returnpostagebadge.png" />
-	<passive name="Slow Go" description="Boring and impractical" gfx="slowgobadge.png" cache="speed" />
-	<passive name="Spike Shield" description="Protects against all spikes" gfx="spikeshieldbadge.png" />
-	<passive name="Super Appeal" description="Give them a good show" gfx="superappealbadge.png" cache="luck" />
+	<passive name="P-Up, D-Down" description="Give and take" gfx="pupddownbadge.png" cache="damage" quality="2" />
+	<passive name="Refund" description="Money back guarantee!" gfx="refundbadge.png" quality="2" />
+	<passive name="Return Postage" description="Send it back" gfx="returnpostagebadge.png" quality="1" />
+	<passive name="Slow Go" description="Boring and impractical" gfx="slowgobadge.png" cache="speed" quality="0" />
+	<passive name="Spike Shield" description="Protects against all spikes" gfx="spikeshieldbadge.png" quality="2" />
+	<passive name="Super Appeal" description="Give them a good show" gfx="superappealbadge.png" cache="luck" quality="2" />
 </items>

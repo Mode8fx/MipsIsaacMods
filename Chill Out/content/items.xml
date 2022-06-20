@@ -1,3 +1,3 @@
 <items gfxroot="gfx/items/" version="1">
-	<passive name="Chill Out" description="No spawn camping" gfx="chilloutbadge.png" />
+	<passive name="Chill Out" description="No spawn camping" gfx="chilloutbadge.png" quality="2" />
 </items>

@@ -1,3 +1,3 @@
 <items gfxroot="gfx/items/" version="1">
-	<passive name="Spike Shield" description="Protects against all spikes" gfx="spikeshieldbadge.png" />
+	<passive name="Spike Shield" description="Protects against all spikes" gfx="spikeshieldbadge.png" quality="2" />
 </items>

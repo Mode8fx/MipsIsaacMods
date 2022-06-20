@@ -25,21 +25,10 @@ Transformation API
 
 
 Add quality for the following items:
-- Bump Attack
-- Chill Out
-- Close Call
 - Dark Restock
-- Double Pain
-- P-Up, D-Down
-- Refund
 - Restraining Order
-- Return Postage
-- Self-Help Book
 - Shady Cell Phone
 - Shady Pass
-- Slow Go
-- Spike Shield
-- Super Appeal
 
 
 
