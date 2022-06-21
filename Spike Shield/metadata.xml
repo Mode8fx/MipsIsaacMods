@@ -6,8 +6,9 @@
     <description>• Passive
 • Become immune to all spikes and spike-related hazards
 • Can give Paper Isaac transformation
+• Repentance and multiplayer support
 
-This protects you from all spikes and spike-related hazards, including curse room doors and spiked chests.
+This protects you from all spikes and spike-related hazards*, including curse room doors and spiked chests.
 
 [u]Item Pools[/u]
 • Treasure Room
@@ -16,9 +17,11 @@ This protects you from all spikes and spike-related hazards, including curse roo
 [u]Transformation[/u]
 • Paper Isaac
 
-This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
-    <version>1.1</version>
-    <visibility>Private</visibility>
+This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].
+
+* (Known Bug: Spike Shield does not protect against the stationary spiked rocks that were added in Repentance. As far as I can tell, these rocks do not have any sort of unique identifier that lets me know if incoming damage came from one of these. If you know how to detect that, please let me know!)</description>
+    <version>1.2</version>
+    <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>
 </metadata>

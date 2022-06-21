@@ -6,6 +6,7 @@
     <description>• Transformation + 2 challenges
 • +0.16 Shot Speed Up
 • Tears may cause bleeding and deal 50% more damage
+• Repentance and multiplayer support
 
 After getting enough badges, Isaac gets a paper hat! This transformation gives a +0.16 Shot Speed up and a flat 20% chance that your tears will &quot;cut&quot; the enemy, dealing 50% more damage and causing bleeding.
 
@@ -25,7 +26,7 @@ Paper Isaac is activated by getting three of the following items:
 This transformation also comes with two challenges: &quot;Paper Isaac&quot; starts you as ??? with no treasure rooms and with Sheol as the goal, and gives you three badges of your choice plus Fire Shield. &quot;Paper Isaac (All)&quot; is the same, except it gives you every badge minus Double Pain and Slow Go. Needless to say, these challenges can only give you whatever badges you've downloaded.
 
 This transformation and its challenges are also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
-    <version>1.1</version>
+    <version>1.2</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Challenges"/>

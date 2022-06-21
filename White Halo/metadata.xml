@@ -5,11 +5,12 @@
     <id>1890437068</id>
     <description>• Trinket
 • Angel rooms can still spawn after defeating a boss, even if a Devil deal has already been taken
+• Repentance and multiplayer support
 
 This trinket makes it so that a Devil room may be replaced by an Angel room upon defeating a boss, even if you've already taken a Devil deal. This only affects spawn rates upon clearing a floor, [i]not[/i] through getting to one of the two rooms through other means (Joker card, red chest, etc).
 
 (Technical note: In the API, you can't force the Angel room chance to anything below 100%, so whether or not you'll get an Angel room is decided when you enter the boss room with this trinket. For example, if you should have a 75% Angel chance, it will start at 0 and have a 75% chance of suddenly shooting up to 100%. Same outcome, just a weird-looking execution).</description>
-    <version>1.2</version>
+    <version>1.3</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Trinkets"/>

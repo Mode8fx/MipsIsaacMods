@@ -5,12 +5,13 @@
     <id>1862156188</id>
     <description>• Trinket
 • Become immune to all fire and fire-related hazards
+• Repentance and multiplayer support
 
 This protects you from all fire and fire-related hazards, including fireplace projectiles. This does not protect against explosions.
 
 This trinket is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
-    <version>1.1</version>
-    <visibility>Private</visibility>
+    <version>1.2</version>
+    <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Trinkets"/>
 </metadata>

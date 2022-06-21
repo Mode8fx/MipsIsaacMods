@@ -6,6 +6,7 @@
     <description>• Passive
 • Grants immunity to all non-self-inflicted damage for two seconds upon entering a room
 • Can give Paper Isaac transformation
+• Repentance and multiplayer support
 
 When you enter a room, you become immune to most damage sources for two seconds. You are [i]not[/i] immune to self-inflicted damage (IV Bag, Kamikaze, etc), special non-enemy entities (blood donation machine, devil beggar, etc), or spiked doors. Basically, you can't abuse it.
 
@@ -16,7 +17,7 @@ When you enter a room, you become immune to most damage sources for two seconds.
 • Paper Isaac
 
 This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
-    <version>1.1</version>
+    <version>1.2</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

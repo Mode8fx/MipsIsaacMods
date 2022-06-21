@@ -6,6 +6,7 @@
     <description>• Passive
 • Using an active item drops money depending on item charge and Luck
 • Can give Paper Isaac transformation
+• Repentance and multiplayer support
 
 Using an active item spawns money depending on the item's charge and your Luck stat, maxing out at 15 coins total per active item.
 
@@ -19,7 +20,7 @@ You need +2 Luck to spawn pennies at the same rate as the Sack of Pennies (one p
 • Paper Isaac
 
 This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
-    <version>1.1</version>
+    <version>1.2</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

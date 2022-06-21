@@ -7,7 +7,7 @@
 • Gives a small, permanent stat boost on every use
 • The increased stat is random, but you can give a specific stat priority
 • Can give Bookworm transformation
-• Compatible with Repentance
+• Repentance and multiplayer support
 
 The Self-Help Book gives a small but permanent stat boost, equal to 1/2 of a stat up pill. The possible stat boosts are:
 
@@ -33,7 +33,7 @@ Two challenges are included, both of which start you with the Self-Help Book and
 [u]Synergies/Interactions[/u]
 • Car Battery: The stat boost is doubled.
 • [url=https://steamcommunity.com/sharedfiles/filedetails/?id=843351279]Transformer[/url]: Can be used with the Self-Help Book and another book (or second Transformer) to get the Bookworm transformation.</description>
-    <version>1.10</version>
+    <version>1.11</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

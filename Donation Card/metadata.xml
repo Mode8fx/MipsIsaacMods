@@ -5,13 +5,14 @@
     <id>1883679045</id>
     <description>• Card
 • Spawns one penny, allows free coin donations for the current room, and spawns/unjams a donation machine
+• Repentance and multiplayer support
 
 &quot;A donation has been made in your name.&quot; Oh... how nice...
 
 Using this card lets you donate to the donation machine without spending any money. This means you can keep donating until the machine jams. It also unjams the machine, spawns a machine if one doesn't already exist in the room, and guarantees that you can add at least five more coins before it jams again.
 
 The unlimited-donation effect only lasts for the current room. In case donation machines aren't currently useful to you, using this card also spawns a penny (but also because the unlimited-donation effect doesn't refund your money until right after you've donated, so you need to donate a penny to get that penny back).</description>
-    <version>1.4</version>
+    <version>1.5</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Cards"/>

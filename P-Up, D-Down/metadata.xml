@@ -6,6 +6,7 @@
     <description>• Passive
 • x2 Damage multiplier
 • Take double damage
+• Repentance and multiplayer support
 
 This item doubles your damage, but also makes you take double damage from all sources, turning you into a glass cannon. Will you take the risk?
 
@@ -16,8 +17,8 @@ This item doubles your damage, but also makes you take double damage from all so
 • Paper Isaac
 
 This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
-    <version>1.1</version>
-    <visibility>Private</visibility>
+    <version>1.2</version>
+    <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>
 </metadata>

@@ -5,6 +5,7 @@
     <id>1862159093</id>
     <description>• Passive
 • When an enemy damages you, it takes damage equal to 3x your DPS.
+• Repentance and multiplayer support
 
 When an enemy damages you, whether by contact or projectile, it takes damage equal to 3x your DPS. This damage amount can be changed with Mod Config Menu.
 
@@ -17,7 +18,7 @@ When an enemy damages you, whether by contact or projectile, it takes damage equ
 • Paper Isaac
 
 This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
-    <version>1.1</version>
+    <version>1.2</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

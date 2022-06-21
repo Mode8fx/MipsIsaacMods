@@ -7,6 +7,7 @@
 • +1 Luck
 • Up to +1.5 additional Luck depending on room clear bonus
 • Can give Paper Isaac transformation
+• Repentance and multiplayer support
 
 This item gives a +1 Luck up and an additional 0.1 Luck every time you clear a room. But be careful: taking damage removes 0.3 Luck from this bonus. This per-room bonus maxes out at 1.5 Luck and can't go below 0. In other words, you get a total +1 ~ +2.5 Luck up depending on your room bonus.
 
@@ -18,7 +19,7 @@ This item gives a +1 Luck up and an additional 0.1 Luck every time you clear a r
 • Paper Isaac
 
 This item is also included in the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1826418847]Paper Isaac modpack[/url].</description>
-    <version>1.1</version>
+    <version>1.2</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>
