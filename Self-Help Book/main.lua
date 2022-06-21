@@ -23,6 +23,7 @@ local oldBatteryCharge = {0, 0, 0, 0}
 local statUpString = {nil, nil, nil, nil}
 local statUpFrame = {-150, -150, -150, -150}
 local playerNum = 0
+-- books is only used for AB+
 local books = {
 	CollectibleType.COLLECTIBLE_BIBLE,
 	CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL,
@@ -36,9 +37,7 @@ local books = {
 	CollectibleType.COLLECTIBLE_HOW_TO_JUMP,
 	CollectibleType.COLLECTIBLE_TELEPATHY_BOOK,
 	CollectibleType.COLLECTIBLE_SATANIC_BIBLE,
-	CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
-	CollectibleType.COLLECTIBLE_LEMEGETON,
-	CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES
+	CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD
 }
 
 function SelfHelpBook:onStart()
