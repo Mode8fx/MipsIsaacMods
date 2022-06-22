@@ -1,16 +1,16 @@
 # Isaac Mods
-This repo contains all of the mods I've made for The Binding of Isaac: Rebirth. These were originally made for the Afterbirth+ expansion, but I'm currently in the process of updating these mods to work with the Repentance expansion.
+This repo contains all of the mods I've made for The Binding of Isaac: Rebirth. These were originally made for the Afterbirth+ expansion, but many of them have since been updated to also support Repentance, with full multiplayer support.
 
 All mods are currently available on the Steam Workshop. In the case of music mods, music is not included in this repo.
 
 ## List of Mods
 
 ### Modpacks
-#### AB+ only, Repentance support coming soon
+#### Repentance and AB+
 - Paper Isaac: The Thousand Year Trapdoor
 
 ### Items
-#### AB+ only, Repentance support coming soon
+#### Repentance and AB+
 - Bump Attack
 - Chill Out
 - Close Call
@@ -33,17 +33,17 @@ All mods are currently available on the Steam Workshop. In the case of music mod
 - Restock+
 
 ### Trinkets
-#### AB+ only, Repentance support coming soon
+#### Repentance and AB+
 - Fire Shield
 - Inheritance
 - White Halo
 
 ### Cards
-#### AB+ only, Repentance support coming soon
+#### Repentance and AB+
 - Donation Card
 
 ### Transformations
-#### AB+ only, Repentance support coming soon
+#### Repentance and AB+
 - Paper Isaac (Transformation)
 
 ### Soundtracks
