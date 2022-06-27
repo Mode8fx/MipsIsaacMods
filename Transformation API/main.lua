@@ -1,5 +1,7 @@
 TransformationAPI = RegisterMod("Transformation API", 1)
 
+-- This mod was updated for Repentance, but it is not recommended for use with Repentance due to official transformation tags making it redundant.
+
 local GS = {} -- GameState (save data)
 local json = require("json")
 
@@ -473,6 +475,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_beelzebub_m
 		end
 		tfID = "3"
+		icTag = ItemConfig.TAG_FLY
 	end
 	if transformation == "guppy" then
 		if useOfficialList then
@@ -481,6 +484,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_guppy_m
 		end
 		tfID = "1"
+		icTag = ItemConfig.TAG_GUPPY
 	end
 	if transformation == "bob" then
 		if useOfficialList then
@@ -489,6 +493,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_bob_m
 		end
 		tfID = "8"
+		icTag = ItemConfig.TAG_BOB
 	end
 	if transformation == "conjoined" then
 		if useOfficialList then
@@ -497,6 +502,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_conjoined_m
 		end
 		tfID = "4"
+		icTag = ItemConfig.TAG_BABY
 	end
 	if transformation == "funguy" then
 		if useOfficialList then
@@ -505,6 +511,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_funguy_m
 		end
 		tfID = "2"
+		icTag = ItemConfig.TAG_MUSHROOM
 	end
 	if transformation == "leviathan" then
 		if useOfficialList then
@@ -513,6 +520,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_leviathan_m
 		end
 		tfID = "9"
+		icTag = ItemConfig.TAG_DEVIL
 	end
 	if transformation == "ohcrap" then
 		if useOfficialList then
@@ -521,6 +529,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_ohcrap_m
 		end
 		tfID = "7"
+		icTag = ItemConfig.TAG_POOP
 	end
 	if transformation == "seraphim" then
 		if useOfficialList then
@@ -529,6 +538,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_seraphim_m
 		end
 		tfID = "10"
+		icTag = ItemConfig.TAG_ANGEL
 	end
 	if transformation == "spun" then
 		if useOfficialList then
@@ -537,6 +547,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_spun_m
 		end
 		tfID = "5"
+		icTag = ItemConfig.TAG_SYRINGE
 	end
 	if transformation == "superbum" then
 		if useOfficialList then
@@ -545,6 +556,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_superbum_m
 		end
 		tfID = "11"
+		icTag = ItemConfig.TAG_QUEST -- superbum isn't really used
 	end
 	if transformation == "yesmother" then
 		if useOfficialList then
@@ -553,6 +565,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_yesmother_m
 		end
 		tfID = "6"
+		icTag = ItemConfig.TAG_MOM
 	end
 	if transformation == "bookworm" then
 		if useOfficialList then
@@ -561,6 +574,7 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_bookworm_m
 		end
 		tfID = "12"
+		icTag = ItemConfig.TAG_BOOK
 	end
 	if transformation == "spiderbaby" then
 		if useOfficialList then
@@ -569,9 +583,10 @@ function TransformationAPI:addItemsToTransformation(transformation, useOfficialL
 			tfList = items_spiderbaby_m
 		end
 		tfID = "13"
+		icTag = ItemConfig.TAG_SPIDER
 	end
 	for _, itemID in pairs(addedItems) do
-		if itemID ~= nil and itemID ~= -1 and not contains(tfList, itemID) then
+		if itemID ~= nil and itemID ~= -1 and not contains(tfList, itemID) and not (REPENTANCE and itemConfig:GetCollectible(itemID):HasTags(icTag)) then
 			table.insert(tfList, itemID)
 			if not useOfficialList then
 				-- External Item Description

@@ -4,12 +4,12 @@
     <directory>transformation api</directory>
     <id>1883533098</id>
     <description>• Preconfigured for 50+ items
-• Compatible with Repentance
+• Recommended for AB+ only (see description)
 
-Are you tired of modded books not counting toward Bookworm? Shouldn't new mushrooms give Fun Guy? The Transformation API adds transformations to over 50 modded items and makes it [u]very[/u] easy to give a transformation to your own item! You can also give additional transformations to official items [strike]in case you think Brimstone is underpowered and want it to also count toward Guppy[/strike]. It even adds the new transformation to the item's External Item Description.
+Are you tired of modded books not counting toward Bookworm? Shouldn't new mushrooms give Fun Guy? The Transformation API (actually it's a library, but too late to change the name now) adds transformations to over 50 modded items and makes it [u]very[/u] easy to give a transformation to your own item! You can also give additional transformations to official items [strike]in case you think Brimstone is underpowered and want it to also count toward Guppy[/strike]. It even adds the new transformation to the item's External Item Description.
 
-[h1]Items currently included in the API[/h1]
-[url=https://pastebin.com/bWFwhTwu]Here is a list of all modded items currently preconfigured in the API.[/url] If you have any of these items installed, enabling this API is all you have to do to make these items count toward transformations. If you know of a modded item that would make sense to count toward a transformation, leave a comment with the item's exact name as it appears in-game and I might add it. Or if you want to add an item yourself...
+[h1]Items currently preconfigured in this mod[/h1]
+[url=https://pastebin.com/bWFwhTwu]Here is a list of all modded items currently preconfigured in the library.[/url] If you have any of these items installed, enabling this mod is all you have to do to make these items count toward transformations. If you know of a modded item that would make sense to count toward a transformation, leave a comment with the item's exact name as it appears in-game and I might add it. Or if you want to add an item yourself...
 
 [h1]How to add a transformation to your own item[/h1]
 For Repentance players, the current modding API allows you to add a transformation to your item via the official &quot;tags&quot; tag in items.xml. For everyone else...
@@ -26,8 +26,11 @@ And replace [i]{ITEM_1, ITEM_2, ETC}[/i] with an array containing the IDs of eac
 For example, if you wanted Little Gish to count toward the Spider Baby transformation, you would include the following line:
 [code]if TransformationAPI ~= nil then TransformationAPI:addItemsToTransformation(&quot;spiderbaby&quot;, {Isaac.GetItemIdByName(&quot;Little Gish&quot;)}) end[/code]
 Or if you wanted to add Seraphim to both Mini Mush and a modded item called Lucky Sevens (which is made up), you would include this line:
-[code]if TransformationAPI ~= nil then TransformationAPI:addItemsToTransformation(&quot;seraphim&quot;, {Isaac.GetItemIdByName(&quot;Mini Mush&quot;), Isaac.GetItemIdByName(&quot;Lucky Sevens&quot;)}) end[/code]</description>
-    <version>1.4</version>
+[code]if TransformationAPI ~= nil then TransformationAPI:addItemsToTransformation(&quot;seraphim&quot;, {Isaac.GetItemIdByName(&quot;Mini Mush&quot;), Isaac.GetItemIdByName(&quot;Lucky Sevens&quot;)}) end[/code]
+
+[h1]Repentance Disclaimer[/h1]
+This mod has been partially updated for Repentance; however, it is not recommended. It was made back when adding a transformation to an item was a complicated and tedious process, but Repentance lets you simply add a tag to an item corresponding to a transformation, making this mod obsolete. It probably works fine with Repentance (albeit single player-only), but I recommend that you only use this mod if you are playing AB+.</description>
+    <version>1.5</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Tweaks"/>

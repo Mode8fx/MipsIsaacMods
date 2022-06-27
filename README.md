@@ -54,5 +54,5 @@ All mods are currently available on the Steam Workshop. In the case of music mod
 - Super Smash Bros. Soundtrack (AB+ Ver)
 
 ### Other
-#### AB+ only, Repentance support not yet confirmed
+#### AB+ only; partially updated for Repentance, will not be updated further
 - Transformation API
