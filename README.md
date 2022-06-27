@@ -17,6 +17,7 @@ All mods are currently available on the Steam Workshop. In the case of music mod
 - Double Pain
 - P-Up, D-Down
 - Refund
+- Restraining Order
 - Return Postage
 - Self-Help Book
 - Slow Go
@@ -24,7 +25,6 @@ All mods are currently available on the Steam Workshop. In the case of music mod
 - Super Appeal
 #### AB+ only, Repentance support not yet confirmed
 - Dark Restock
-- Restraining Order
 - Shady Cell Phone
 - Shady Pass
 

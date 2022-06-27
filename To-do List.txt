@@ -6,12 +6,6 @@ Dark Restock
 - Does not work if A Pound of Flesh is active (should restock devil room item)
 - Tainted Jacob's ghost form can get infinite items
 
-Restraining Order
-- "PostUpdate" failed: line 136: attempt to index a nil value (upvalue 'player')
-	- Only does this during the first run after the game is opened
-- Angel room chance increase only works if player 1 gets Restraining Order
-- The three soul hearts upon picking up the item always go to player 1
-
 Restock+
 - "PostUpdate" failed: line 149: attempt to index a nil value (upvalue 'player')
 	- Only does this during the first run after the game is opened
@@ -23,7 +17,6 @@ Restock+
 
 Add quality for the following items:
 - Dark Restock
-- Restraining Order
 - Shady Cell Phone
 - Shady Pass
 
