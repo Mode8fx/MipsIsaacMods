@@ -1,6 +1,4 @@
-Add quality for the following items:
-- Shady Cell Phone
-- Shady Pass
+Note: There's a good chance these remaining issues will never be fixed; all that's left are bugs that are either unfixable (to my knowledge) or simply not worth the trouble.
 
 
 
@@ -16,11 +14,8 @@ Spike Shield
 
 Other Known Bugs:
 
-Shady Cell Phone, Shady Pass
-- These items are untested and probably don't work at all in Repentance; I may come back and test/fix them in the future, but they're the first mods I ever made, the code is messy, and I suspect they'll be some of the most difficult to fix.
-
 Transformation API
 - This mod does not have proper multiplayer support, and Repentance support may be a little dodgy. But Repentance itself added transformation tags to item XMLs and makes this mod completely redundant anyway.
 
 Restock+ and Dark Restock:
-- Picking up A Pound of Flesh makes these items useless.
+- Picking up A Pound of Flesh nullifies the added effect of Restock+ and makes Dark Restock useless.

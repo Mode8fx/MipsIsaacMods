@@ -1,5 +1,5 @@
 # Isaac Mods
-This repo contains all of the mods I've made for The Binding of Isaac: Rebirth. These were originally made for the Afterbirth+ expansion, but many of them have since been updated to also support Repentance, with full multiplayer support.
+This repo contains all of the mods I've made for The Binding of Isaac: Rebirth. These were originally made for the Afterbirth+ expansion, but have all have since been updated to also support Repentance, with full multiplayer support, unless otherwise specified.
 
 All mods are currently available on the Steam Workshop. In the case of music mods, music is not included in this repo.
 
@@ -21,12 +21,11 @@ All mods are currently available on the Steam Workshop. In the case of music mod
 - Restraining Order
 - Return Postage
 - Self-Help Book
+- Shady Cell Phone
+- Shady Pass
 - Slow Go
 - Spike Shield
 - Super Appeal
-#### AB+ only, probably won't be updated for Repentance
-- Shady Cell Phone
-- Shady Pass
 
 ### Changes to Existing Items
 #### Repentance and AB+
