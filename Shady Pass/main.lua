@@ -5,11 +5,15 @@ ShadyPass.COLLECTIBLE_SHADY_PASS = Isaac.GetItemIdByName("Shady Pass")
 local GameState = {}
 local json = require("json")
 
-local player
+local players = {}
 local currLevel
 
 function ShadyPass:onStart()
-	GameState = json.decode(ShadyPass:LoadData())
+	if ShadyPass:HasData() then
+		GameState = json.decode(ShadyPass:LoadData())
+	else
+		GameState = {}
+	end
 
 	-- External Item Description
 	if not __eidItemDescriptions then
@@ -17,7 +21,7 @@ function ShadyPass:onStart()
 	end
 	__eidItemDescriptions[ShadyPass.COLLECTIBLE_SHADY_PASS] = "+1 Black Heart#Spawns a black market deal at the start of every floor except The Chest/Dark Room"
 
-	player = Isaac.GetPlayer(0)
+	players = getPlayers()
 	currLevel = Game():GetLevel()
 	if GameState.itemSpawnPosX ~= nil and GameState.itemSpawnPosY ~= nil then
 		ShadyPass.itemSpawnPos = Vector(GameState.itemSpawnPosX, GameState.itemSpawnPosY)
@@ -27,7 +31,7 @@ function ShadyPass:onStart()
 		-- GameState.itemSpawnPosY = nil
 		GameState.startSeed = Game():GetSeeds():GetStartSeed()
 		GameState.currRoomIndex = currLevel:GetCurrentRoomIndex()
-		GameState.oldNumShadyPasses = 0
+		GameState.oldNumShadyPasses = {0, 0, 0, 0, 0, 0, 0, 0}
 		-- GameState.originalRoomIndex = nil
 		-- GameState.lastItem = nil
 		GameState.hadRedHeartsOnLastTick = true
@@ -44,54 +48,56 @@ ShadyPass:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, ShadyPass.onExit)
 ShadyPass:AddCallback(ModCallbacks.MC_POST_GAME_END, ShadyPass.onExit)
 
 function ShadyPass:onUpdate()
-	local numShadyPasses = player:GetCollectibleNum(ShadyPass.COLLECTIBLE_SHADY_PASS)
-	if numShadyPasses > 0 then
-		if numShadyPasses > GameState.oldNumShadyPasses then
-			player:AddBlackHearts((numShadyPasses - GameState.oldNumShadyPasses) * 2)
-			GameState.oldNumShadyPasses = numShadyPasses
-		end
-		if (player:GetMaxHearts() > 0) ~= GameState.hadRedHeartsOnLastTick then
+	local haveRedHearts = playersHaveRedHearts()
+	for playerNum = 1, #players do
+		local numShadyPasses = players[playerNum]:GetCollectibleNum(ShadyPass.COLLECTIBLE_SHADY_PASS)
+		if numShadyPasses > 0 then
+			if numShadyPasses > GameState.oldNumShadyPasses[playerNum] then
+				players[playerNum]:AddBlackHearts((numShadyPasses - GameState.oldNumShadyPasses[playerNum]) * 2)
+				GameState.oldNumShadyPasses[playerNum] = numShadyPasses
+			end
+			if haveRedHearts ~= GameState.hadRedHeartsOnLastTick then
+				if GameState.currRoomIndex == GameState.originalRoomIndex then
+					local currPrice = ShadyPass:getPrice()
+					for _, entity in pairs(Isaac.GetRoomEntities()) do
+						if entity.Position.X == ShadyPass.itemSpawnPos.X and entity.Position.Y == ShadyPass.itemSpawnPos.Y and entity.Type == EntityType.ENTITY_PICKUP and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE then
+							local pickup = entity:ToPickup()
+							-- Only update the item's price if it's a devil deal (-1000 = free)
+							if pickup.Price < 0 and pickup.Price > -1000 then
+								pickup.Price = currPrice
+							end
+							break
+						end
+					end
+				end
+			end
 			if GameState.currRoomIndex == GameState.originalRoomIndex then
 				local currPrice = ShadyPass:getPrice()
 				for _, entity in pairs(Isaac.GetRoomEntities()) do
-					if entity.Position.X == ShadyPass.itemSpawnPos.X and entity.Position.Y == ShadyPass.itemSpawnPos.Y and entity.Type == EntityType.ENTITY_PICKUP and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE then
+					if entity.Position.X == ShadyPass.itemSpawnPos.X and entity.Position.Y == ShadyPass.itemSpawnPos.Y and entity.Type == EntityType.ENTITY_PICKUP and entity.Variant ~= PickupVariant.PICKUP_COLLECTIBLE then
 						local pickup = entity:ToPickup()
-						-- Only update the item's price if it's a devil deal (-1000 = free)
-						if pickup.Price < 0 and pickup.Price > -1000 then
-							pickup.Price = currPrice
+						-- Only update the item if it's a non-free heart
+						if pickup.Price > 0 then
+							entity:Remove()
+							-- Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ShadyPass.itemSpawnPos, Vector(0,0), nil)
+							ShadyPass:spawnFromPool(ItemPoolType.POOL_SHOP, ShadyPass.itemSpawnPos, currPrice, GameState.startSeed)
 						end
 						break
 					end
 				end
 			end
+			GameState.hadRedHeartsOnLastTick = haveRedHearts
 		end
-		if GameState.currRoomIndex == GameState.originalRoomIndex then
-			local currPrice = ShadyPass:getPrice()
-			for _, entity in pairs(Isaac.GetRoomEntities()) do
-				if entity.Position.X == ShadyPass.itemSpawnPos.X and entity.Position.Y == ShadyPass.itemSpawnPos.Y and entity.Type == EntityType.ENTITY_PICKUP and entity.Variant ~= PickupVariant.PICKUP_COLLECTIBLE then
-					local pickup = entity:ToPickup()
-					-- Only update the item if it's a non-free heart
-					if pickup.Price > 0 then
-						entity:Remove()
-						-- Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ShadyPass.itemSpawnPos, Vector(0,0), nil)
-						ShadyPass:spawnFromPool(ItemPoolType.POOL_SHOP, ShadyPass.itemSpawnPos, currPrice, GameState.startSeed)
-					end
-					break
-				end
-			end
-		end
-		GameState.hadRedHeartsOnLastTick = player:GetMaxHearts() > 0
 	end
 end
 
 function ShadyPass:onNewLevel()
-	player = Isaac.GetPlayer(0)
 	currLevel = Game():GetLevel()
 	GameState.originalRoomIndex = currLevel:GetCurrentRoomIndex()
 	ShadyPass.itemSpawnPos = Isaac.GetFreeNearPosition(Vector(180,160), 0)
 	-- Item works on every floor except The Chest/Dark Room (just like black markets)
 	if currLevel:GetStage() ~= 11 then
-		if player:HasCollectible(ShadyPass.COLLECTIBLE_SHADY_PASS) then
+		if playersHaveCollectible(ShadyPass.COLLECTIBLE_SHADY_PASS) then
 			-- Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ShadyPass.itemSpawnPos, Vector(0,0), nil)
 			ShadyPass:spawnFromPool(ItemPoolType.POOL_SHOP, ShadyPass.itemSpawnPos, ShadyPass:getPrice(), GameState.startSeed)
 		end
@@ -125,11 +131,40 @@ function ShadyPass:spawnFromPool(pool, pos, price, seed)
 end
 
 function ShadyPass:getPrice()
-	local price = PickupPrice.PRICE_ONE_HEART
-	if player:GetMaxHearts() == 0 then
-		price = PickupPrice.PRICE_THREE_SOULHEARTS
+	for i = 1, #players do
+		if players[i]:GetMaxHearts() == 0 then
+			return PickupPrice.PRICE_THREE_SOULHEARTS
+		end
 	end
-	return price
+	return PickupPrice.PRICE_ONE_HEART
+end
+
+function playersHaveRedHearts()
+	for playerNum=0,Game():GetNumPlayers()-1 do
+		if Isaac.GetPlayer(playerNum):GetMaxHearts() > 0 then
+			return true
+		end
+	end
+	return false
+end
+
+function playersHaveCollectible(collectibleType)
+	for playerNum=0,Game():GetNumPlayers()-1 do
+		if Isaac.GetPlayer(playerNum):HasCollectible(collectibleType) then
+			return true
+		end
+	end
+	return false
+end
+
+function getPlayers()
+	local p = {}
+	for playerNum=0,Game():GetNumPlayers()-1 do
+		if Isaac.GetPlayer(playerNum) ~= nil then
+			table.insert(p, Isaac.GetPlayer(playerNum))
+		end
+	end
+	return p
 end
 
 ShadyPass:AddCallback(ModCallbacks.MC_POST_UPDATE, ShadyPass.onUpdate)

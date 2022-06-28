@@ -25,7 +25,7 @@ function Refund:onStart()
 end
 
 function Refund:onExit(save)
-	for playerNum=1,4 do
+	for playerNum=1,8 do
 		for i=1,GameState.r_highestID[playerNum] do
 			if GameState.r_activeItems[playerNum][i] == nil then
 				GameState.r_activeItems[playerNum][i] = 0
@@ -50,10 +50,9 @@ function Refund:r_onStart()
 	if Game():GetFrameCount() < 5 then
 		-- initialize all variables
 		GameState.r_activeItems = {}
-		GameState.r_highestID = {}
-		for playerNum=1,4 do
+		GameState.r_highestID = {-1, -1, -1, -1, -1, -1, -1, -1}
+		for playerNum=1,8 do
 			GameState.r_activeItems[playerNum] = {}
-			GameState.r_highestID[playerNum] = -1
 		end
 	end
 end

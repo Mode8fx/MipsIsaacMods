@@ -7,12 +7,16 @@ SoundEffect.SOUND_SHADY_CELL_BAD = Isaac.GetSoundIdByName("bad")
 local GameState = {}
 local json = require("json")
 
-local player
+local players = {}
 local currLevel
 local restockShadyPass
 
 function ShadyCellPhone:onStart()
-	GameState = json.decode(ShadyCellPhone:LoadData())
+	if ShadyCellPhone:HasData() then
+		GameState = json.decode(ShadyCellPhone:LoadData())
+	else
+		GameState = {}
+	end
 
 	-- External Item Description
 	if not __eidItemDescriptions then
@@ -20,7 +24,7 @@ function ShadyCellPhone:onStart()
 	end
 	__eidItemDescriptions[ShadyCellPhone.COLLECTIBLE_SHADY_CELL_PHONE] = "Spawns a Black Market deal and restocks item spawned by Shady Pass#Has no effect in The Chest/Dark Room"
 
-	player = Isaac.GetPlayer(0)
+	players = getPlayers()
 	currLevel = Game():GetLevel()
 	ShadyCellPhone.COLLECTIBLE_SHADY_PASS = Isaac.GetItemIdByName("Shady Pass")
 	if Game():GetFrameCount() == 0 then
@@ -49,7 +53,7 @@ ShadyCellPhone:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, ShadyCellPhone.onExit)
 ShadyCellPhone:AddCallback(ModCallbacks.MC_POST_GAME_END, ShadyCellPhone.onExit)
 
 function ShadyCellPhone:onUpdate()
-	if restockShadyPass and GameState.currRoomIndex == GameState.originalRoomIndex and (DarkRestock == nil or not player:HasCollectible(Isaac.GetItemIdByName("Dark Restock"))) and (RestockPlus == nil or not player:HasCollectible(Isaac.GetItemIdByName("Restock"))) then
+	if restockShadyPass and GameState.currRoomIndex == GameState.originalRoomIndex and (DarkRestock == nil or not playersHaveCollectible(Isaac.GetItemIdByName("Dark Restock"))) and (RestockPlus == nil or not playersHaveCollectible(Isaac.GetItemIdByName("Restock"))) then
 		-- Restock item spawned by Shady Pass if necessary
 		-- ShadyCellPhone:addRoomPosPair(GameState.originalRoomIndex, ShadyPass.itemSpawnPos)
 		local dealExists = false
@@ -75,8 +79,9 @@ function ShadyCellPhone:onUpdate()
 		restockShadyPass = false
 	end
 
+	local haveRedHearts = playersHaveRedHearts()
 	-- If Isaac is in a room that contains an item spawned by the Shady Cell Phone or Shady Pass, then update created item prices to correct amount of heart containers
-	if (player:GetMaxHearts() > 0) ~= GameState.hadRedHeartsOnLastTick then
+	if haveRedHearts ~= GameState.hadRedHeartsOnLastTick then
 		if GameState.createdItemValues[GameState.currRoomIndex] ~= nil then
 			local currPrice = ShadyCellPhone:getPrice()
 			for i=1,#GameState.createdItemValues[GameState.currRoomIndex] do
@@ -122,7 +127,7 @@ function ShadyCellPhone:onUpdate()
 			end
 		end
 	end
-	GameState.hadRedHeartsOnLastTick = player:GetMaxHearts() > 0
+	GameState.hadRedHeartsOnLastTick = haveRedHearts
 end
 
 function ShadyCellPhone:onNewLevel()
@@ -135,7 +140,7 @@ function ShadyCellPhone:onNewRoom()
 	GameState.currRoomIndex = Game():GetLevel():GetCurrentRoomIndex()
 end
 
-function ShadyCellPhone:useItem()
+function ShadyCellPhone:useItem(collectibleType, rng, player, flags, activeSlot, customVarData)
 	player:AnimateCollectible(ShadyCellPhone.COLLECTIBLE_SHADY_CELL_PHONE, "UseItem", "PlayerPickup")
 	if currLevel:GetStage() ~= 11 then
 		SFXManager():Play(SoundEffect.SOUND_SHADY_CELL_GOOD, 0.5, 0, false, 1)
@@ -177,11 +182,12 @@ function ShadyCellPhone:spawnFromPool(pool, pos, price, seed, lastItem)
 end
 
 function ShadyCellPhone:getPrice()
-	local price = PickupPrice.PRICE_ONE_HEART
-	if player:GetMaxHearts() == 0 then
-		price = PickupPrice.PRICE_THREE_SOULHEARTS
+	for i = 1, #players do
+		if players[i]:GetMaxHearts() == 0 then
+			return PickupPrice.PRICE_THREE_SOULHEARTS
+		end
 	end
-	return price
+	return PickupPrice.PRICE_ONE_HEART
 end
 
 function ShadyCellPhone:addRoomPosPair(roomIndex, itemPos)
@@ -195,6 +201,34 @@ function ShadyCellPhone:addRoomPosPair(roomIndex, itemPos)
 		end
 	end
 	table.insert(GameState.createdItemValues[roomIndex], {itemPos, 0})
+end
+
+function playersHaveRedHearts()
+	for playerNum=0,Game():GetNumPlayers()-1 do
+		if Isaac.GetPlayer(playerNum):GetMaxHearts() > 0 then
+			return true
+		end
+	end
+	return false
+end
+
+function playersHaveCollectible(collectibleType)
+	for playerNum=0,Game():GetNumPlayers()-1 do
+		if Isaac.GetPlayer(playerNum):HasCollectible(collectibleType) then
+			return true
+		end
+	end
+	return false
+end
+
+function getPlayers()
+	local p = {}
+	for i = 0, Game():GetNumPlayers() do
+		if Isaac.GetPlayer(i) ~= nil then
+			table.insert(p, Isaac.GetPlayer(i))
+		end
+	end
+	return p
 end
 
 ShadyCellPhone:AddCallback(ModCallbacks.MC_POST_UPDATE, ShadyCellPhone.onUpdate)

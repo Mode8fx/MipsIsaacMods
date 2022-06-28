@@ -124,7 +124,7 @@ A simple challenge that starts you as ??? with the Fire Shield trinket + three b
 Same as the above challenge, except this starts you with every badge except Double Pain and Slow Go.
 
 Special thanks to Nato Potato for showing how to let the player disable specific items (it seems so obvious in hindsight) and for being an all around great modder.</description>
-    <version>1.4</version>
+    <version>1.5</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

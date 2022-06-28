@@ -48,15 +48,13 @@ local sa_maxRooms = 15
 
 function SuperAppeal:sa_onStart()
 	if Game():GetFrameCount() < 5 then
-		GameState.sa_numRooms = {}
+		GameState.sa_numRooms = {0, 0, 0, 0, 0, 0, 0, 0}
 		GameState.sa_currRoom = {}
 		GameState.sa_inSafeRoom = {}
-		GameState.sa_hadSA = {}
-		for playerNum=1,4 do
-			GameState.sa_numRooms[playerNum] = 0
+		GameState.sa_hadSA = {false, false, false, false, false, false, false, false}
+		for playerNum=1,Game():GetNumPlayers() do
 			GameState.sa_currRoom[playerNum] = Game():GetRoom()
 			GameState.sa_inSafeRoom[playerNum] = GameState.sa_currRoom[playerNum]:IsClear()
-			GameState.sa_hadSA[playerNum] = false
 		end
 	end
 end
