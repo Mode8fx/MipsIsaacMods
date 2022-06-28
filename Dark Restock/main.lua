@@ -119,12 +119,12 @@ DarkRestock:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, DarkRestock.onExit)
 DarkRestock:AddCallback(ModCallbacks.MC_POST_GAME_END, DarkRestock.onExit)
 
 function DarkRestock:onUpdate()
-	for i = 1, #players do
-		local numDarkRestocks = players[i]:GetCollectibleNum(DarkRestock.COLLECTIBLE_DARK_RESTOCK)
+	for playerNum = 1, #players do
+		local numDarkRestocks = players[playerNum]:GetCollectibleNum(DarkRestock.COLLECTIBLE_DARK_RESTOCK)
 		if numDarkRestocks > GameState.oldNumDarkRestocks[i] then
 			local pickupTypeList = {PickupVariant.PICKUP_HEART, PickupVariant.PICKUP_COIN, PickupVariant.PICKUP_KEY, PickupVariant.PICKUP_BOMB, PickupVariant.PICKUP_PILL, PickupVariant.PICKUP_LIL_BATTERY, PickupVariant.PICKUP_TAROTCARD, PickupVariant.PICKUP_TRINKET}
 			for i=1,GameState.pickupOption do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, pickupTypeList[math.random(1,8)], 0, Isaac.GetFreeNearPosition(Vector(players[i].Position.X + 20*math.random(-1,1), players[i].Position.Y + 20*math.random(-1,1)), 0), Vector(0,0), nil):ToPickup()
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, pickupTypeList[math.random(1,8)], 0, Isaac.GetFreeNearPosition(Vector(players[playerNum].Position.X + 20*math.random(-1,1), players[playerNum].Position.Y + 20*math.random(-1,1)), 0), Vector(0,0), nil):ToPickup()
 			end
 			GameState.oldNumDarkRestocks[i] = numDarkRestocks
 		end
