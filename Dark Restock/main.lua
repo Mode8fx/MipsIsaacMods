@@ -5,14 +5,19 @@ DarkRestock.COLLECTIBLE_DARK_RESTOCK = Isaac.GetItemIdByName("Dark Restock")
 local GameState = {}
 local json = require("json")
 
-local player
+local players = {}
+local specialPlayerTypePresent = false
 local currRoomIndex
 
-local options = {0, 1, 2, 3, 4, 5, 99999}
+local lostOptions = {0, 1, 2, 3, 4, 5, 99999}
 local alreadyPlayedOnceOnBoot = false -- for Mod Config Menu; makes it so that the option is only added once per game boot
 
 function DarkRestock:onStart()
-	GameState = json.decode(DarkRestock:LoadData())
+	if DarkRestock:HasData() then
+		GameState = json.decode(DarkRestock:LoadData())
+	else
+		GameState = {}
+	end
 
 	-- External Item Description
 	if not __eidItemDescriptions then
@@ -20,24 +25,26 @@ function DarkRestock:onStart()
 	end
 	__eidItemDescriptions[DarkRestock.COLLECTIBLE_DARK_RESTOCK] = "Devil rooms and black markets instantly restock their items when you buy them"
 
-	player = Isaac.GetPlayer(0)
+	players = getPlayers()
+
+	specialPlayerTypePresent = false
+	for i = 1, #players do
+		if players[i]:GetPlayerType() == PlayerType.PLAYER_THELOST or players[i]:GetPlayerType() == PlayerType.PLAYER_THELOST_B or players[i]:GetPlayerType() == PlayerType.PLAYER_JACOB2_B then
+			specialPlayerTypePresent = true
+			break
+		end
+	end
+
 	DarkRestock.COLLECTIBLE_SHADY_PASS = Isaac.GetItemIdByName("Shady Pass")
 
 	if GameState.lostOption == nil then
 		GameState.lostOption = 1
 	end
+	if GameState.pickupOption == nil then
+		GameState.pickupOption = 3
+	end
 
 	if not alreadyPlayedOnceOnBoot then
-		-- OptionsMod
-		-- if optionsmod ~= nil and optionsmod.RegisterNewSetting ~= nil then
-		-- 	DarkRestockOptionsMod()
-		-- else
-		-- 	if optionsmod_init == nil then
-		-- 		optionsmod_init = {}
-		-- 	end
-		-- 	optionsmod_init[#optionsmod_init+1] = DarkRestockOptionsMod
-		-- end
-
 		-- Mod Config Menu
 		if ModConfigMenu then
 			ModConfigMenu.AddSpace("Dark Restock")
@@ -60,11 +67,33 @@ function DarkRestock:onStart()
 				Maximum = 6,
 				Default = 1,
 				OnChange = function(currentNum)
-					GameState.lostOption = options[currentNum+1]
+					GameState.lostOption = lostOptions[currentNum+1]
+					DarkRestock:onExit()
 				end,
 				Info = {
 					"Set how many devil room/black market restocks",
 					"per floor are allowed when playing as the Lost."
+				}
+			})
+			ModConfigMenu.AddSetting("Dark Restock", { 
+				Type = ModConfigMenu.OptionType.NUMBER,
+				CurrentSetting = function()
+					return GameState.pickupOption
+				end,
+				Display = function()
+					return "# of pickups spawned: " .. GameState.pickupOption
+				end,
+				Minimum = 0,
+				Maximum = 3,
+				ModifyBy = 1,
+				Default = 3,
+				OnChange = function(currentNum)
+					GameState.pickupOption = currentNum
+					DarkRestock:onExit()
+				end,
+				Info = {
+					"Set how many pickups are spawned upon getting.",
+					"this item. (Recommended: Rep. = 0, AB+ = 3)"
 				}
 			})
 		end
@@ -73,7 +102,7 @@ function DarkRestock:onStart()
 
 	if Game():GetFrameCount() == 0 then
 		GameState.startSeed = Game():GetSeeds():GetStartSeed()
-		GameState.oldNumDarkRestocks = 0
+		GameState.oldNumDarkRestocks = {0, 0, 0, 0, 0, 0, 0, 0}
 		GameState.roomItemValues = {} -- Table containing room index and position of each item spawned by devil room/black market
 		GameState.crookedPennyFrame = -3
 		GameState.inGoodRoom = false
@@ -83,19 +112,6 @@ function DarkRestock:onStart()
 end
 DarkRestock:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, DarkRestock.onStart)
 
--- function DarkRestockOptionsMod()
--- 	optionsmod.RegisterMod("Dark Restock", {"Lost behavior"})
--- 	option = optionsmod.RegisterNewSetting({
--- 	    name = "# of restocks/floor",
--- 	    description = "Determines how many devil room/black market restocks per floor are allowed when playing as the Lost",
--- 	    category = "Lost behavior",
--- 	    type = "normal",
--- 	    options = {{"0", 0}, {"1", 1}, {"2", 2}, {"3", 3}, {"4", 4}, {"5", 5}, {"Unlimited", 99999}},
--- 	    default = 2 -- option #2 (one per floor), not value 2
--- 	})
--- 	alreadyPlayedOnceOnBoot = true
--- end
-
 function DarkRestock:onExit(save)
 	DarkRestock:SaveData(json.encode(GameState))
 end
@@ -103,15 +119,17 @@ DarkRestock:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, DarkRestock.onExit)
 DarkRestock:AddCallback(ModCallbacks.MC_POST_GAME_END, DarkRestock.onExit)
 
 function DarkRestock:onUpdate()
-	local numDarkRestocks = player:GetCollectibleNum(DarkRestock.COLLECTIBLE_DARK_RESTOCK)
-	if numDarkRestocks > GameState.oldNumDarkRestocks then
-		local pickupTypeList = {PickupVariant.PICKUP_HEART, PickupVariant.PICKUP_COIN, PickupVariant.PICKUP_KEY, PickupVariant.PICKUP_BOMB, PickupVariant.PICKUP_PILL, PickupVariant.PICKUP_LIL_BATTERY, PickupVariant.PICKUP_TAROTCARD, PickupVariant.PICKUP_TRINKET}
-		for i=1,3 do
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, pickupTypeList[math.random(1,8)], 0, Isaac.GetFreeNearPosition(Vector(player.Position.X + 20*math.random(-1,1), player.Position.Y + 20*math.random(-1,1)), 0), Vector(0,0), nil):ToPickup()
+	for i = 1, #players do
+		local numDarkRestocks = players[i]:GetCollectibleNum(DarkRestock.COLLECTIBLE_DARK_RESTOCK)
+		if numDarkRestocks > GameState.oldNumDarkRestocks[i] then
+			local pickupTypeList = {PickupVariant.PICKUP_HEART, PickupVariant.PICKUP_COIN, PickupVariant.PICKUP_KEY, PickupVariant.PICKUP_BOMB, PickupVariant.PICKUP_PILL, PickupVariant.PICKUP_LIL_BATTERY, PickupVariant.PICKUP_TAROTCARD, PickupVariant.PICKUP_TRINKET}
+			for i=1,GameState.pickupOption do
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, pickupTypeList[math.random(1,8)], 0, Isaac.GetFreeNearPosition(Vector(players[i].Position.X + 20*math.random(-1,1), players[i].Position.Y + 20*math.random(-1,1)), 0), Vector(0,0), nil):ToPickup()
+			end
+			GameState.oldNumDarkRestocks[i] = numDarkRestocks
 		end
-		GameState.oldNumDarkRestocks = numDarkRestocks
 	end
-	if GameState.inGoodRoom and player:HasCollectible(DarkRestock.COLLECTIBLE_DARK_RESTOCK) and ((player:GetPlayerType() ~= PlayerType.PLAYER_THELOST and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B) or GameState.numRestocksUsedOnFloor < GameState.lostOption) then
+	if GameState.inGoodRoom and playersHaveCollectible(DarkRestock.COLLECTIBLE_DARK_RESTOCK) and ((not specialPlayerTypePresent) or GameState.numRestocksUsedOnFloor < GameState.lostOption) then
 		local currFrame = Game():GetFrameCount()
 		if currFrame == GameState.crookedPennyFrame + 1 then
 			DarkRestock:getItemValues()
@@ -125,7 +143,7 @@ function DarkRestock:onUpdate()
 		end
 		currRoomIndex = Game():GetLevel():GetCurrentRoomIndex()
 		if GameState.roomItemValues[currRoomIndex] ~= nil then
-			local hasShadyPass = DarkRestock.COLLECTIBLE_SHADY_PASS ~= -1 and player:HasCollectible(DarkRestock.COLLECTIBLE_SHADY_PASS)
+			local hasShadyPass = DarkRestock.COLLECTIBLE_SHADY_PASS ~= -1 and playersHaveCollectible(DarkRestock.COLLECTIBLE_SHADY_PASS)
 			for i=1,#GameState.roomItemValues[currRoomIndex] do
 				if currRoomIndex ~= GameState.originalRoomIndex or (hasShadyPass and GameState.hadShadyPass and Game():GetLevel():GetStage() ~= 11) then
 					local dealExists = false
@@ -155,7 +173,7 @@ function DarkRestock:onUpdate()
 			end
 		end
 	end
-	GameState.hadDarkRestock = player:HasCollectible(DarkRestock.COLLECTIBLE_DARK_RESTOCK)
+	GameState.hadDarkRestock = playersHaveCollectible(DarkRestock.COLLECTIBLE_DARK_RESTOCK)
 end
 
 function DarkRestock:onNewLevel()
@@ -163,7 +181,7 @@ function DarkRestock:onNewLevel()
 	if DarkRestock.COLLECTIBLE_SHADY_PASS ~= -1 then
 		DarkRestock:addRoomPosPair(currRoomIndex, Isaac.GetFreeNearPosition(Vector(180,160), 0)) -- Shady Pass initial item spawn position
 	end
-	GameState.hadShadyPass = DarkRestock.COLLECTIBLE_SHADY_PASS ~= -1 and Isaac.GetPlayer(0):HasCollectible(Isaac.GetItemIdByName("Shady Pass"))
+	GameState.hadShadyPass = DarkRestock.COLLECTIBLE_SHADY_PASS ~= -1 and playersHaveCollectible(Isaac.GetItemIdByName("Shady Pass"))
 	GameState.numRestocksUsedOnFloor = 0
 end
 
@@ -215,15 +233,35 @@ function DarkRestock:addRoomPosPair(roomIndex, itemPos)
 end
 
 function DarkRestock:getPrice()
-	local price = PickupPrice.PRICE_ONE_HEART
-	if player:GetMaxHearts() == 0 then
-		price = PickupPrice.PRICE_THREE_SOULHEARTS
+	for i = 1, #players do
+		if players[i]:GetMaxHearts() == 0 then
+			return PickupPrice.PRICE_THREE_SOULHEARTS
+		end
 	end
-	return price
+	return PickupPrice.PRICE_ONE_HEART
 end
 
 function DarkRestock:useCrookedPenny()
 	GameState.crookedPennyFrame = Game():GetFrameCount()
+end
+
+function playersHaveCollectible(collectibleType)
+	for playerNum=0,Game():GetNumPlayers()-1 do
+		if Isaac.GetPlayer(playerNum):HasCollectible(collectibleType) then
+			return true
+		end
+	end
+	return false
+end
+
+function getPlayers()
+	local p = {}
+	for i = 0, Game():GetNumPlayers() do
+		if Isaac.GetPlayer(i) ~= nil then
+			table.insert(p, Isaac.GetPlayer(i))
+		end
+	end
+	return p
 end
 
 DarkRestock:AddCallback(ModCallbacks.MC_POST_UPDATE, DarkRestock.onUpdate);

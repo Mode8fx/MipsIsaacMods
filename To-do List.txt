@@ -1,22 +1,4 @@
-Dark Restock
-- "PostUpdate" failed: line 106: attempt to index a nil value (upvalue 'player')
-	- Only does this during the first run after the game is opened
-- Item currently spawns three random pickups; make this a toggle (disabled by default)
-- Only works if player 1 has Dark Restock
-- Does not work if A Pound of Flesh is active (should restock devil room item)
-- Tainted Jacob's ghost form can get infinite items
-
-Restock+
-- "PostUpdate" failed: line 149: attempt to index a nil value (upvalue 'player')
-	- Only does this during the first run after the game is opened
-- Only works if player 1 has Restock
-- Does not work if A Pound of Flesh is active (should restock devil room item)
-- Tainted Jacob's ghost form can get infinite items
-
-
-
 Add quality for the following items:
-- Dark Restock
 - Shady Cell Phone
 - Shady Pass
 
@@ -39,3 +21,6 @@ Shady Cell Phone, Shady Pass
 
 Transformation API
 - This mod does not have proper multiplayer support, and Repentance support may be a little dodgy. But Repentance itself added transformation tags to item XMLs and makes this mod completely redundant anyway.
+
+Restock+ and Dark Restock:
+- Picking up A Pound of Flesh makes these items useless.

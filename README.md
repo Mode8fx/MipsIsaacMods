@@ -14,6 +14,7 @@ All mods are currently available on the Steam Workshop. In the case of music mod
 - Bump Attack
 - Chill Out
 - Close Call
+- Dark Restock
 - Double Pain
 - P-Up, D-Down
 - Refund
@@ -23,13 +24,12 @@ All mods are currently available on the Steam Workshop. In the case of music mod
 - Slow Go
 - Spike Shield
 - Super Appeal
-#### AB+ only, Repentance support not yet confirmed
-- Dark Restock
+#### AB+ only, probably won't be updated for Repentance
 - Shady Cell Phone
 - Shady Pass
 
 ### Changes to Existing Items
-#### AB+ only, Repentance support not yet confirmed
+#### Repentance and AB+
 - Restock+
 
 ### Trinkets

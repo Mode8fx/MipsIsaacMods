@@ -3,14 +3,19 @@ RestockPlus = RegisterMod("Restock Plus", 1)
 local GameState = {}
 local json = require("json")
 
-local player
+local players = {}
+local specialPlayerTypePresent = false
 local currRoomIndex
 
 local options = {0, 1, 2, 3, 4, 5, 99999}
 local alreadyPlayedOnceOnBoot = false -- for Mod Config Menu; makes it so that the option is only added once per game boot
 
 function RestockPlus:onStart()
-	GameState = json.decode(RestockPlus:LoadData())
+	if RestockPlus:HasData() then
+		GameState = json.decode(RestockPlus:LoadData())
+	else
+		GameState = {}
+	end
 
 	-- External Item Description
 	if not __eidItemDescriptions then
@@ -18,7 +23,16 @@ function RestockPlus:onStart()
 	end
 	__eidItemDescriptions[CollectibleType.COLLECTIBLE_RESTOCK] = "Shops, Devil rooms, and black markets instantly restock their items when you buy them"
 
-	player = Isaac.GetPlayer(0)
+	players = getPlayers()
+
+	specialPlayerTypePresent = false
+	for i = 1, #players do
+		if players[i]:GetPlayerType() == PlayerType.PLAYER_THELOST or players[i]:GetPlayerType() == PlayerType.PLAYER_THELOST_B or players[i]:GetPlayerType() == PlayerType.PLAYER_JACOB2_B then
+			specialPlayerTypePresent = true
+			break
+		end
+	end
+
 	RestockPlus.COLLECTIBLE_SHADY_PASS = Isaac.GetItemIdByName("Shady Pass")
 	RestockPlus.COLLECTIBLE_DARK_RESTOCK = Isaac.GetItemIdByName("Dark Restock")
 
@@ -27,16 +41,6 @@ function RestockPlus:onStart()
 	end
 
 	if not alreadyPlayedOnceOnBoot then
-		-- OptionsMod
-		-- if optionsmod ~= nil and optionsmod.RegisterNewSetting ~= nil then
-		-- 	RestockPlusOptionsMod()
-		-- else
-		-- 	if optionsmod_init == nil then
-		-- 		optionsmod_init = {}
-		-- 	end
-		-- 	optionsmod_init[#optionsmod_init+1] = RestockPlusOptionsMod
-		-- end
-
 		-- Mod Config Menu
 		if ModConfigMenu then
 			ModConfigMenu.AddSpace("Restock+")
@@ -60,6 +64,7 @@ function RestockPlus:onStart()
 				Default = 1,
 				OnChange = function(currentNum)
 					GameState.lostOption = options[currentNum+1]
+					RestockPlus:onExit()
 				end,
 				Info = {
 					"Set how many devil room/black market restocks",
@@ -82,19 +87,6 @@ function RestockPlus:onStart()
 end
 RestockPlus:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, RestockPlus.onStart)
 
--- function RestockPlusOptionsMod()
--- 	optionsmod.RegisterMod("Restock+", {"Lost behavior"})
--- 	option = optionsmod.RegisterNewSetting({
--- 	    name = "# of restocks/floor",
--- 	    description = "Determines how many devil room/black market restocks per floor are allowed when playing as the Lost",
--- 	    category = "Lost behavior",
--- 	    type = "normal",
--- 	    options = {{"0", 0}, {"1", 1}, {"2", 2}, {"3", 3}, {"4", 4}, {"5", 5}, {"Unlimited", 99999}},
--- 	    default = 2 -- option #2 (one per floor), not value 2
--- 	})
--- 	alreadyPlayedOnceOnBoot = true
--- end
-
 function RestockPlus:onExit(save)
 	RestockPlus:SaveData(json.encode(GameState))
 end
@@ -102,7 +94,7 @@ RestockPlus:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, RestockPlus.onExit)
 RestockPlus:AddCallback(ModCallbacks.MC_POST_GAME_END, RestockPlus.onExit)
 
 function RestockPlus:onUpdate()
-	if GameState.inGoodRoom and player:HasCollectible(CollectibleType.COLLECTIBLE_RESTOCK) and ((player:GetPlayerType() ~= PlayerType.PLAYER_THELOST and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B) or GameState.numRestocksUsedOnFloor < GameState.lostOption) and (RestockPlus.COLLECTIBLE_DARK_RESTOCK == -1 or not player:HasCollectible(RestockPlus.COLLECTIBLE_DARK_RESTOCK)) then
+	if GameState.inGoodRoom and playersHaveCollectible(CollectibleType.COLLECTIBLE_RESTOCK) and ((not specialPlayerTypePresent) or GameState.numRestocksUsedOnFloor < GameState.lostOption) and (RestockPlus.COLLECTIBLE_DARK_RESTOCK == -1 or not playersHaveCollectible(RestockPlus.COLLECTIBLE_DARK_RESTOCK)) then
 		local currFrame = Game():GetFrameCount()
 		if currFrame == GameState.crookedPennyFrame + 1 then
 			RestockPlus:getItemValues()
@@ -116,7 +108,7 @@ function RestockPlus:onUpdate()
 		end
 		currRoomIndex = Game():GetLevel():GetCurrentRoomIndex()
 		if GameState.roomItemValues[currRoomIndex] ~= nil then
-			local hasShadyPass = RestockPlus.COLLECTIBLE_SHADY_PASS ~= -1 and player:HasCollectible(RestockPlus.COLLECTIBLE_SHADY_PASS)
+			local hasShadyPass = RestockPlus.COLLECTIBLE_SHADY_PASS ~= -1 and playersHaveCollectible(RestockPlus.COLLECTIBLE_SHADY_PASS)
 			for i=1,#GameState.roomItemValues[currRoomIndex] do
 				if currRoomIndex ~= GameState.originalRoomIndex or (hasShadyPass and GameState.hadShadyPass and Game():GetLevel():GetStage() ~= 11) then
 					local dealExists = false
@@ -146,7 +138,7 @@ function RestockPlus:onUpdate()
 			end
 		end
 	end
-	GameState.hadRestock = player:HasCollectible(CollectibleType.COLLECTIBLE_RESTOCK)
+	GameState.hadRestock = playersHaveCollectible(CollectibleType.COLLECTIBLE_RESTOCK)
 end
 
 function RestockPlus:onNewLevel()
@@ -154,7 +146,7 @@ function RestockPlus:onNewLevel()
 	if RestockPlus.COLLECTIBLE_SHADY_PASS ~= -1 then
 		RestockPlus:addRoomPosPair(currRoomIndex, Isaac.GetFreeNearPosition(Vector(180,160), 0)) -- Shady Pass initial item spawn position
 	end
-	GameState.hadShadyPass = RestockPlus.COLLECTIBLE_SHADY_PASS ~= -1 and Isaac.GetPlayer(0):HasCollectible(Isaac.GetItemIdByName("Shady Pass"))
+	GameState.hadShadyPass = RestockPlus.COLLECTIBLE_SHADY_PASS ~= -1 and playersHaveCollectible(Isaac.GetItemIdByName("Shady Pass"))
 	GameState.numRestocksUsedOnFloor = 0
 end
 
@@ -206,15 +198,35 @@ function RestockPlus:addRoomPosPair(roomIndex, itemPos)
 end
 
 function RestockPlus:getPrice()
-	local price = PickupPrice.PRICE_ONE_HEART
-	if player:GetMaxHearts() == 0 then
-		price = PickupPrice.PRICE_THREE_SOULHEARTS
+	for i = 1, #players do
+		if players[i]:GetMaxHearts() == 0 then
+			return PickupPrice.PRICE_THREE_SOULHEARTS
+		end
 	end
-	return price
+	return PickupPrice.PRICE_ONE_HEART
 end
 
 function RestockPlus:useCrookedPenny()
 	GameState.crookedPennyFrame = Game():GetFrameCount()
+end
+
+function playersHaveCollectible(collectibleType)
+	for playerNum=0,Game():GetNumPlayers()-1 do
+		if Isaac.GetPlayer(playerNum):HasCollectible(collectibleType) then
+			return true
+		end
+	end
+	return false
+end
+
+function getPlayers()
+	local p = {}
+	for i = 0, Game():GetNumPlayers() do
+		if Isaac.GetPlayer(i) ~= nil then
+			table.insert(p, Isaac.GetPlayer(i))
+		end
+	end
+	return p
 end
 
 RestockPlus:AddCallback(ModCallbacks.MC_POST_UPDATE, RestockPlus.onUpdate);
