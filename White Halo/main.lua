@@ -113,9 +113,9 @@ end
 
 function getPlayers()
 	local p = {}
-	for i = 0, Game():GetNumPlayers() do
-		if Isaac.GetPlayer(i) ~= nil then
-			table.insert(p, Isaac.GetPlayer(i))
+	for playerNum=0,Game():GetNumPlayers()-1 do
+		if Isaac.GetPlayer(playerNum) ~= nil then
+			table.insert(p, Isaac.GetPlayer(playerNum))
 		end
 	end
 	return p
