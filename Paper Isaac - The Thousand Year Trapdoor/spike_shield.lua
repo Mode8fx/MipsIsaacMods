@@ -37,6 +37,11 @@ function damageIsFromMausoleumDoor(damageFlag)
 		and Game():GetRoom():GetType() == RoomType.ROOM_BOSS and Game():GetRoom():IsClear())
 end
 
+-- Spiked rocks don't have any unique identifier... but they do have a strange quirk where all their values - including position - are either 0 or nil. So this PROBABLY doesn't include anything else
+function damageIsFromSpikedRock(damageFlag, damageSource)
+	return damageFlag == 0 and damageSource.Entity == nil and damageSource.Position.X == 0 and damageSource.Position.Y == 0 and damageSource.Type == 0 and damageSource.Variant == 0
+end
+
 local ss_lastDamageFrame = 0
 
 function SpikeShield:ss_onStart()
@@ -49,6 +54,7 @@ function SpikeShield:ss_onHit(target,damageAmount,damageFlag,damageSource,numCou
 			if ((hasBit(damageFlag, DamageFlag.DAMAGE_SPIKES) and Game():GetRoom():GetType() ~= RoomType.ROOM_SACRIFICE)
 				or hasBit(damageFlag, DamageFlag.DAMAGE_CURSED_DOOR)
 				or hasBit(damageFlag, DamageFlag.DAMAGE_CHEST)
+				or damageIsFromSpikedRock(damageFlag, damageSource)
 				or damageSource.Type == 44 or damageSource.Type == 218 or damageSource.Type == 877 or damageSource.Type == 893 or damageSource.Type == 852 or damageSource.Type == 915)
 				and not damageIsFromMausoleumDoor(damageFlag) then
 				if currFrame > ss_lastDamageFrame + 1 then

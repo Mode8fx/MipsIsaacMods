@@ -87,8 +87,6 @@ This is a (more or less) objectively bad joke item. All it does is cut your move
 
 This protects you from all spikes and spike-related hazards*, including curse room doors and spiked chests.
 
-* (Known Bug: Spike Shield does not protect against the stationary spiked rocks that were added in Repentance. As far as I can tell, these rocks do not have any sort of unique identifier that lets me know if incoming damage came from one of these. If you know how to detect that, please let me know!)
-
 [h1]Super Appeal[/h1]
 • Passive
 • +1 Luck
@@ -124,7 +122,7 @@ A simple challenge that starts you as ??? with the Fire Shield trinket + three b
 Same as the above challenge, except this starts you with every badge except Double Pain and Slow Go.
 
 Special thanks to Nato Potato for showing how to let the player disable specific items (it seems so obvious in hindsight) and for being an all around great modder.</description>
-    <version>1.6</version>
+    <version>1.7</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

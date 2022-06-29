@@ -7,9 +7,6 @@ Unfixable(?) Bugs:
 Bump Attack, Chill Out, Close Call
 - These items cannot prevent losing Holy Mantle (Holy Mantle activates before the MC_ENTITY_TAKE_DMG callback is attempted)
 
-Spike Shield
-- Spiked rocks pierce Spike Shield (I don't think there's a way to uniquely distinguish this entity through the damageSource since it's a GridEntity)
-
 
 
 Other Known Bugs:

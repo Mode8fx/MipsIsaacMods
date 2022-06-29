@@ -279,17 +279,19 @@ function PaperTransformation:pt_onHit(target,damageAmount,damageFlag,damageSourc
 end
 
 function PaperTransformation:pt_checkForBleeding(target,damageAmount,damageFlag,damageSource,numCountdownFrames)
-	if (not alreadyHit) and damageSource and damageSource.Entity and damageSource.Entity.SpawnerType == EntityType.ENTITY_PLAYER and damageSource.Type == EntityType.ENTITY_TEAR and target:IsVulnerableEnemy() and not (target.Type == 39 and target.Variant == 22) and math.random(5) == 1 then
-		playerNum = getCurrPlayerNum(damageSource.Entity.SpawnerEntity:ToPlayer())
-		if GameState.pt_transformed[playerNum] then
-			for _, entity in pairs(Isaac.GetRoomEntities()) do
-				if entity.Type == damageSource.Entity.Type and entity.Variant == damageSource.Entity.Variant and entity.Position.X == damageSource.Entity.Position.X and entity.Position.Y == damageSource.Entity.Position.Y then
-					alreadyHit = true
-					target:TakeDamage(damageAmount * 0.5, 0, damageSource, 0)
-					if not target:IsBoss() then
-						target:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT)
+	if GameState.pt_transformed then
+		if (not alreadyHit) and damageSource and damageSource.Entity and damageSource.Entity.SpawnerType == EntityType.ENTITY_PLAYER and damageSource.Type == EntityType.ENTITY_TEAR and target:IsVulnerableEnemy() and not (target.Type == 39 and target.Variant == 22) and math.random(5) == 1 then
+			playerNum = getCurrPlayerNum(damageSource.Entity.SpawnerEntity:ToPlayer())
+			if GameState.pt_transformed[playerNum] then
+				for _, entity in pairs(Isaac.GetRoomEntities()) do
+					if entity.Type == damageSource.Entity.Type and entity.Variant == damageSource.Entity.Variant and entity.Position.X == damageSource.Entity.Position.X and entity.Position.Y == damageSource.Entity.Position.Y then
+						alreadyHit = true
+						target:TakeDamage(damageAmount * 0.5, 0, damageSource, 0)
+						if not target:IsBoss() then
+							target:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT)
+						end
+						break
 					end
-					break
 				end
 			end
 		end
