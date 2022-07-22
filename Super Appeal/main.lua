@@ -54,7 +54,11 @@ function SuperAppeal:sa_onStart()
 		GameState.sa_hadSA = {false, false, false, false, false, false, false, false}
 		for playerNum=1,Game():GetNumPlayers() do
 			GameState.sa_currRoom[playerNum] = Game():GetRoom()
-			GameState.sa_inSafeRoom[playerNum] = GameState.sa_currRoom[playerNum]:IsClear()
+			if GameState.sa_currRoom[playerNum] ~= nil then
+				GameState.sa_inSafeRoom[playerNum] = GameState.sa_currRoom[playerNum]:IsClear()
+			else
+				GameState.sa_inSafeRoom[playerNum] = true
+			end
 		end
 	end
 end
