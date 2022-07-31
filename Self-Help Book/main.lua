@@ -176,7 +176,7 @@ function initializeAllVars()
 	GameState.collectedBooks = initializeVar(GameState.collectedBooks, {{}, {}, {}, {}})
 	GameState.highestID = initializeVar(GameState.highestID, {})
 	GameState.transformed = initializeVar(GameState.transformed, {})
-	for i=1,4 do
+	for i=1,8 do
 		GameState.numDamageUp[i] = initializeVar(GameState.numDamageUp[i], 0)
 		GameState.numRangeUp[i] = initializeVar(GameState.numRangeUp[i], 0)
 		GameState.numSpeedUp[i] = initializeVar(GameState.numSpeedUp[i], 0)
@@ -191,7 +191,7 @@ function initializeAllVars()
 end
 
 function SelfHelpBook:onExit(save)
-	for playerNum=1,4 do
+	for playerNum=1,8 do
 		for i=1,GameState.highestID[playerNum] do
 			if GameState.collectedBooks[playerNum][i] == nil then
 				GameState.collectedBooks[playerNum][i] = false
@@ -204,7 +204,7 @@ SelfHelpBook:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, SelfHelpBook.onExit)
 SelfHelpBook:AddCallback(ModCallbacks.MC_POST_GAME_END, SelfHelpBook.onExit)
 
 function SelfHelpBook:loadCollectedList()
-	for playerNum=1,4 do
+	for playerNum=1,8 do
 		local new_collectedBooks = {}
 		for i=1, GameState.highestID[playerNum] do
 			if GameState.collectedBooks[playerNum][i] == true then
