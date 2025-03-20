@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" version="1">
+    <active description="The weak become strong" gfx="transmutationtablet.png" maxcharges="6" name="Transmutation Tablet" quality="4" />
+</items>

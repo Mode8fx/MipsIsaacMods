@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Transmutation Tablet</name>
+    <directory>transmutation tablet</directory>
+    <id>3440318340</id>
+    <description>• Active (6 room charge)
+• Converts passive items/familiars of a low quality into an item of a higher quality
+• Repentance and multiplayer support
+
+Loosely based on the Minecraft Tekkit/Equivalent Exchange item of the same name, the Transmutation Tablet allows you to convert lower-quality items into a single higher-quality item. The catch is that you can't pick exactly which items you convert or which new item you get, so don't use it recklessly!
+
+The default costs are:
+• 2x 0-quality items -&gt; a 1-quality item
+• 2x 1-quality items -&gt; a 2-quality item
+• 2x 2-quality items -&gt; a 3-quality item
+• 4x 3-quality items -&gt; a 4-quality item
+... but these costs can be adjusted between 1 and 6 each using [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2681875787]Mod Config Menu[/url].
+
+Repentogon is recommended but not required; if you don't have it, the item names printed upon conversion will be less human-readable.
+
+[u]Synergies:[/u]
+• Car Battery: Two conversions will be performed, if possible.
+• Quest items (Polaroid, Key Pieces, etc.): These are ignored; they will not be created or destroyed.</description>
+    <version>1.1</version>
+    <visibility>Private</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+    <tag id="Active Items"/>
+</metadata>
